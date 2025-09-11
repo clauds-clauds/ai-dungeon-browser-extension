@@ -11,5 +11,6 @@ function onShareClick() {
 }
 
 function onHelpClick() {
-    console.log("Help was clicked");
+    console.log("FAQ was clicked!");
+    window.open('https://help.aidungeon.com/faq', '_blank');
 }

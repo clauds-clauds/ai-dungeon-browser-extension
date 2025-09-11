@@ -15,7 +15,8 @@
             ],
             "js": [
                 "scripts/content.js",
-                "scripts/mutations/menu.js"
+                "scripts/mutations/menu.js",
+                "scripts/logic/buttons.js"
             ]
         }
     ],

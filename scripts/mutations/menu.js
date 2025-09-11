@@ -62,10 +62,10 @@ function applyMenuMutation() {
     }
 
     const buttonConfigs = [
-        { id: 'custom-btn-characters', label: 'Characters', icon: 'group', exitGameButton, listContainer, onCharactersClick },
-        { id: 'custom-btn-notes', label: 'Notes', icon: 'description', exitGameButton, listContainer, onNotesClick },
-        { id: 'custom-btn-share', label: 'Share', icon: 'share', exitGameButton, listContainer, onShareClick },
-        { id: 'custom-btn-faq', label: 'FAQ', icon: 'contact_support', exitGameButton, listContainer, onHelpClick }
+        { id: 'custom-btn-characters', label: 'Characters', icon: 'group', exitGameButton, listContainer, onClick: onCharactersClick },
+        { id: 'custom-btn-notes', label: 'Notes', icon: 'description', exitGameButton, listContainer, onClick: onNotesClick },
+        { id: 'custom-btn-share', label: 'Share', icon: 'share', exitGameButton, listContainer, onClick: onShareClick },
+        { id: 'custom-btn-faq', label: 'FAQ', icon: 'contact_support', exitGameButton, listContainer, onClick: onHelpClick }
     ];
 
     buttonConfigs.forEach(injectButton);
