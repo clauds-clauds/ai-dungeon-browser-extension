@@ -21,9 +21,9 @@
                 "scripts/config.js",
                 "scripts/content.js",
                 "scripts/triggers.js",
-                "scripts/mutations/menu.js",
-                "scripts/mutations/highlighter.js",
-                "scripts/mutations/characters.js"
+                "scripts/menu.js",
+                "scripts/highlight.js",
+                "scripts/characters.js"
             ],
             "css": [
                 "styles/extension_style.css"

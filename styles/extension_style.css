@@ -183,3 +183,26 @@ input[type="color"]::-webkit-color-swatch {
 .hidden {
     display: none !important;
 }
+
+.character-highlight {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+
+    /* This is the correct fix. It moves the ENTIRE component up to align 
+       it properly with the baseline of the surrounding text.
+    */
+    position: relative;
+    top: 3px;
+    /* You can adjust this to -2px or -4px for perfection */
+}
+
+.character-portrait {
+    /* Basic styling for the portrait, no positioning hacks */
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    margin-right: 5px;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
