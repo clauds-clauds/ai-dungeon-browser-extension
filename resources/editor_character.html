@@ -1,0 +1,53 @@
+<div id="character-editor-panel">
+    <div id="character-list-view">
+        <div class="view-header">
+            <h3>Characters</h3>
+            <button id="show-add-form-btn" title="Add New Character">
+                <span class="material-symbols-outlined">add</span>
+            </button>
+        </div>
+        <ul id="character-list"></ul>
+    </div>
+
+    <div id="character-form-view" style="display: none;">
+        <div class="view-header">
+            <h3 id="form-title">Add Character</h3>
+            <button id="back-to-list-btn" title="Back to list">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+        </div>
+        <form id="character-form">
+            <label for="char-portrait-file">Portrait Image (Local File)</label>
+            <input type="file" id="char-portrait-file" accept="image/*">
+
+            <label for="char-name">Character Name</label>
+            <input type="text" id="char-name" required>
+
+            <label for="char-nicknames">Nicknames (comma-separated)</label>
+            <input type="text" id="char-nicknames">
+
+            <div class="form-row">
+                <div>
+                    <label for="char-color">Name Color</label>
+                    <input type="color" id="char-color" value="#f8ae2c">
+                </div>
+                <div>
+                    <label for="char-status">Status</label>
+                    <select id="char-status">
+                        <option value="alive">Alive</option>
+                        <option value="dead">Dead</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" id="delete-char-btn" title="Delete Character">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+                <button type="submit" id="save-char-btn" title="Save Character">
+                    <span class="material-symbols-outlined">save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

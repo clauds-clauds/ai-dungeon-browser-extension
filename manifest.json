@@ -3,6 +3,9 @@
     "name": "Dungeon Extension",
     "version": "1.0.0",
     "description": "A browser plugin which aims to add some nice QoL features to AI Dungeon.",
+    "permissions": [
+        "storage"
+    ],
     "icons": {
         "48": "icons/icon_medium.png",
         "128": "icons/icon_large.png"
@@ -14,14 +17,32 @@
                 "https://beta.aidungeon.com/*"
             ],
             "js": [
+                "scripts/state.js",
+                "scripts/config.js",
                 "scripts/content.js",
+                "scripts/triggers.js",
                 "scripts/mutations/menu.js",
-                "scripts/logic/buttons.js"
+                "scripts/mutations/highlighter.js",
+                "scripts/mutations/characters.js"
+            ],
+            "css": [
+                "styles/extension_style.css"
             ]
         }
     ],
     "host_permissions": [
         "https://fonts.googleapis.com/",
         "https://fonts.gstatic.com/"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "resources/editor_character.html"
+            ],
+            "matches": [
+                "https://play.aidungeon.com/*",
+                "https://beta.aidungeon.com/*"
+            ]
+        }
     ]
 }

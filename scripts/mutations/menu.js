@@ -45,7 +45,7 @@ function injectButton(config) {
     listContainer.insertBefore(button, exitGameButton);
 }
 
-function applyMenuMutation() {
+function applyMenuMutation(observer) {
     // Try to grab the standard "Exit game" button.
     const exitGameButton = document.querySelector('div[role="button"][aria-label="Exit game"]');
 

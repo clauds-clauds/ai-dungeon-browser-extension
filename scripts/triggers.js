@@ -1,5 +1,5 @@
-function onCharactersClick() {
-
+async function onCharactersClick() {
+    await setupCharacterEditor();
 }
 
 function onNotesClick() {
