@@ -4,17 +4,21 @@ let characterState = { characters: [], editingId: null };
 
 async function loadCharacterData() {
     const adventureId = getAdventureId();
+
     if (!adventureId) {
         characterData = [];
         return;
     }
+
     const storageData = await chrome.storage.local.get(adventureId);
     characterData = storageData[adventureId] || [];
 }
 
 async function saveCharacters() {
     const adventureId = getAdventureId();
+
     if (!adventureId) return;
+
     await chrome.storage.local.set({ [adventureId]: characterState.characters });
 }
 
@@ -33,6 +37,7 @@ function renderCharacterList() {
 function showListView() {
     document.getElementById('character-list-view').style.display = 'flex';
     document.getElementById('character-form-view').style.display = 'none';
+
     renderCharacterList();
 }
 
@@ -41,6 +46,7 @@ function showFormView(characterId = null) {
     const form = document.getElementById('character-form');
     const title = document.getElementById('form-title');
     const deleteBtn = document.getElementById('delete-char-btn');
+
     form.reset();
 
     if (characterId) {
@@ -79,6 +85,7 @@ async function handleSave(event) {
         } else {
             characterState.characters.push({ id: Date.now(), ...formData, portraitUrl: portraitUrl || '' });
         }
+
         await saveCharacters();
         showListView();
     };
@@ -105,6 +112,7 @@ function closeCharacterEditor() {
 
 async function setupCharacterEditor() {
     let panel = document.getElementById('character-editor-panel');
+
     if (!panel) {
         const editorUrl = chrome.runtime.getURL('resources/editor_character.html');
         const editorHtml = await (await fetch(editorUrl)).text();

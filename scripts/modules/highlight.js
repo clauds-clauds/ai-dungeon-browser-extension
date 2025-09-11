@@ -4,17 +4,22 @@ function highlightNamesInNode(node) {
     if (!characterData || characterData.length === 0) return;
 
     const allNames = characterData.flatMap(char => [char.name, ...(char.nicknames || [])]).filter(Boolean);
+
     if (allNames.length === 0) return;
+
     const pattern = allNames.map(name => escapeRegExp(name)).join('|');
     const regex = new RegExp(`\\b(${pattern})\\b`, 'gi');
     const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+
     const textNodesToProcess = [];
     let currentNode;
+
     while (currentNode = walker.nextNode()) {
         if (currentNode.parentElement && !currentNode.parentElement.closest('.character-highlight')) {
             textNodesToProcess.push(currentNode);
         }
     }
+
     for (const textNode of textNodesToProcess) {
         const originalText = textNode.textContent;
         if (!regex.test(originalText)) continue;
@@ -28,13 +33,16 @@ function highlightNamesInNode(node) {
                 matchedName.toLowerCase() === c.name.toLowerCase() ||
                 (c.nicknames || []).some(nick => nick.toLowerCase() === matchedName.toLowerCase())
             );
+
             if (!char) continue;
+
             if (match.index > lastIndex) {
                 fragment.appendChild(document.createTextNode(originalText.substring(lastIndex, match.index)));
             }
             const span = document.createElement('span');
             span.className = 'character-highlight';
             span.style.color = char.color || 'inherit';
+
             if (char.portraitUrl) {
                 const img = document.createElement('img');
                 img.src = char.portraitUrl;
@@ -42,13 +50,16 @@ function highlightNamesInNode(node) {
                 img.alt = char.name;
                 span.appendChild(img);
             }
+
             span.appendChild(document.createTextNode(matchedName));
             fragment.appendChild(span);
             lastIndex = regex.lastIndex;
         }
+
         if (lastIndex < originalText.length) {
             fragment.appendChild(document.createTextNode(originalText.substring(lastIndex)));
         }
+
         if (fragment.childNodes.length > 0) {
             textNode.parentElement.replaceChild(fragment, textNode);
         }
@@ -57,6 +68,7 @@ function highlightNamesInNode(node) {
 
 function applyHighlights() {
     const storyContainers = document.querySelectorAll(`${SELECTORS.STORY_CONTAINER}:not([data-chars-highlighted])`);
+
     for (const container of storyContainers) {
         container.setAttribute('data-chars-highlighted', 'true');
         highlightNamesInNode(container);
