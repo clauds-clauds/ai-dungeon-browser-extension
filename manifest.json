@@ -4,8 +4,8 @@
     "version": "1.0.0",
     "description": "A browser plugin which aims to add some nice QoL features to AI Dungeon.",
     "icons": {
-        "48": "icons/icon-48.png",
-        "128": "icons/icon-128.png"
+        "48": "icons/icon_medium.png",
+        "128": "icons/icon_large.png"
     },
     "content_scripts": [
         {
@@ -14,8 +14,12 @@
                 "https://beta.aidungeon.com/*"
             ],
             "js": [
-                "scripts/monitor.js"
+                "scripts/menu.js"
             ]
         }
+    ],
+    "host_permissions": [
+        "https://fonts.googleapis.com/",
+        "https://fonts.gstatic.com/"
     ]
 }
