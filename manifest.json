@@ -14,7 +14,8 @@
                 "https://beta.aidungeon.com/*"
             ],
             "js": [
-                "scripts/menu.js"
+                "scripts/content.js",
+                "scripts/mutations/menu.js"
             ]
         }
     ],

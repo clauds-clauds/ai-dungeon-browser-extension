@@ -1,6 +1,6 @@
 // Menu ...
 // Setup...
-function injectElements(config) {
+function injectButton(config) {
     const { id, label, icon, exitGameButton, listContainer } = config;
 
     if (document.getElementById(id)) {
@@ -43,7 +43,7 @@ function injectElements(config) {
     listContainer.insertBefore(button, exitGameButton);
 }
 
-function initializeMenu() {
+function applyMenuMutation() {
     // Try to grab the standard "Exit game" button.
     const exitGameButton = document.querySelector('div[role="button"][aria-label="Exit game"]');
 
@@ -64,8 +64,5 @@ function initializeMenu() {
         { id: 'custom-btn-notes', label: 'Notes', icon: 'description', exitGameButton, listContainer }
     ];
 
-    buttonConfigs.forEach(injectElements);
+    buttonConfigs.forEach(injectButton);
 }
-
-const observer = new MutationObserver(() => { initializeMenu(); });
-observer.observe(document.body, { childList: true, subtree: true });
