@@ -1,3 +1,0 @@
-let extensionState = {
-    characters: []
-};

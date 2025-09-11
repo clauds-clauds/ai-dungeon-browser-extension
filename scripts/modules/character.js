@@ -1,15 +1,15 @@
+'use strict';
+
 let characterState = { characters: [], editingId: null };
 
-function getAdventureId() {
-    const match = window.location.pathname.match(/adventure\/([^\/]+)/);
-    return match ? match[1] : null;
-}
-
-async function loadCharacters() {
+async function loadCharacterData() {
     const adventureId = getAdventureId();
-    if (!adventureId) return [];
-    const data = await chrome.storage.local.get(adventureId);
-    return data[adventureId] || [];
+    if (!adventureId) {
+        characterData = [];
+        return;
+    }
+    const storageData = await chrome.storage.local.get(adventureId);
+    characterData = storageData[adventureId] || [];
 }
 
 async function saveCharacters() {
@@ -21,6 +21,7 @@ async function saveCharacters() {
 function renderCharacterList() {
     const listEl = document.getElementById('character-list');
     listEl.innerHTML = '';
+
     characterState.characters.forEach(char => {
         const item = document.createElement('li');
         item.innerHTML = `<img src="${char.portraitUrl || ''}"><span style="color: ${char.color};">${char.name}</span>`;
@@ -117,7 +118,9 @@ async function setupCharacterEditor() {
         document.getElementById('delete-char-btn').addEventListener('click', handleDelete);
     }
 
-    characterState.characters = await loadCharacters();
+    await loadCharacterData();
+    characterState.characters = characterData;
+
     showListView();
     panel.style.display = 'flex';
 }

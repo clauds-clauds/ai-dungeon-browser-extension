@@ -17,13 +17,13 @@
                 "https://beta.aidungeon.com/*"
             ],
             "js": [
-                "scripts/state.js",
                 "scripts/config.js",
-                "scripts/content.js",
-                "scripts/triggers.js",
-                "scripts/menu.js",
-                "scripts/highlight.js",
-                "scripts/characters.js"
+                "scripts/global.js",
+                "scripts/modules/character.js",
+                "scripts/modules/highlight.js",
+                "scripts/modules/buttons.js",
+                "scripts/modules/interface.js",
+                "scripts/run.js"
             ],
             "css": [
                 "styles/extension_style.css"

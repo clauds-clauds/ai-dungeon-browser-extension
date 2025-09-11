@@ -1,11 +1,8 @@
-// Menu ...
-// Setup...
+'use strict';
+
 function injectButton(config) {
     const { id, label, icon, exitGameButton, listContainer, onClick } = config;
-
-    if (document.getElementById(id)) {
-        return;
-    }
+    if (document.getElementById(id)) return;
 
     const button = document.createElement('div');
     button.id = id;
@@ -16,6 +13,7 @@ function injectButton(config) {
 
     const originalIconContainer = exitGameButton.querySelector('div');
     const originalTextSpan = exitGameButton.querySelector('span.is_ButtonText');
+    if (!originalIconContainer || !originalTextSpan) return;
 
     const iconContainer = document.createElement('div');
     iconContainer.className = originalIconContainer.className;
@@ -36,22 +34,16 @@ function injectButton(config) {
     button.addEventListener('click', (ev) => {
         ev.preventDefault();
         ev.stopPropagation();
-
-        if (onClick) {
-            onClick();
-        }
+        if (onClick) onClick();
     });
 
     listContainer.insertBefore(button, exitGameButton);
 }
 
-function applyMenuMutation(observer) {
-    // Try to grab the standard "Exit game" button.
-    const exitGameButton = document.querySelector('div[role="button"][aria-label="Exit game"]');
-
-    // Try to find the listcontainer, which is the parent of the exit button. This can only happen when the exit button is actually there (surprise).
+function addCustomButtons() {
+    const exitGameButton = document.querySelector(SELECTORS.EXIT_GAME_BUTTON);
     const listContainer = exitGameButton ? exitGameButton.parentElement : null;
-    if (!listContainer) return; // Return if the list container is not valid.
+    if (!listContainer) return;
 
     if (!document.getElementById('custom-material-symbols')) {
         const link = document.createElement('link');
@@ -62,11 +54,11 @@ function applyMenuMutation(observer) {
     }
 
     const buttonConfigs = [
-        { id: 'custom-btn-characters', label: 'Characters', icon: 'group', exitGameButton, listContainer, onClick: onCharactersClick },
-        { id: 'custom-btn-notes', label: 'Notes', icon: 'description', exitGameButton, listContainer, onClick: onNotesClick },
-        { id: 'custom-btn-share', label: 'Share', icon: 'share', exitGameButton, listContainer, onClick: onShareClick },
-        { id: 'custom-btn-faq', label: 'FAQ', icon: 'contact_support', exitGameButton, listContainer, onClick: onHelpClick }
+        { id: 'custom-btn-characters', label: 'Characters', icon: 'group', onClick: onCharactersClick },
+        { id: 'custom-btn-notes', label: 'Notes', icon: 'description', onClick: onNotesClick },
+        { id: 'custom-btn-share', label: 'Share', icon: 'share', onClick: onShareClick },
+        { id: 'custom-btn-faq', label: 'FAQ', icon: 'contact_support', onClick: onHelpClick }
     ];
 
-    buttonConfigs.forEach(injectButton);
+    buttonConfigs.forEach(config => injectButton({ ...config, exitGameButton, listContainer }));
 }
