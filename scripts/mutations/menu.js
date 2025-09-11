@@ -1,7 +1,7 @@
 // Menu ...
 // Setup...
 function injectButton(config) {
-    const { id, label, icon, exitGameButton, listContainer } = config;
+    const { id, label, icon, exitGameButton, listContainer, onClick } = config;
 
     if (document.getElementById(id)) {
         return;
@@ -36,8 +36,10 @@ function injectButton(config) {
     button.addEventListener('click', (ev) => {
         ev.preventDefault();
         ev.stopPropagation();
-        console.log(`${label} button clicked!`);
-        // Future logic to open character/notes panel here.
+
+        if (onClick) {
+            onClick();
+        }
     });
 
     listContainer.insertBefore(button, exitGameButton);
@@ -60,8 +62,10 @@ function applyMenuMutation() {
     }
 
     const buttonConfigs = [
-        { id: 'custom-btn-characters', label: 'Characters', icon: 'group', exitGameButton, listContainer },
-        { id: 'custom-btn-notes', label: 'Notes', icon: 'description', exitGameButton, listContainer }
+        { id: 'custom-btn-characters', label: 'Characters', icon: 'group', exitGameButton, listContainer, onCharactersClick },
+        { id: 'custom-btn-notes', label: 'Notes', icon: 'description', exitGameButton, listContainer, onNotesClick },
+        { id: 'custom-btn-share', label: 'Share', icon: 'share', exitGameButton, listContainer, onShareClick },
+        { id: 'custom-btn-faq', label: 'FAQ', icon: 'contact_support', exitGameButton, listContainer, onHelpClick }
     ];
 
     buttonConfigs.forEach(injectButton);
