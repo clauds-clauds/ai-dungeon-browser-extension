@@ -271,9 +271,21 @@ input[type="color"]::-webkit-color-swatch {
     color: var(--c-coreA85, #eee);
 }
 
+#close-settings-btn {
+    transition: transform 0.3s ease, color 0.2s ease;
+}
+
 #close-settings-btn:hover {
-    background-color: var(--c-core3, #2f3539);
-    color: var(--c-coreA9, #fff);
+    transform: scale(1.1);
+    color: var(--c-healthBarRed, #ef4444)
+}
+
+#save-settings-btn {
+    transition: transform 0.3s ease, color 0.2s ease;
+}
+
+#save-settings-btn:hover {
+    transform: scale(1.1);
 }
 
 /* Notes Stuff: */
@@ -311,8 +323,8 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 #close-notes-btn:hover {
-    transform: rotate(90deg);
-    color: var(--c-coreA9, #fff);
+    transform: scale(1.1);
+    color: var(--c-healthBarRed, #ef4444);
 }
 
 #notes-list {
@@ -386,13 +398,11 @@ input[type="color"]::-webkit-color-swatch {
     justify-content: center;
     flex-shrink: 0;
     opacity: 0;
-    transform: scale(0.8);
     transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 #notes-list li:hover .delete-note-btn {
     opacity: 1;
-    transform: scale(1);
 }
 
 .delete-note-btn:hover {

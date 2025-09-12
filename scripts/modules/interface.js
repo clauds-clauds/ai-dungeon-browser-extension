@@ -64,9 +64,9 @@ function addCustomButtons() {
         { id: 'custom-btn-notes', label: 'Notes', icon: 'description', onClick: onNotesClick },
         { id: 'custom-btn-settings', label: 'Settings', icon: 'settings_heart', onClick: onSettingsClick },
         { id: 'custom-btn-share', label: 'Share', icon: 'share', onClick: onShareClick },
-        { id: 'custom-btn-scripts', label: 'Scripts', icon: 'data_object', onClick: onScriptsClick },
-        { id: 'custom-btn-faq', label: 'FAQ', icon: 'contact_support', onClick: onHelpClick },
-        { id: 'custom-btn-language', label: 'Language', icon: 'glyphs', onClick: onLanguageClick } // HOW WOULD THEY UNDERSTAND IF THEY DO NOT SPEAK ENGLISH WITHOUT TAKING UP 3000 LINES ON THIS BAR?! TODO: SOMEHOW GET BROWSER LANGUAGE LOCALES.
+        // { id: 'custom-btn-scripts', label: 'Scripts', icon: 'data_object', onClick: onScriptsClick },
+        // { id: 'custom-btn-faq', label: 'FAQ', icon: 'contact_support', onClick: onHelpClick },
+        // { id: 'custom-btn-language', label: 'Language', icon: 'glyphs', onClick: onLanguageClick } // HOW WOULD THEY UNDERSTAND IF THEY DO NOT SPEAK ENGLISH WITHOUT TAKING UP 3000 LINES ON THIS BAR?! TODO: SOMEHOW GET BROWSER LANGUAGE LOCALES.
     ];
 
     buttonConfigs.forEach(config => injectButton({ ...config, exitGameButton, listContainer }));
