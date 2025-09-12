@@ -3,7 +3,7 @@
 let extensionSettings = {
     defaultColor: '#f8ae2c',
     portraitSize: 22,
-    verticalOffset: 3,
+    borderRadius: 10,
     notesPerPage: 30,
     defaultNoteColor: '#3a4045'
 };
@@ -22,9 +22,7 @@ function applySettingsStyles() {
         .character-portrait {
             width: ${extensionSettings.portraitSize}px;
             height: ${extensionSettings.portraitSize}px;
-        }
-        .character-highlight {
-            top: ${extensionSettings.verticalOffset}px;
+            border-radius: ${extensionSettings.borderRadius}%;
         }
     `;
 }
@@ -35,7 +33,7 @@ async function loadSettings() {
 
     document.getElementById('setting-default-color').value = extensionSettings.defaultColor;
     document.getElementById('setting-portrait-size').value = extensionSettings.portraitSize;
-    document.getElementById('setting-css-offset').value = extensionSettings.verticalOffset;
+    document.getElementById('setting-border-radius').value = extensionSettings.borderRadius;
 
     document.getElementById('info-adventure-id').textContent = getAdventureId() || 'N/A';
     document.getElementById('info-plugin-version').textContent = chrome.runtime.getManifest().version;
@@ -48,7 +46,7 @@ async function saveSettings(event) {
     event.preventDefault();
     extensionSettings.defaultColor = document.getElementById('setting-default-color').value;
     extensionSettings.portraitSize = document.getElementById('setting-portrait-size').value;
-    extensionSettings.verticalOffset = document.getElementById('setting-css-offset').value;
+    extensionSettings.borderRadius = document.getElementById('setting-border-radius').value;
 
     await chrome.storage.local.set({ extensionSettings });
 
