@@ -1,4 +1,8 @@
-#character-editor-panel {
+/*Character Panel Stuff*/
+#character-editor-panel,
+#settings-editor-panel,
+#notes-editor-panel,
+#share-editor-panel {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,11 +14,14 @@
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    font-family: var(--f-family, 'IBMPlexSans', sans-serif);
+    font-family: var(--f-family, 'IBMPlexSans', sans-serif)
 }
 
 #character-list-view,
-#character-form-view {
+#character-form-view,
+#settings-view,
+#notes-view,
+#share-view {
     background: var(--c-core1, #1b1f22);
     border: 1px solid var(--c-core2, #272c30);
     border-radius: var(--t-radius-1, 8px);
@@ -23,7 +30,7 @@
     max-width: 500px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 16px
 }
 
 .view-header {
@@ -31,14 +38,14 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--c-core2, #272c30);
-    padding-bottom: 16px;
+    padding-bottom: 16px
 }
 
 .view-header h3 {
     font-family: var(--f-family-heading, 'IBMPlexSerif', serif);
     color: var(--c-coreA9, #fff);
     margin: 0;
-    font-size: 1.5em;
+    font-size: 1.5em
 }
 
 #character-list {
@@ -46,7 +53,7 @@
     padding: 0;
     margin: 0;
     max-height: 60vh;
-    overflow-y: auto;
+    overflow-y: auto
 }
 
 #character-list li {
@@ -56,35 +63,43 @@
     padding: 10px;
     border-radius: 4px;
     cursor: pointer;
-    color: var(--c-core8, #828a92);
+    color: var(--c-core8, #828a92)
 }
 
 #character-list li:hover {
-    background-color: var(--c-core2, #272c30);
+    background-color: var(--c-core2, #272c30)
 }
 
 #character-list img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    object-fit: cover;
+    object-fit: cover
 }
 
-#character-form {
+#character-form,
+#settings-form,
+#share-form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 24px;
+    flex-grow: 1
 }
 
-#character-form label {
+#character-form label,
+#settings-form label,
+#share-form label {
     color: var(--c-core8, #828a92);
     font-size: 0.9em;
-    font-weight: 500;
+    font-weight: 500
 }
 
-#character-form input[type="text"],
-#character-form input[type="file"],
-#character-form select {
+#character-form input[type=text],
+#character-form input[type=file],
+#character-form select,
+#add-note-form textarea,
+#note-meta-inputs input[type=text],
+#char-search-input {
     background-color: var(--c-core0, #000);
     border: 1px solid var(--c-core4, #3a4045);
     border-radius: 4px;
@@ -92,45 +107,44 @@
     color: var(--c-coreA85, #eee);
     font-size: 1em;
     width: 100%;
-    box-sizing: border-box;
+    box-sizing: border-box
 }
 
-/* xCgHNPqSJv0IOQpSYZquTuyyXuxDOQ0Mesg1XZnVUZlWXr0SztcudsmoXZi92s0SptgyXuxPNrx4ptlRYBxDYQ1WXsUSJCxDUGB8qsbSps0SztcIYucAXZe5NrfIOvlWXZcQOPfSJumcYZ0uzsmIVZy8KvfuWZ/HOumSptgyXuxLdt1uNrdSps0SpQlcNvpIYZc1Nr0Szt19NvxnXsySJQ0EOP3SJvjoNPcAYZ19NvxHNrbSTC392M */
-
 #character-form input:focus,
-#character-form select:focus {
+#character-form select:focus,
+#char-search-input:focus {
     border-color: var(--c-primary, #f8ae2c);
-    outline: none;
+    outline: none
 }
 
 .form-row {
     display: flex;
     gap: 16px;
-    align-items: flex-end;
+    align-items: flex-end
 }
 
 .form-row>div {
-    flex: 1;
+    flex: 1
 }
 
 .form-row label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 8px
 }
 
-input[type="color"] {
+input[type=color] {
     width: 100%;
     height: 42px;
     background-color: transparent;
     border: 1px solid var(--c-core4, #3a4045);
     border-radius: 4px;
     padding: 4px;
-    cursor: pointer;
+    cursor: pointer
 }
 
-input[type="color"]::-webkit-color-swatch {
+input[type=color]::-webkit-color-swatch {
     border: none;
-    border-radius: 2px;
+    border-radius: 2px
 }
 
 .form-actions {
@@ -139,7 +153,7 @@ input[type="color"]::-webkit-color-swatch {
     justify-content: flex-end;
     border-top: 1px solid var(--c-core2, #272c30);
     padding-top: 16px;
-    margin-top: 8px;
+    margin-top: auto
 }
 
 #show-add-form-btn,
@@ -156,73 +170,65 @@ input[type="color"]::-webkit-color-swatch {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s, color 0.2s;
+    transition: background-color .2s, color .2s
 }
 
 #show-add-form-btn span,
 #back-to-list-btn span,
 .form-actions button span {
     font-size: 22px;
-    line-height: 1;
+    line-height: 1
 }
 
 #show-add-form-btn:hover,
 #back-to-list-btn:hover {
     background-color: var(--c-core3, #2f3539);
-    color: var(--c-coreA9, #fff);
+    color: var(--c-coreA9, #fff)
 }
 
 #save-char-btn:hover {
     background-color: var(--c-healthBarGreen, #22c55e);
-    color: var(--c-coreA9, #fff);
+    color: var(--c-coreA9, #fff)
 }
 
 #delete-char-btn:hover {
     background-color: var(--c-healthBarRed, #ef4444);
-    color: var(--c-coreA9, #fff);
+    color: var(--c-coreA9, #fff)
 }
 
 .hidden {
-    display: none !important;
+    display: none !important
 }
 
 .drag-handle {
     cursor: grab;
-    opacity: 0.5;
-    transition: opacity 0.2s;
+    opacity: .5;
+    transition: opacity .2s;
     user-select: none;
+    color: var(--c-core8, #828a92)
 }
 
-#character-list li:hover .drag-handle {
-    opacity: 1;
+#character-list li:hover .drag-handle,
+.drag-handle:hover {
+    opacity: 1
 }
 
 .search-container {
     flex-grow: 1;
-    margin: 0 16px;
+    margin: 0 16px
 }
 
 #char-search-input {
-    width: 100%;
-    background-color: var(--c-core0, #000);
-    border: 1px solid var(--c-core4, #3a4045);
-    border-radius: 4px;
     padding: 8px 12px;
-    color: var(--c-coreA85, #eee);
-    font-size: 0.9em;
+    font-size: .9em
 }
 
-#char-search-input:focus {
-    border-color: var(--c-primary, #f8ae2c);
-    outline: none;
-}
-
-/* Character Panel Stuff: */
+/* xCgHNPqSJv0IOQpSYZquTuyyXuxDOQ0Mesg1XZnVUZlWXr0SztcudsmoXZi92s0SptgyXuxPNrx4ptlRYBxDYQ1WXsUSJCxDUGB8qsbSps0SztcIYucAXZe5NrfIOvlWXZcQOPfSJumcYZ0uzsmIVZy8KvfuWZ/HOumSptgyXuxLdt1uNrdSps0SpQlcNvpIYZc1Nr0Szt19NvxnXsySJQ0EOP3SJvjoNPcAYZ19NvxHNrbSTC392M */
 
 .character-highlight {
     display: inline-flex;
     align-items: baseline;
-    white-space: nowrap;
+    white-space: nowrap
 }
 
 .character-portrait {
@@ -231,79 +237,47 @@ input[type="color"]::-webkit-color-swatch {
     border-radius: 10%;
     margin-right: 5px;
     object-fit: cover;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    align-self: center;
+    border: 1px solid rgba(255, 255, 255, .3);
+    align-self: center
 }
 
-/* Settings Stuff: */
-
-#settings-editor-panel {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--c-blackA7, rgba(18, 21, 25, 0.8));
-    backdrop-filter: blur(4px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9998;
-    font-family: var(--f-family, 'IBMPlexSans', sans-serif);
-}
-
-#settings-view {
-    background: var(--c-core1, #1b1f22);
-    border: 1px solid var(--c-core2, #272c30);
-    border-radius: var(--t-radius-1, 8px);
-    padding: 24px;
-    width: 90%;
-    max-width: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-#settings-form {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-#settings-form fieldset {
+/*Settings Stuff*/
+#settings-form fieldset,
+#share-form fieldset {
     border: 1px solid var(--c-core2, #272c30);
     border-radius: 4px;
     padding: 16px;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 16px
 }
 
-#settings-form legend {
+#settings-form legend,
+#share-form legend {
     color: var(--c-core8, #828a92);
     font-weight: 500;
     padding: 0 8px;
-    margin-left: 8px;
+    margin-left: 8px
 }
 
 .info-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--c-core8, #828a92);
+    color: var(--c-core8, #828a92)
 }
 
 .info-row code {
     background-color: var(--c-core0, #000);
     padding: 4px 8px;
     border-radius: 4px;
-    font-size: 0.9em;
-    color: var(--c-coreA85, #eee);
+    font-size: .9em;
+    color: var(--c-coreA85, #eee)
 }
 
 #close-settings-btn {
-    transition: transform 0.3s ease, color 0.2s ease;
+    transition: transform .3s ease, color .2s ease
 }
 
 #close-settings-btn:hover {
@@ -312,50 +286,25 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 #save-settings-btn {
-    transition: transform 0.3s ease, color 0.2s ease;
+    transition: transform .3s ease, color .2s ease
 }
 
 #save-settings-btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.1)
 }
 
-/* Notes Stuff: */
-
-#notes-editor-panel {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(18, 21, 25, 0.8);
-    backdrop-filter: blur(4px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9997;
-    font-family: var(--f-family, 'IBMPlexSans', sans-serif);
-}
-
+/*Notes Stuff*/
 #notes-view {
-    background: var(--c-core1, #1b1f22);
-    border: 1px solid var(--c-core2, #272c30);
-    border-radius: var(--t-radius-1, 8px);
-    padding: 24px;
-    width: 90%;
-    max-width: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    height: 80vh;
+    height: 80vh
 }
 
 #close-notes-btn {
-    transition: transform 0.3s ease, color 0.2s ease;
+    transition: transform .3s ease, color .2s ease
 }
 
 #close-notes-btn:hover {
     transform: scale(1.1);
-    color: var(--c-healthBarRed, #ef4444);
+    color: var(--c-healthBarRed, #ef4444)
 }
 
 #notes-list {
@@ -363,7 +312,7 @@ input[type="color"]::-webkit-color-swatch {
     padding: 0;
     margin: 0;
     overflow-y: auto;
-    flex-grow: 1;
+    flex-grow: 1
 }
 
 #notes-list li {
@@ -375,44 +324,33 @@ input[type="color"]::-webkit-color-swatch {
     background-color: var(--c-core2, #272c30);
     margin-bottom: 8px;
     color: var(--c-core8, #828a92);
-    user-select: none;
-}
-
-.drag-handle {
-    cursor: grab;
-    color: var(--c-core8, #828a92);
-    opacity: 0.6;
-    user-select: none;
-}
-
-.drag-handle:hover {
-    opacity: 1;
+    user-select: none
 }
 
 .note-content {
     flex-grow: 1;
-    padding-right: 10px;
+    padding-right: 10px
 }
 
 .note-text {
     margin: 0;
     color: var(--c-coreA85, #eee);
-    white-space: pre-wrap;
+    white-space: pre-wrap
 }
 
 .note-tags {
     margin-top: 8px;
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 6px
 }
 
 .note-tag {
     background-color: var(--c-core4, #3a4045);
     color: var(--c-coreA85, #eee);
-    font-size: 0.75em;
+    font-size: .75em;
     padding: 2px 8px;
-    border-radius: 10px;
+    border-radius: 10px
 }
 
 .delete-note-btn {
@@ -429,27 +367,16 @@ input[type="color"]::-webkit-color-swatch {
     justify-content: center;
     flex-shrink: 0;
     opacity: 0;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity .2s ease, transform .2s ease
 }
 
 #notes-list li:hover .delete-note-btn {
-    opacity: 1;
+    opacity: 1
 }
 
 .delete-note-btn:hover {
     background-color: var(--c-healthBarRed, #ef4444) !important;
-    color: var(--c-coreA9, #fff) !important;
-}
-
-/* Spooky */
-
-.sortable-ghost {
-    opacity: 0.4;
-    background: var(--c-core4, #3a4045);
-}
-
-.sortable-drag {
-    opacity: 0.8 !important;
+    color: var(--c-coreA9, #fff) !important
 }
 
 #add-note-form {
@@ -457,48 +384,33 @@ input[type="color"]::-webkit-color-swatch {
     flex-direction: column;
     gap: 8px;
     border-top: 1px solid var(--c-core2, #272c30);
-    padding-top: 16px;
+    padding-top: 16px
 }
 
 #add-note-form textarea {
-    background-color: var(--c-core0, #000);
-    border: 1px solid var(--c-core4, #3a4045);
-    border-radius: 4px;
-    padding: 10px;
-    color: var(--c-coreA85, #eee);
-    font-size: 1em;
     resize: vertical;
-    min-height: 50px;
-    width: 100%;
-    box-sizing: border-box;
+    min-height: 50px
 }
 
 #note-meta-inputs {
     display: flex;
     gap: 8px;
-    align-items: center;
+    align-items: center
 }
 
-#note-meta-inputs input[type="text"] {
+#note-meta-inputs input[type=text] {
     flex-grow: 1;
-    background-color: var(--c-core0, #000);
-    border: 1px solid var(--c-core4, #3a4045);
-    border-radius: 4px;
     padding: 8px 10px;
-    color: var(--c-coreA85, #eee);
-    font-size: 0.9em;
+    font-size: .9em
 }
 
-#note-meta-inputs input[type="color"] {
+#note-meta-inputs input[type=color] {
     height: 36px;
     width: 36px;
-    padding: 2px;
-    border-radius: 4px;
-    border: 1px solid var(--c-core4, #3a4045);
+    padding: 2px
 }
 
 #add-note-form button {
-    background: transparent;
     border: 1px solid var(--c-core4, #3a4045);
     color: var(--c-core8, #828a92);
     cursor: pointer;
@@ -509,87 +421,35 @@ input[type="color"]::-webkit-color-swatch {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s, color 0.2s;
-    flex-shrink: 0;
+    transition: background-color .2s, color .2s;
+    flex-shrink: 0
 }
 
 #add-note-form button:hover {
     background-color: var(--c-primary, #f8ae2c);
     border-color: var(--c-primary, #f8ae2c);
-    color: #000;
+    color: #000
 }
 
-#notes-sentinel {
-    height: 40px;
+/*Spooky*/
+.sortable-ghost {
+    opacity: .4;
+    background: var(--c-core4, #3a4045)
 }
 
-/* Share Settings: */
-
-#share-editor-panel {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--c-blackA7, rgba(18, 21, 25, 0.8));
-    backdrop-filter: blur(4px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    font-family: var(--f-family, 'IBMPlexSans', sans-serif);
+.sortable-drag {
+    opacity: .8 !important
 }
 
-#share-view {
-    background: var(--c-core1, #1b1f22);
-    border: 1px solid var(--c-core2, #272c30);
-    border-radius: var(--t-radius-1, 8px);
-    padding: 24px;
-    width: 90%;
-    max-width: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-#share-form {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    flex-grow: 1;
-}
-
-#share-form fieldset {
-    border: 1px solid var(--c-core2, #272c30);
-    border-radius: 4px;
-    padding: 16px;
-    margin: 0;
-}
-
-#share-form legend {
-    color: var(--c-core8, #828a92);
-    font-weight: 500;
-    padding: 0 8px;
-    margin-left: 8px;
-}
-
+/*Share Settings*/
 #share-form p {
     color: var(--c-core8, #828a92);
     line-height: 1.5;
-    margin: 0;
+    margin: 0
 }
 
 #share-form .warning-text strong {
-    color: var(--c-healthBarRed, #ef4444);
-}
-
-#share-form .form-actions {
-    margin-top: auto;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    border-top: 1px solid var(--c-core2, #272c30);
-    padding-top: 16px;
+    color: var(--c-healthBarRed, #ef4444)
 }
 
 #share-form .form-actions button {
@@ -600,23 +460,23 @@ input[type="color"]::-webkit-color-swatch {
     padding: 8px;
     width: 40px;
     height: 40px;
-    font-size: 0.9em;
+    font-size: .9em;
     font-weight: 500;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0;
-    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    transition: background-color .2s ease, border-color .2s ease, color .2s ease
 }
 
 #share-form .form-actions button:hover {
     background-color: var(--c-core3, #2f3539);
     border-color: var(--c-core5, #495057);
-    color: var(--c-coreA9, #fff);
+    color: var(--c-coreA9, #fff)
 }
 
 #share-form .form-actions button .material-symbols-outlined {
     font-size: 24px;
-    color: inherit;
+    color: inherit
 }
