@@ -190,16 +190,8 @@ input[type="color"]::-webkit-color-swatch {
 
 .character-highlight {
     display: inline-flex;
-    align-items: center;
+    align-items: baseline;
     white-space: nowrap;
-    position: relative;
-    /*
-    You might be wondering: why is there a 3px offset here?
-    Well, you see, that's because for some reason the names/portraits are a tiny bit off. Exactly 3 pixels to be precise.
-    I could dig up all the code and figure out why the hell that is the way it is, but I am too tired at the moment.
-    I'll totes fix this soon... totally... surely... I wouldn't lie about that, would I?
-    */
-    top: 3px;
 }
 
 .character-portrait {
