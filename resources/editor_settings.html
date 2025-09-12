@@ -1,0 +1,60 @@
+<div id="settings-editor-panel">
+    <div id="settings-view">
+        <div class="view-header">
+            <h3>Settings</h3>
+            <button id="close-settings-btn" title="Close">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <form id="settings-form">
+            <fieldset>
+                <legend>Plugin Info</legend>
+                <div class="info-row">
+                    <span>Adventure ID:</span>
+                    <code id="info-adventure-id">loading...</code>
+                </div>
+                <div class="info-row">
+                    <span>Plugin Version:</span>
+                    <code id="info-plugin-version">loading...</code>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Character Settings</legend>
+                <label for="setting-default-color">Default Color</label>
+                <input type="color" id="setting-default-color" value="#f8ae2c">
+
+                <div class="form-row">
+                    <div>
+                        <label for="setting-portrait-size">Portrait Size (px)</label>
+                        <input type="number" id="setting-portrait-size" min="16" max="64" value="22">
+                    </div>
+                    <div>
+                        <label for="setting-css-offset">Vertical Offset (px)</label>
+                        <input type="number" id="setting-css-offset" min="-10" max="10" value="3">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Notes Settings</legend>
+                <div class="form-row">
+                    <div>
+                        <label for="setting-notes-per-page">Notes Per Page</label>
+                        <input type="number" id="setting-notes-per-page" min="5" max="100" value="30">
+                    </div>
+                    <div>
+                        <label for="setting-default-note-color">Default Color</label>
+                        <input type="color" id="setting-default-note-color" value="#3a4045">
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-actions">
+                <button type="submit" id="save-settings-btn" title="Save Settings">
+                    <span class="material-symbols-outlined">save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

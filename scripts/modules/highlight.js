@@ -8,7 +8,7 @@ function highlightNamesInNode(node) {
     if (allNames.length === 0) return;
 
     const pattern = allNames.map(name => escapeRegExp(name)).join('|');
-    const regex = new RegExp(`\\b(${pattern})\\b`, 'gi');
+    const regex = new RegExp(`\\b(${pattern})\\b`, 'gi'); // Yeah.
     const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
 
     const textNodesToProcess = [];

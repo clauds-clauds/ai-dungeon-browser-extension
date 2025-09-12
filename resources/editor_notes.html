@@ -1,0 +1,26 @@
+<div id="notes-editor-panel">
+    <div id="notes-view">
+        <div class="view-header">
+            <h3>Notes</h3>
+            <button id="close-notes-btn" title="Close">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <ul id="notes-list">
+        </ul>
+
+        <form id="add-note-form">
+            <div id="note-input-area">
+                <textarea id="new-note-input" placeholder="Add a new note..."></textarea>
+                <div id="note-meta-inputs">
+                    <input type="color" id="new-note-color" value="#3a4045" title="Color">
+                    <input type="text" id="new-note-tags" placeholder="Tags, comma-separated">
+                </div>
+            </div>
+            <button type="submit" title="Add Note">
+                <span class="material-symbols-outlined">add_circle</span>
+            </button>
+        </form>
+    </div>
+</div>

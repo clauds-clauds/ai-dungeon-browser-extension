@@ -17,10 +17,13 @@
                 "https://beta.aidungeon.com/*"
             ],
             "js": [
+                "scripts/libraries/Sortable.min.js",
                 "scripts/config.js",
                 "scripts/global.js",
                 "scripts/modules/character.js",
                 "scripts/modules/highlight.js",
+                "scripts/modules/settings.js",
+                "scripts/modules/notes.js",
                 "scripts/modules/buttons.js",
                 "scripts/modules/interface.js",
                 "scripts/run.js"
@@ -37,7 +40,9 @@
     "web_accessible_resources": [
         {
             "resources": [
-                "resources/editor_character.html"
+                "resources/editor_character.html",
+                "resources/editor_notes.html",
+                "resources/editor_settings.html"
             ],
             "matches": [
                 "https://play.aidungeon.com/*",

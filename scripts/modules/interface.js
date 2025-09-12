@@ -45,6 +45,7 @@ function addCustomButtons() {
     const listContainer = exitGameButton ? exitGameButton.parentElement : null;
     if (!listContainer) return;
 
+    // Is this required? No. Is this handy? Probably not. Do I keep it? Yes.
     if (!document.getElementById('custom-material-symbols')) {
         const link = document.createElement('link');
         link.id = 'custom-material-symbols';
@@ -54,10 +55,18 @@ function addCustomButtons() {
     }
 
     const buttonConfigs = [
+        /* 
+        You can define any and all new buttons here, it's pretty modular.
+        Also, I use some cute Material Icons by Google from here:
+        https://fonts.google.com/icons?selected=Material+Symbols+Outlined
+        */
         { id: 'custom-btn-characters', label: 'Characters', icon: 'group', onClick: onCharactersClick },
         { id: 'custom-btn-notes', label: 'Notes', icon: 'description', onClick: onNotesClick },
+        { id: 'custom-btn-settings', label: 'Settings', icon: 'settings_heart', onClick: onSettingsClick },
         { id: 'custom-btn-share', label: 'Share', icon: 'share', onClick: onShareClick },
-        { id: 'custom-btn-faq', label: 'FAQ', icon: 'contact_support', onClick: onHelpClick }
+        { id: 'custom-btn-scripts', label: 'Scripts', icon: 'data_object', onClick: onScriptsClick },
+        { id: 'custom-btn-faq', label: 'FAQ', icon: 'contact_support', onClick: onHelpClick },
+        { id: 'custom-btn-language', label: 'Language', icon: 'glyphs', onClick: onLanguageClick } // HOW WOULD THEY UNDERSTAND IF THEY DO NOT SPEAK ENGLISH WITHOUT TAKING UP 3000 LINES ON THIS BAR?! TODO: SOMEHOW GET BROWSER LANGUAGE LOCALES.
     ];
 
     buttonConfigs.forEach(config => injectButton({ ...config, exitGameButton, listContainer }));
