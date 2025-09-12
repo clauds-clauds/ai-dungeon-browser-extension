@@ -27,3 +27,7 @@ function onHelpClick() {
 function onLanguageClick() {
     window.open('https://github.com/LewdLeah/Localized-Languages', '_blank');
 }
+
+function onBugsClick() {
+    window.open('https://github.com/clauds-clauds/ai-dungeon-browser-extension/issues', '_blank');
+}

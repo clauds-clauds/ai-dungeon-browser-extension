@@ -2,12 +2,15 @@
     "manifest_version": 3,
     "name": "Dungeon Extension",
     "version": "1.0.0",
-    "description": "A browser plugin which aims to add some nice QoL features to AI Dungeon.",
+    "description": "An extension which adds some quality of life features to your AI Dungeon adventures.",
     "permissions": [
         "storage"
     ],
     "icons": {
+        "16": "icons/icon_tiny.png",
+        "32": "icons/icon_small.png",
         "48": "icons/icon_medium.png",
+        "96": "icons/icon_medium_large.png",
         "128": "icons/icon_large.png"
     },
     "content_scripts": [
