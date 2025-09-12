@@ -4,31 +4,33 @@ let characterState = { characters: [], editingId: null };
 
 async function loadCharacterData() {
     const adventureId = getAdventureId();
-
     if (!adventureId) {
         characterData = [];
         return;
     }
-
     const storageData = await chrome.storage.local.get(adventureId);
     characterData = storageData[adventureId] || [];
 }
 
 async function saveCharacters() {
     const adventureId = getAdventureId();
-
     if (!adventureId) return;
-
     await chrome.storage.local.set({ [adventureId]: characterState.characters });
 }
 
-function renderCharacterList() {
+function renderCharacterList(charactersToRender = characterState.characters) {
     const listEl = document.getElementById('character-list');
     listEl.innerHTML = '';
 
-    characterState.characters.forEach(char => {
+    charactersToRender.forEach(char => {
         const item = document.createElement('li');
-        item.innerHTML = `<img src="${char.portraitUrl || ''}"><span style="color: ${char.color};">${char.name}</span>`;
+        item.dataset.id = char.id;
+        item.innerHTML = `
+            <span class="drag-handle material-symbols-outlined">drag_indicator</span>
+            <img src="${char.portraitUrl || ''}" alt="${char.name}">
+            <span style="color: ${char.color};">${char.name}</span>`;
+
+        item.querySelector('.drag-handle').addEventListener('mousedown', e => e.stopPropagation());
         item.addEventListener('click', () => showFormView(char.id));
         listEl.appendChild(item);
     });
@@ -37,7 +39,7 @@ function renderCharacterList() {
 function showListView() {
     document.getElementById('character-list-view').style.display = 'flex';
     document.getElementById('character-form-view').style.display = 'none';
-
+    document.getElementById('char-search-input').value = '';
     renderCharacterList();
 }
 
@@ -125,6 +127,27 @@ async function setupCharacterEditor() {
         document.getElementById('back-to-list-btn').addEventListener('click', showListView);
         document.getElementById('character-form').addEventListener('submit', handleSave);
         document.getElementById('delete-char-btn').addEventListener('click', handleDelete);
+
+        document.getElementById('char-search-input').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredChars = characterState.characters.filter(char =>
+                char.name.toLowerCase().includes(searchTerm) ||
+                (char.nicknames || []).some(nick => nick.toLowerCase().includes(searchTerm))
+            );
+            renderCharacterList(filteredChars);
+        });
+
+        const listEl = document.getElementById('character-list');
+        new Sortable(listEl, {
+            animation: 150,
+            handle: '.drag-handle',
+            forceFallback: true,
+            onEnd: async (evt) => {
+                const [movedItem] = characterState.characters.splice(evt.oldIndex, 1);
+                characterState.characters.splice(evt.newIndex, 0, movedItem);
+                await saveCharacters();
+            }
+        });
     }
 
     await loadCharacterData();

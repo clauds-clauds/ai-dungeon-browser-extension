@@ -186,6 +186,37 @@ input[type="color"]::-webkit-color-swatch {
     display: none !important;
 }
 
+.drag-handle {
+    cursor: grab;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    user-select: none;
+}
+
+#character-list li:hover .drag-handle {
+    opacity: 1;
+}
+
+.search-container {
+    flex-grow: 1;
+    margin: 0 16px;
+}
+
+#char-search-input {
+    width: 100%;
+    background-color: var(--c-core0, #000);
+    border: 1px solid var(--c-core4, #3a4045);
+    border-radius: 4px;
+    padding: 8px 12px;
+    color: var(--c-coreA85, #eee);
+    font-size: 0.9em;
+}
+
+#char-search-input:focus {
+    border-color: var(--c-primary, #f8ae2c);
+    outline: none;
+}
+
 /* Character Panel Stuff: */
 
 .character-highlight {
