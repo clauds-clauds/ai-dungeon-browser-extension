@@ -59,6 +59,7 @@ function showFormView(characterId = null) {
         deleteBtn.classList.remove('hidden');
     } else {
         title.textContent = 'Add Character';
+        document.getElementById('char-color').value = extensionSettings.defaultColor;
         deleteBtn.classList.add('hidden');
     }
 
