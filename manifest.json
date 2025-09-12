@@ -27,6 +27,7 @@
                 "scripts/modules/highlight.js",
                 "scripts/modules/settings.js",
                 "scripts/modules/notes.js",
+                "scripts/modules/share.js",
                 "scripts/modules/buttons.js",
                 "scripts/modules/interface.js",
                 "scripts/run.js"
@@ -45,7 +46,8 @@
             "resources": [
                 "resources/editor_character.html",
                 "resources/editor_notes.html",
-                "resources/editor_settings.html"
+                "resources/editor_settings.html",
+                "resources/editor_share.html"
             ],
             "matches": [
                 "https://play.aidungeon.com/*",

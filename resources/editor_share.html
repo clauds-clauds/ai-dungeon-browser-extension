@@ -1,0 +1,33 @@
+<div id="share-editor-panel">
+    <div id="share-view">
+        <div class="view-header">
+            <h3>Share / Import Data</h3>
+            <button id="close-share-btn" title="Close">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <form id="share-form">
+            <fieldset>
+                <legend>Export</legend>
+                <p>This will package all characters and notes for the current adventure into a single `.json` file that
+                    you can save as a backup or share with others.</p>
+            </fieldset>
+            <fieldset>
+                <legend>Import</legend>
+                <p class="warning-text"><strong>Warning:</strong> Importing a file will overwrite all existing
+                    characters and notes for the current adventure. This action cannot be undone.</p>
+            </fieldset>
+
+            <input type="file" id="import-file-input" accept=".json" style="display: none;">
+
+            <div class="form-actions">
+                <button type="button" id="export-data-btn" title="Export Adventure Data">
+                    <span class="material-symbols-outlined">download</span>
+                </button>
+                <button type="button" id="import-data-btn" title="Import Adventure Data">
+                    <span class="material-symbols-outlined">upload</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

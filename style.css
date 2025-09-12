@@ -411,6 +411,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 /* Spooky */
+
 .sortable-ghost {
     opacity: 0.4;
     background: var(--c-core4, #3a4045);
@@ -489,4 +490,102 @@ input[type="color"]::-webkit-color-swatch {
 
 #notes-sentinel {
     height: 40px;
+}
+
+/* Share Settings: */
+
+#share-editor-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--c-blackA7, rgba(18, 21, 25, 0.8));
+    backdrop-filter: blur(4px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    font-family: var(--f-family, 'IBMPlexSans', sans-serif);
+}
+
+#share-view {
+    background: var(--c-core1, #1b1f22);
+    border: 1px solid var(--c-core2, #272c30);
+    border-radius: var(--t-radius-1, 8px);
+    padding: 24px;
+    width: 90%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+#share-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex-grow: 1;
+}
+
+#share-form fieldset {
+    border: 1px solid var(--c-core2, #272c30);
+    border-radius: 4px;
+    padding: 16px;
+    margin: 0;
+}
+
+#share-form legend {
+    color: var(--c-core8, #828a92);
+    font-weight: 500;
+    padding: 0 8px;
+    margin-left: 8px;
+}
+
+#share-form p {
+    color: var(--c-core8, #828a92);
+    line-height: 1.5;
+    margin: 0;
+}
+
+#share-form .warning-text strong {
+    color: var(--c-healthBarRed, #ef4444);
+}
+
+#share-form .form-actions {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid var(--c-core2, #272c30);
+    padding-top: 16px;
+}
+
+#share-form .form-actions button {
+    background-color: var(--c-core2, #272c30);
+    color: var(--c-core8, #828a92);
+    border: 1px solid var(--c-core4, #3a4045);
+    border-radius: 4px;
+    padding: 8px;
+    width: 40px;
+    height: 40px;
+    font-size: 0.9em;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+#share-form .form-actions button:hover {
+    background-color: var(--c-core3, #2f3539);
+    border-color: var(--c-core5, #495057);
+    color: var(--c-coreA9, #fff);
+}
+
+#share-form .form-actions button .material-symbols-outlined {
+    font-size: 24px;
+    color: inherit;
 }

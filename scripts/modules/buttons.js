@@ -13,6 +13,7 @@ function onSettingsClick() {
 }
 
 function onShareClick() {
+    setupShareEditor();
     console.log("Share button clicked.");
 }
 
