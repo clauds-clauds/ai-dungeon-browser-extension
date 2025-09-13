@@ -36,7 +36,7 @@ async function loadSettings() {
     document.getElementById('setting-autosave').checked = extensionSettings.autoSaveEnabled;
 
     document.getElementById('info-adventure-id').textContent = getAdventureId() || 'N/A';
-    document.getElementById('info-plugin-version').textContent = chrome.runtime.getManifest().version;
+    document.getElementById('info-plugin-version').textContent = "Alpha " + chrome.runtime.getManifest().version;
 
     applySettingsStyles();
 }

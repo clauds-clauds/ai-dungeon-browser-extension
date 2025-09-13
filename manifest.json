@@ -17,7 +17,8 @@
         {
             "matches": [
                 "https://play.aidungeon.com/*",
-                "https://beta.aidungeon.com/*"
+                "https://beta.aidungeon.com/*",
+                "https://alpha.aidungeon.com/*"
             ],
             "js": [
                 "scripts/libraries/Sortable.min.js",
@@ -51,7 +52,8 @@
             ],
             "matches": [
                 "https://play.aidungeon.com/*",
-                "https://beta.aidungeon.com/*"
+                "https://beta.aidungeon.com/*",
+                "https://alpha.aidungeon.com/*"
             ]
         }
     ]
