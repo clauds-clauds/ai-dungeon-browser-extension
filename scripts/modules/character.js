@@ -75,6 +75,10 @@ async function saveCharacterForm() {
 
     const file = document.getElementById('char-portrait-file').files[0];
 
+    // If a character with an invalid names attempts to be saved then simply return.
+    const name = document.getElementById('char-name').value;
+    if (!name.trim()) return;
+
     const processSave = async (portraitUrl) => {
         const formData = {
             name: document.getElementById('char-name').value,
@@ -135,7 +139,7 @@ async function setupCharacterEditor() {
             }
         });
 
-        document.getElementById('show-add-form-btn').addEventListener('click', () => showFormView);
+        document.getElementById('show-add-form-btn').addEventListener('click', () => showFormView());
         document.getElementById('character-form').addEventListener('submit', handleSave);
 
         // Auto saving stuff below:
