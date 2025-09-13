@@ -1,13 +1,7 @@
 'use strict';
 
 const menuObserver = new MutationObserver(() => {
-    const buttonHandlers = {
-        onCharactersClick: () => setupCharacterEditor(),
-        onNotesClick: () => console.log("Notes clicked"),
-        onShareClick: () => console.log("Share clicked"),
-        onHelpClick: () => window.open('https://help.aidungeon.com/faq', '_blank')
-    };
-    addCustomButtons(buttonHandlers);
+    addCustomButtons();
 });
 menuObserver.observe(document.body, { childList: true, subtree: true });
 
