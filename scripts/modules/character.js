@@ -27,7 +27,7 @@ function renderCharacterList(charactersToRender = characterState.characters) {
         item.dataset.id = char.id;
         item.innerHTML = `
             <span class="drag-handle material-symbols-outlined">drag_indicator</span>
-            <img src="${char.portraitUrl || ''}" alt="${char.name}">
+            <img src="${char.portraitUrl || ''}" style="border-radius: ${extensionSettings.borderRadius};" alt="${char.name}">
             <span style="color: ${char.color};">${char.name}</span>`;
 
         item.querySelector('.drag-handle').addEventListener('mousedown', e => e.stopPropagation());
