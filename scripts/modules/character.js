@@ -110,7 +110,7 @@ async function handleDelete() {
 
 async function setupCharacterEditor() {
     let panel = document.getElementById('character-editor-panel');
-
+    makePageInert();
     if (!panel) {
         const editorUrl = chrome.runtime.getURL('resources/editor_character.html');
         const editorHtml = await (await fetch(editorUrl)).text();

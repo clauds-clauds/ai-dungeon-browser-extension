@@ -81,6 +81,7 @@ async function deleteNote(id) {
 
 async function setupNotesEditor() {
     let panel = document.getElementById('notes-editor-panel');
+    makePageInert();
 
     const settingsData = await chrome.storage.local.get('extensionSettings');
     const currentSettings = { defaultNoteColor: '#3a4045', ...settingsData.extensionSettings };

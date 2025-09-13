@@ -62,6 +62,7 @@ async function saveSettings(event) {
 
 async function setupSettingsEditor() {
     let panel = document.getElementById('settings-editor-panel');
+    makePageInert();
     if (!panel) {
         const editorUrl = chrome.runtime.getURL('resources/editor_settings.html');
         const editorHtml = await (await fetch(editorUrl)).text();

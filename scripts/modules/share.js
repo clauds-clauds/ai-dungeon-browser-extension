@@ -69,6 +69,7 @@ function handleImport(event) {
 
 async function setupShareEditor() {
     let panel = document.getElementById('share-editor-panel');
+    makePageInert();
     if (!panel) {
         const editorUrl = chrome.runtime.getURL('resources/editor_share.html');
         const editorHtml = await (await fetch(editorUrl)).text();
