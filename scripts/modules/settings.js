@@ -57,11 +57,6 @@ async function saveSettings(event) {
     setTimeout(() => { saveBtn.style.backgroundColor = 'transparent'; }, 1000);
 }
 
-function closeSettingsEditor() {
-    const panel = document.getElementById('settings-editor-panel');
-    if (panel) panel.classList.remove('visible');
-}
-
 async function setupSettingsEditor() {
     let panel = document.getElementById('settings-editor-panel');
     if (!panel) {
@@ -71,8 +66,7 @@ async function setupSettingsEditor() {
         panel = document.getElementById('settings-editor-panel');
 
         // Add event listeners, I love event listeners listening.
-        panel.addEventListener('click', e => { if (e.target === panel) closeSettingsEditor(); });
-        document.getElementById('close-settings-btn').addEventListener('click', closeSettingsEditor);
+        panel.addEventListener('click', e => { if (e.target === panel) closePanel('settings-editor-panel'); });
         document.getElementById('settings-form').addEventListener('submit', saveSettings);
     }
 

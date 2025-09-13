@@ -67,11 +67,6 @@ function handleImport(event) {
     reader.readAsText(file);
 }
 
-function closeShareEditor() {
-    const panel = document.getElementById('share-editor-panel');
-    if (panel) panel.classList.remove('visible');
-}
-
 async function setupShareEditor() {
     let panel = document.getElementById('share-editor-panel');
     if (!panel) {
@@ -80,8 +75,7 @@ async function setupShareEditor() {
         document.body.insertAdjacentHTML('beforeend', editorHtml);
         panel = document.getElementById('share-editor-panel');
 
-        panel.addEventListener('click', e => { if (e.target === panel) closeShareEditor(); });
-        document.getElementById('close-share-btn').addEventListener('click', closeShareEditor);
+        panel.addEventListener('click', e => { if (e.target === panel) closePanel('share-editor-panel'); });
         document.getElementById('export-data-btn').addEventListener('click', handleExport);
 
         const importBtn = document.getElementById('import-data-btn');

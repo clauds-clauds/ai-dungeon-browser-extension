@@ -299,15 +299,6 @@ input[type=color]::-webkit-color-swatch {
     color: var(--c-coreA85, #eee)
 }
 
-#close-settings-btn {
-    transition: transform .3s ease, color .2s ease
-}
-
-#close-settings-btn:hover {
-    transform: scale(1.1);
-    color: var(--c-healthBarRed, #ef4444)
-}
-
 #save-settings-btn {
     transition: transform .3s ease, color .2s ease
 }
@@ -319,15 +310,6 @@ input[type=color]::-webkit-color-swatch {
 /*Notes Stuff*/
 #notes-view {
     height: 80vh
-}
-
-#close-notes-btn {
-    transition: transform .3s ease, color .2s ease
-}
-
-#close-notes-btn:hover {
-    transform: scale(1.1);
-    color: var(--c-healthBarRed, #ef4444)
 }
 
 #notes-list {

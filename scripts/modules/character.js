@@ -108,11 +108,6 @@ async function handleDelete() {
     showListView();
 }
 
-function closeCharacterEditor() {
-    const panel = document.getElementById('character-editor-panel');
-    if (panel) panel.classList.remove('visible');
-}
-
 async function setupCharacterEditor() {
     let panel = document.getElementById('character-editor-panel');
 
@@ -122,7 +117,7 @@ async function setupCharacterEditor() {
         document.body.insertAdjacentHTML('beforeend', editorHtml);
         panel = document.getElementById('character-editor-panel');
 
-        panel.addEventListener('click', e => { if (e.target === panel) closeCharacterEditor(); });
+        panel.addEventListener('click', e => { if (e.target === panel) closePanel('character-editor-panel'); });
         document.getElementById('show-add-form-btn').addEventListener('click', () => showFormView());
         document.getElementById('back-to-list-btn').addEventListener('click', showListView);
         document.getElementById('character-form').addEventListener('submit', handleSave);

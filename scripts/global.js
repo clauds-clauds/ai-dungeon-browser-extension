@@ -12,3 +12,8 @@ function getAdventureId() {
 function escapeRegExp(str) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
+
+function closePanel(id) {
+    const panel = document.getElementById(id);
+    if (panel) panel.classList.remove('visible');
+}

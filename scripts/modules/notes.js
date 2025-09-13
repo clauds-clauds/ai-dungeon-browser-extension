@@ -79,12 +79,6 @@ async function deleteNote(id) {
     renderNotes();
 }
 
-function closeNotesEditor() {
-    const panel = document.getElementById('notes-editor-panel');
-    if (panel) panel.classList.remove('visible');
-}
-
-
 async function setupNotesEditor() {
     let panel = document.getElementById('notes-editor-panel');
 
@@ -97,8 +91,7 @@ async function setupNotesEditor() {
         document.body.insertAdjacentHTML('beforeend', editorHtml);
         panel = document.getElementById('notes-editor-panel');
 
-        panel.addEventListener('click', e => { if (e.target === panel) closeNotesEditor(); });
-        document.getElementById('close-notes-btn').addEventListener('click', closeNotesEditor);
+        panel.addEventListener('click', e => { if (e.target === panel) closePanel('notes-editor-panel'); });
         document.getElementById('add-note-form').addEventListener('submit', addNote);
 
         const listEl = document.getElementById('notes-list');
