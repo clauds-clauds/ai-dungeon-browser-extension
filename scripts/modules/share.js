@@ -69,7 +69,7 @@ function handleImport(event) {
 
 function closeShareEditor() {
     const panel = document.getElementById('share-editor-panel');
-    if (panel) panel.style.display = 'none';
+    if (panel) panel.classList.remove('visible');
 }
 
 async function setupShareEditor() {
@@ -90,5 +90,5 @@ async function setupShareEditor() {
         fileInput.addEventListener('change', handleImport);
     }
 
-    panel.style.display = 'flex';
+    setTimeout(() => panel.classList.add('visible'), 10);
 }

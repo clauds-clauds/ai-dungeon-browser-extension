@@ -81,7 +81,7 @@ async function deleteNote(id) {
 
 function closeNotesEditor() {
     const panel = document.getElementById('notes-editor-panel');
-    if (panel) panel.style.display = 'none';
+    if (panel) panel.classList.remove('visible');
 }
 
 
@@ -117,5 +117,5 @@ async function setupNotesEditor() {
 
     document.getElementById('new-note-color').value = currentSettings.defaultNoteColor;
     await loadNotes();
-    panel.style.display = 'flex';
+    setTimeout(() => panel.classList.add('visible'), 10);
 }

@@ -59,7 +59,7 @@ async function saveSettings(event) {
 
 function closeSettingsEditor() {
     const panel = document.getElementById('settings-editor-panel');
-    if (panel) panel.style.display = 'none';
+    if (panel) panel.classList.remove('visible');
 }
 
 async function setupSettingsEditor() {
@@ -77,5 +77,5 @@ async function setupSettingsEditor() {
     }
 
     await loadSettings();
-    panel.style.display = 'flex';
+    setTimeout(() => panel.classList.add('visible'), 10);
 }

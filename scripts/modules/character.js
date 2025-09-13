@@ -110,7 +110,7 @@ async function handleDelete() {
 
 function closeCharacterEditor() {
     const panel = document.getElementById('character-editor-panel');
-    if (panel) panel.style.display = 'none';
+    if (panel) panel.classList.remove('visible');
 }
 
 async function setupCharacterEditor() {
@@ -154,5 +154,5 @@ async function setupCharacterEditor() {
     characterState.characters = characterData;
 
     showListView();
-    panel.style.display = 'flex';
+    setTimeout(() => panel.classList.add('visible'), 10);
 }
