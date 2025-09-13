@@ -32,3 +32,10 @@ function onLanguageClick() {
 function onBugsClick() {
     window.open('https://github.com/clauds-clauds/ai-dungeon-browser-extension/issues', '_blank');
 }
+
+async function onRefreshClick() {
+    await loadSettingsFromStorage();
+    await loadCharacterData();
+    applySettingsStyles();
+    reapplyAllHighlights();
+}

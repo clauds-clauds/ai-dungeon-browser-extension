@@ -1,13 +1,17 @@
 'use strict';
 
-const menuObserver = new MutationObserver(() => {
-    addCustomButtons();
-});
-menuObserver.observe(document.body, { childList: true, subtree: true });
+async function initialize() {
+    await loadSettingsFromStorage();
+    applySettingsStyles();
+    await loadCharacterData();
+    applyHighlights();
 
+    const menuObserver = new MutationObserver(() => {
+        addCustomButtons();
+    });
 
-(async function () {
-    // Watches for page changes and story stuff.
+    menuObserver.observe(document.body, { childList: true, subtree: true });
+
     const highlightObserver = new MutationObserver((mutations) => {
         for (const mutation of mutations) {
             if (mutation.addedNodes.length > 0) {
@@ -22,7 +26,8 @@ menuObserver.observe(document.body, { childList: true, subtree: true });
         }
     });
 
-    // Watches on storage changes and refreshes.
+    highlightObserver.observe(document.body, { childList: true, subtree: true });
+
     chrome.storage.onChanged.addListener((changes, areaName) => {
         if (areaName === 'local') {
             const adventureId = getAdventureId();
@@ -31,8 +36,20 @@ menuObserver.observe(document.body, { childList: true, subtree: true });
             }
         }
     });
+}
 
-    await loadCharacterData();
-    applyHighlights();
-    highlightObserver.observe(document.body, { childList: true, subtree: true });
-})();
+// This below checks for when the actual text box of your adventures are loaded, only then should we initialize the actual highlighting and other contents.
+const pageReadyObserver = new MutationObserver((mutations, observer) => {
+    const storyContainerExists = document.querySelector(SELECTORS.STORY_CONTAINER);
+
+    if (storyContainerExists) {
+        console.log("Story container found. Initializing extension.");
+        initialize();
+        observer.disconnect();
+    }
+});
+
+pageReadyObserver.observe(document.body, {
+    childList: true,
+    subtree: true
+});

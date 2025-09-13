@@ -26,9 +26,14 @@ function applySettingsStyles() {
     `;
 }
 
-async function loadSettings() {
+async function loadSettingsFromStorage() {
     const data = await chrome.storage.local.get('extensionSettings');
     Object.assign(extensionSettings, data.extensionSettings);
+}
+
+function populateSettingsForm() {
+    const form = document.getElementById('settings-form');
+    if (!form) return;
 
     document.getElementById('setting-default-color').value = extensionSettings.defaultColor;
     document.getElementById('setting-portrait-size').value = extensionSettings.portraitSize;
@@ -37,8 +42,6 @@ async function loadSettings() {
 
     document.getElementById('info-adventure-id').textContent = getAdventureId() || 'N/A';
     document.getElementById('info-plugin-version').textContent = "Alpha " + chrome.runtime.getManifest().version;
-
-    applySettingsStyles();
 }
 
 async function saveSettings(event) {
@@ -82,6 +85,9 @@ async function setupSettingsEditor() {
         });
     }
 
-    await loadSettings();
+    await loadSettingsFromStorage();
+    populateSettingsForm();
+    applySettingsStyles();
+
     setTimeout(() => panel.classList.add('visible'), 10);
 }
