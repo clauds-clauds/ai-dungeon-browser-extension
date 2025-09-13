@@ -73,42 +73,53 @@ async function saveCharacterForm() {
     const form = document.getElementById('character-form');
     if (!form || form.offsetParent === null) return;
 
-    const file = document.getElementById('char-portrait-file').files[0];
-
-    // If a character with an invalid names attempts to be saved then simply return.
     const name = document.getElementById('char-name').value;
     if (!name.trim()) return;
 
-    const processSave = async (portraitUrl) => {
-        const formData = {
-            name: document.getElementById('char-name').value,
-            nicknames: document.getElementById('char-nicknames').value.split(',').map(n => n.trim()).filter(Boolean),
-            color: document.getElementById('char-color').value,
-            status: document.getElementById('char-status').value,
-        };
-
-        if (characterState.editingId) {
-            const char = characterState.characters.find(c => c.id === characterState.editingId);
-            if (char) {
-                Object.assign(char, formData);
-                if (portraitUrl !== undefined) char.portraitUrl = portraitUrl;
+    const getPortraitUrl = () => {
+        return new Promise((resolve) => {
+            const file = document.getElementById('char-portrait-file').files[0];
+            if (!file) {
+                const existingChar = characterState.characters.find(c => c.id === characterState.editingId);
+                resolve(existingChar ? existingChar.portraitUrl : '');
+                return;
             }
-        } else {
-            const newId = Date.now();
-            characterState.characters.push({ id: newId, ...formData, portraitUrl: portraitUrl || '' });
-            characterState.editingId = newId;
-        }
-        await saveCharacters();
+
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                if (extensionSettings.autoResizeEnabled) {
+                    const resizedDataUrl = await resizeImage(e.target.result, 64, 64);
+                    resolve(resizedDataUrl);
+                } else {
+                    resolve(e.target.result);
+                }
+            };
+            reader.readAsDataURL(file);
+        });
     };
 
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => processSave(e.target.result);
-        reader.readAsDataURL(file);
+    const portraitUrl = await getPortraitUrl();
+
+    const formData = {
+        name: document.getElementById('char-name').value,
+        nicknames: document.getElementById('char-nicknames').value.split(',').map(n => n.trim()).filter(Boolean),
+        color: document.getElementById('char-color').value,
+        status: document.getElementById('char-status').value,
+    };
+
+    if (characterState.editingId) {
+        const char = characterState.characters.find(c => c.id === characterState.editingId);
+        if (char) {
+            Object.assign(char, formData);
+            if (portraitUrl !== undefined) char.portraitUrl = portraitUrl;
+        }
     } else {
-        const existingChar = characterState.characters.find(c => c.id === characterState.editingId);
-        processSave(existingChar ? existingChar.portraitUrl : '');
+        const newId = Date.now();
+        characterState.characters.push({ id: newId, ...formData, portraitUrl: portraitUrl || '' });
+        characterState.editingId = newId;
     }
+
+    await saveCharacters();
 }
 
 async function handleSave(event) {

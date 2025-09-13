@@ -45,3 +45,21 @@ async function refreshAll() {
     applySettingsStyles();
     reapplyAllHighlights();
 }
+
+async function resizeImage(dataUrl, width, height, quality = 1.0) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.onerror = (err) => {
+            reject(err);
+        };
+        img.src = dataUrl;
+    });
+}

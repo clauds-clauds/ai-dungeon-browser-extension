@@ -7,7 +7,8 @@ let extensionSettings = {
     borderRadius: 10,
     notesPerPage: 30,
     defaultNoteColor: '#3a4045',
-    autoSaveEnabled: true
+    autoSaveEnabled: true,
+    autoResizeEnabled: true
 };
 
 function applySettingsStyles() {
@@ -40,7 +41,9 @@ function populateSettingsForm() {
     document.getElementById('setting-dead-color').value = extensionSettings.deadColor;
     document.getElementById('setting-portrait-size').value = extensionSettings.portraitSize;
     document.getElementById('setting-border-radius').value = extensionSettings.borderRadius;
+
     document.getElementById('setting-autosave').checked = extensionSettings.autoSaveEnabled;
+    document.getElementById('setting-autosize').checked = extensionSettings.autoResizeEnabled;
 
     document.getElementById('info-adventure-id').textContent = getAdventureId() || 'N/A';
     document.getElementById('info-plugin-version').textContent = "Alpha " + chrome.runtime.getManifest().version;
@@ -56,6 +59,7 @@ async function saveSettings(event) {
     extensionSettings.portraitSize = document.getElementById('setting-portrait-size').value;
     extensionSettings.borderRadius = document.getElementById('setting-border-radius').value;
     extensionSettings.autoSaveEnabled = document.getElementById('setting-autosave').checked;
+    extensionSettings.autoResizeEnabled = document.getElementById('setting-autosize').checked;
 
     await chrome.storage.local.set({ extensionSettings });
     applySettingsStyles();
