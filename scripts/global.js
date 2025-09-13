@@ -13,10 +13,13 @@ function escapeRegExp(str) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-function closePanel(id) {
+function closePanel(id, refreshHighlights = false) {
     const panel = document.getElementById(id);
     if (panel) panel.classList.remove('visible');
     makePageInteractive();
+
+    // This is used for the settings panel, I could do it every save but performance and all that.
+    if (refreshHighlights) reapplyAllHighlights();
 }
 
 function makePageInert() {
@@ -34,4 +37,11 @@ function makePageInteractive() {
     document.querySelectorAll('[inert]').forEach(element => {
         element.removeAttribute('inert');
     });
+}
+
+async function refreshAll() {
+    await loadSettingsFromStorage();
+    await loadCharacterData();
+    applySettingsStyles();
+    reapplyAllHighlights();
 }

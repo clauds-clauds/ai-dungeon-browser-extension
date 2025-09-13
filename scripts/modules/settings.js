@@ -1,7 +1,8 @@
 'use strict';
 
 let extensionSettings = {
-    defaultColor: '#f8ae2c',
+    defaultColor: '#c8aa64',
+    deadColor: '#c8aa64',
     portraitSize: 22,
     borderRadius: 10,
     notesPerPage: 30,
@@ -36,6 +37,7 @@ function populateSettingsForm() {
     if (!form) return;
 
     document.getElementById('setting-default-color').value = extensionSettings.defaultColor;
+    document.getElementById('setting-dead-color').value = extensionSettings.deadColor;
     document.getElementById('setting-portrait-size').value = extensionSettings.portraitSize;
     document.getElementById('setting-border-radius').value = extensionSettings.borderRadius;
     document.getElementById('setting-autosave').checked = extensionSettings.autoSaveEnabled;
@@ -50,6 +52,7 @@ async function saveSettings(event) {
     }
 
     extensionSettings.defaultColor = document.getElementById('setting-default-color').value;
+    extensionSettings.deadColor = document.getElementById('setting-dead-color').value;
     extensionSettings.portraitSize = document.getElementById('setting-portrait-size').value;
     extensionSettings.borderRadius = document.getElementById('setting-border-radius').value;
     extensionSettings.autoSaveEnabled = document.getElementById('setting-autosave').checked;
@@ -73,7 +76,7 @@ async function setupSettingsEditor() {
         panel = document.getElementById('settings-editor-panel');
         const form = document.getElementById('settings-form');
 
-        panel.addEventListener('click', e => { if (e.target === panel) closePanel('settings-editor-panel'); });
+        panel.addEventListener('click', e => { if (e.target === panel) closePanel('settings-editor-panel', true); });
         form.addEventListener('submit', saveSettings);
 
         form.addEventListener('input', (event) => {

@@ -43,7 +43,7 @@ const pageReadyObserver = new MutationObserver((mutations, observer) => {
     const storyContainerExists = document.querySelector(SELECTORS.STORY_CONTAINER);
 
     if (storyContainerExists) {
-        console.log("Story container found. Initializing extension.");
+        console.log("Dungeon Extension: Required stuff found, initializing extension...");
         initialize();
         observer.disconnect();
     }

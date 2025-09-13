@@ -41,7 +41,7 @@ function highlightNamesInNode(node) {
             }
             const span = document.createElement('span');
             span.className = 'character-highlight';
-            span.style.color = char.color || 'inherit';
+            span.style.color = (char.status == "alive" ? char.color : extensionSettings.deadColor) || 'inherit';
 
             if (char.portraitUrl) {
                 const img = document.createElement('img');

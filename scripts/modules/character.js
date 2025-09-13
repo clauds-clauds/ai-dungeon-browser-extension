@@ -69,8 +69,10 @@ function showFormView(characterId = null) {
     document.getElementById('character-form-view').style.display = 'flex';
 }
 
-async function handleSave(event) {
-    event.preventDefault();
+async function saveCharacterForm() {
+    const form = document.getElementById('character-form');
+    if (!form || form.offsetParent === null) return;
+
     const file = document.getElementById('char-portrait-file').files[0];
 
     const processSave = async (portraitUrl) => {
@@ -83,14 +85,16 @@ async function handleSave(event) {
 
         if (characterState.editingId) {
             const char = characterState.characters.find(c => c.id === characterState.editingId);
-            Object.assign(char, formData);
-            if (portraitUrl) char.portraitUrl = portraitUrl;
+            if (char) {
+                Object.assign(char, formData);
+                if (portraitUrl !== undefined) char.portraitUrl = portraitUrl;
+            }
         } else {
-            characterState.characters.push({ id: Date.now(), ...formData, portraitUrl: portraitUrl || '' });
+            const newId = Date.now();
+            characterState.characters.push({ id: newId, ...formData, portraitUrl: portraitUrl || '' });
+            characterState.editingId = newId;
         }
-
         await saveCharacters();
-        showListView();
     };
 
     if (file) {
@@ -98,8 +102,15 @@ async function handleSave(event) {
         reader.onload = (e) => processSave(e.target.result);
         reader.readAsDataURL(file);
     } else {
-        processSave(null);
+        const existingChar = characterState.characters.find(c => c.id === characterState.editingId);
+        processSave(existingChar ? existingChar.portraitUrl : '');
     }
+}
+
+async function handleSave(event) {
+    event.preventDefault();
+    await saveCharacterForm();
+    showListView();
 }
 
 async function handleDelete() {
@@ -117,10 +128,22 @@ async function setupCharacterEditor() {
         document.body.insertAdjacentHTML('beforeend', editorHtml);
         panel = document.getElementById('character-editor-panel');
 
-        panel.addEventListener('click', e => { if (e.target === panel) closePanel('character-editor-panel'); });
-        document.getElementById('show-add-form-btn').addEventListener('click', () => showFormView());
-        document.getElementById('back-to-list-btn').addEventListener('click', showListView);
+        panel.addEventListener('click', e => {
+            if (e.target === panel) {
+                if (extensionSettings.autoSaveEnabled) saveCharacterForm();
+                closePanel('character-editor-panel');
+            }
+        });
+
+        document.getElementById('show-add-form-btn').addEventListener('click', () => showFormView);
         document.getElementById('character-form').addEventListener('submit', handleSave);
+
+        // Auto saving stuff below:
+        document.getElementById('back-to-list-btn').addEventListener('click', () => {
+            if (extensionSettings.autoSaveEnabled) saveCharacterForm();
+            showListView();
+        });
+
         document.getElementById('delete-char-btn').addEventListener('click', handleDelete);
 
         document.getElementById('char-search-input').addEventListener('input', (e) => {

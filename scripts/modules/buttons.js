@@ -34,8 +34,5 @@ function onBugsClick() {
 }
 
 async function onRefreshClick() {
-    await loadSettingsFromStorage();
-    await loadCharacterData();
-    applySettingsStyles();
-    reapplyAllHighlights();
+    refreshAll();
 }
