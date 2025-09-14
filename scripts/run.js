@@ -1,15 +1,9 @@
 'use strict';
 
-async function initialize() {
-    await loadSettingsFromStorage();
-    applySettingsStyles();
-    await loadCharacterData();
-    applyHighlights();
-
+function setupPermanentObservers() {
     const menuObserver = new MutationObserver(() => {
         addCustomButtons();
     });
-
     menuObserver.observe(document.body, { childList: true, subtree: true });
 
     const highlightObserver = new MutationObserver((mutations) => {
@@ -25,7 +19,6 @@ async function initialize() {
             }
         }
     });
-
     highlightObserver.observe(document.body, { childList: true, subtree: true });
 
     chrome.storage.onChanged.addListener((changes, areaName) => {
@@ -38,18 +31,31 @@ async function initialize() {
     });
 }
 
-// This below checks for when the actual text box of your adventures are loaded, only then should we initialize the actual highlighting and other contents.
-const pageReadyObserver = new MutationObserver((mutations, observer) => {
-    const storyContainerExists = document.querySelector(SELECTORS.STORY_CONTAINER);
+async function loadAndApplyAdventureData() {
+    await loadSettingsFromStorage();
+    applySettingsStyles();
+    await loadCharacterData();
+    applyHighlights();
+}
 
-    if (storyContainerExists) {
-        console.log("Dungeon Extension: Required stuff found, initializing extension...");
-        initialize();
-        observer.disconnect();
+let initializedAdventureId = null;
+setupPermanentObservers();
+
+const adventureChangeObserver = new MutationObserver(() => {
+    const storyContainerExists = document.querySelector(SELECTORS.STORY_CONTAINER);
+    const currentAdventureId = getAdventureId();
+
+    if (storyContainerExists && currentAdventureId && currentAdventureId !== initializedAdventureId) {
+        console.log(`Dungeon Extension: Detected new adventure [${currentAdventureId}]. Loading data...`);
+        initializedAdventureId = currentAdventureId;
+        loadAndApplyAdventureData();
+    } else if (!currentAdventureId && initializedAdventureId !== null) {
+        console.log("Dungeon Extension: Navigated away from adventure. State reset.");
+        initializedAdventureId = null;
     }
 });
 
-pageReadyObserver.observe(document.body, {
+adventureChangeObserver.observe(document.body, {
     childList: true,
     subtree: true
 });
