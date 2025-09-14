@@ -2,10 +2,10 @@
 
 let extensionSettings = {
     defaultColor: '#c8aa64',
-    deadColor: '#c8aa64',
-    portraitSize: 22,
-    borderRadius: 10,
-    notesPerPage: 30,
+    sharedColor: '#c8aa64',
+    portraitSize: 28,
+    borderRadius: 0,
+    notesPerPage: 16,
     defaultNoteColor: '#3a4045',
     autoSaveEnabled: true,
     autoResizeEnabled: true
@@ -38,7 +38,7 @@ function populateSettingsForm() {
     if (!form) return;
 
     document.getElementById('setting-default-color').value = extensionSettings.defaultColor;
-    document.getElementById('setting-dead-color').value = extensionSettings.deadColor;
+    document.getElementById('setting-shared-color').value = extensionSettings.sharedColor;
     document.getElementById('setting-portrait-size').value = extensionSettings.portraitSize;
     document.getElementById('setting-border-radius').value = extensionSettings.borderRadius;
 
@@ -55,7 +55,7 @@ async function saveSettings(event) {
     }
 
     extensionSettings.defaultColor = document.getElementById('setting-default-color').value;
-    extensionSettings.deadColor = document.getElementById('setting-dead-color').value;
+    extensionSettings.sharedColor = document.getElementById('setting-shared-color').value;
     extensionSettings.portraitSize = document.getElementById('setting-portrait-size').value;
     extensionSettings.borderRadius = document.getElementById('setting-border-radius').value;
     extensionSettings.autoSaveEnabled = document.getElementById('setting-autosave').checked;

@@ -28,7 +28,7 @@ function renderCharacterList(charactersToRender = characterState.characters) {
         item.innerHTML = `
             <span class="drag-handle material-symbols-outlined">drag_indicator</span>
             <img src="${char.portraitUrl || ''}" style="border-radius: ${extensionSettings.borderRadius};" alt="${char.name}">
-            <span style="color: ${char.color};">${char.name}</span>`;
+            <span style="color: ${char.colorMode == "special" ? char.color : extensionSettings.sharedColor};">${char.name}</span>`;
 
         item.querySelector('.drag-handle').addEventListener('mousedown', e => e.stopPropagation());
         item.addEventListener('click', () => showFormView(char.id));
@@ -57,7 +57,7 @@ function showFormView(characterId = null) {
         document.getElementById('char-name').value = char.name;
         document.getElementById('char-nicknames').value = char.nicknames.join(', ');
         document.getElementById('char-color').value = char.color;
-        document.getElementById('char-status').value = char.status;
+        document.getElementById('char-color-mode').value = char.colorMode;
         deleteBtn.classList.remove('hidden');
     } else {
         title.textContent = 'Add Character';
@@ -104,7 +104,7 @@ async function saveCharacterForm() {
         name: document.getElementById('char-name').value,
         nicknames: document.getElementById('char-nicknames').value.split(',').map(n => n.trim()).filter(Boolean),
         color: document.getElementById('char-color').value,
-        status: document.getElementById('char-status').value,
+        colorMode: document.getElementById('char-color-mode').value,
     };
 
     if (characterState.editingId) {
