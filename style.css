@@ -1,4 +1,28 @@
-/*Character Panel Stuff*/
+@font-face {
+    font-family: 'Material Symbols Rounded';
+    font-style: normal;
+    font-weight: 100 700;
+    src: url('chrome-extension://__MSG_@@extension_id__/resources/fonts/material_symbols_rounded.ttf') format('truetype');
+}
+
+.material-symbols-rounded {
+    font-family: 'Material Symbols Rounded';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: "liga";
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+/*Character Panel Stuff */
 #character-editor-panel,
 #settings-editor-panel,
 #notes-editor-panel,
@@ -519,7 +543,7 @@ input[type=color]::-webkit-color-swatch {
     color: var(--c-coreA9, #fff)
 }
 
-#share-form .form-actions button .material-symbols-outlined {
+#share-form .form-actions button .material-symbols-rounded {
     font-size: 24px;
     color: inherit
 }

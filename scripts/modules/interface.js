@@ -19,7 +19,7 @@ function injectButton(config) {
     iconContainer.className = originalIconContainer.className;
 
     const iconSpan = document.createElement('span');
-    iconSpan.className = 'material-symbols-outlined';
+    iconSpan.className = 'material-symbols-rounded';
     iconSpan.textContent = icon;
     iconSpan.style.fontSize = '18px';
 
@@ -45,15 +45,6 @@ function addCustomButtons() {
     const listContainer = exitGameButton ? exitGameButton.parentElement : null;
     if (!listContainer) return;
 
-    // Is this required? No. Is this handy? Probably not. Do I keep it? Yes.
-    if (!document.getElementById('custom-material-symbols')) {
-        const link = document.createElement('link');
-        link.id = 'custom-material-symbols';
-        link.rel = 'stylesheet';
-        link.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200';
-        document.head.appendChild(link);
-    }
-
     const buttonConfigs = [
         /* 
         You can define any and all new buttons here, it's pretty modular.
@@ -64,8 +55,8 @@ function addCustomButtons() {
         { id: 'custom-btn-notes', label: 'Notes', icon: 'description', onClick: onNotesClick },
         { id: 'custom-btn-settings', label: 'Settings', icon: 'settings_heart', onClick: onSettingsClick },
         { id: 'custom-btn-share', label: 'Share', icon: 'share', onClick: onShareClick },
-        // { id: 'custom-btn-bugs', label: 'Bugs', icon: 'pest_control', onClick: onBugsClick }, // DEV FEATURE: REMOVE FROM PRODUCTION.
-        // { id: 'custom-btn-refresh', label: 'Refresh', icon: 'refresh', onClick: onRefreshClick }, // DEV FEATURE: REMOVE FROM PRODUCTION.
+        { id: 'custom-btn-bugs', label: 'Bugs', icon: 'pest_control', onClick: onBugsClick }, // DEV FEATURE: REMOVE FROM STABLE PRODUCTION.
+        { id: 'custom-btn-refresh', label: 'Refresh', icon: 'refresh', onClick: onRefreshClick }, // DEV FEATURE: REMOVE FROM STABLE PRODUCTION.
         // { id: 'custom-btn-scripts', label: 'Scripts', icon: 'data_object', onClick: onScriptsClick },
         // { id: 'custom-btn-faq', label: 'FAQ', icon: 'contact_support', onClick: onHelpClick },
         // { id: 'custom-btn-language', label: 'Language', icon: 'glyphs', onClick: onLanguageClick } // HOW WOULD THEY UNDERSTAND IF THEY DO NOT SPEAK ENGLISH WITHOUT TAKING UP 3000 LINES ON THIS BAR?! TODO: SOMEHOW GET BROWSER LANGUAGE LOCALES.

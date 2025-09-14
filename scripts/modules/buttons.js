@@ -30,7 +30,7 @@ function onLanguageClick() {
 }
 
 function onBugsClick() {
-    window.open('https://github.com/clauds-clauds/ai-dungeon-browser-extension/issues', '_blank');
+    window.open('https://github.com/clauds-clauds/ai-dungeon-browser-extension-public/issues', '_blank');
 }
 
 async function onRefreshClick() {

@@ -31,7 +31,7 @@ function renderNotes() {
         item.style.borderLeft = `5px solid ${note.color || 'var(--c-core4, #3a4045)'}`;
 
         const dragHandle = document.createElement('span');
-        dragHandle.className = 'drag-handle material-symbols-outlined';
+        dragHandle.className = 'drag-handle material-symbols-rounded';
         dragHandle.textContent = 'drag_indicator';
 
         const noteContent = document.createElement('div');
@@ -58,7 +58,7 @@ function renderNotes() {
         deleteBtn.title = 'Delete Note';
 
         const deleteIcon = document.createElement('span');
-        deleteIcon.className = 'material-symbols-outlined';
+        deleteIcon.className = 'material-symbols-rounded';
         deleteIcon.textContent = 'delete';
         deleteBtn.appendChild(deleteIcon);
         deleteBtn.addEventListener('click', () => deleteNote(note.id));

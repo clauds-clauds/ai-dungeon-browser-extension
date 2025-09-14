@@ -38,17 +38,14 @@
             ]
         }
     ],
-    "host_permissions": [
-        "https://fonts.googleapis.com/",
-        "https://fonts.gstatic.com/"
-    ],
     "web_accessible_resources": [
         {
             "resources": [
                 "resources/editor_character.html",
                 "resources/editor_notes.html",
                 "resources/editor_settings.html",
-                "resources/editor_share.html"
+                "resources/editor_share.html",
+                "resources/fonts/material_symbols_rounded.ttf"
             ],
             "matches": [
                 "https://play.aidungeon.com/*",

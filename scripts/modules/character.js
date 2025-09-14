@@ -27,7 +27,7 @@ function renderCharacterList(charactersToRender = characterState.characters) {
         item.dataset.id = char.id;
 
         const dragHandle = document.createElement('span');
-        dragHandle.className = 'drag-handle material-symbols-outlined';
+        dragHandle.className = 'drag-handle material-symbols-rounded';
         dragHandle.textContent = 'drag_indicator';
 
         const portrait = document.createElement('img');
