@@ -11,6 +11,7 @@ async function handleExport() {
     const notesData = await chrome.storage.local.get(`notes_${adventureId}`);
 
     const exportObject = {
+        extensionVersion: chrome.runtime.getManifest().version,
         adventureId: adventureId,
         exportedAt: new Date().toISOString(),
         data: {
