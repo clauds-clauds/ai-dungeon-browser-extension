@@ -489,6 +489,10 @@ input[type=color]::-webkit-color-swatch {
     margin: 0
 }
 
+#share-form .warning-text-orange strong {
+    color: var(--c-healthBarRed, #f8ae2c)
+}
+
 #share-form .warning-text strong {
     color: var(--c-healthBarRed, #ef4444)
 }

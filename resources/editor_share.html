@@ -10,19 +10,28 @@
                     you can save as a backup or share with others.</p>
             </fieldset>
             <fieldset>
-                <legend>Import</legend>
-                <p class="warning-text"><strong>Warning:</strong> Importing a file will overwrite all existing
+                <legend>Import & Merge</legend>
+                <p class="warning-text-orange"><strong>Important:</strong> This will try to merge all data
+                    from another `.json` file. Generally the safest way to import data from other adventures.
+                </p>
+            </fieldset>
+            <fieldset>
+                <legend>Import & Replace</legend>
+                <p class="warning-text"><strong>Warning:</strong> This will overwrite all existing
                     characters and notes for the current adventure. This action cannot be undone.</p>
             </fieldset>
 
             <input type="file" id="import-file-input" accept=".json" style="display: none;">
 
             <div class="form-actions">
-                <button type="button" id="export-data-btn" title="Export Adventure Data">
+                <button type="button" id="export-data-btn" title="Export">
                     <span class="material-symbols-outlined">upload</span>
                 </button>
-                <button type="button" id="import-data-btn" title="Import Adventure Data">
+                <button type="button" id="import-merge-data-btn" title="Import & Merge">
                     <span class="material-symbols-outlined">download</span>
+                </button>
+                <button type="button" id="import-data-btn" title="Import & Replace">
+                    <span class="material-symbols-outlined">partner_reports</span>
                 </button>
             </div>
         </form>

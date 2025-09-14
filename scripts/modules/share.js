@@ -32,15 +32,45 @@ async function handleExport() {
     URL.revokeObjectURL(url);
 }
 
-function handleImport(event) {
-    const file = event.target.files[0];
+async function handleMergeImport(importObject, adventureId) {
+    const existingCharsData = await chrome.storage.local.get(adventureId);
+    const existingNotesData = await chrome.storage.local.get(`notes_${adventureId}`);
+
+    const existingChars = existingCharsData[adventureId] || [];
+    const existingNotes = existingNotesData[`notes_${adventureId}`] || [];
+
+    const newChars = importObject.data.characters.map((char, index) => ({
+        ...char,
+        id: Date.now() + index
+    }));
+    const newNotes = importObject.data.notes.map((note, index) => ({
+        ...note,
+        id: Date.now() + index
+    }));
+
+    const mergedChars = [...existingChars, ...newChars];
+    const mergedNotes = [...existingNotes, ...newNotes];
+
+    await chrome.storage.local.set({ [adventureId]: mergedChars });
+    await chrome.storage.local.set({ [`notes_${adventureId}`]: mergedNotes });
+}
+
+async function handleReplaceImport(importObject, adventureId) {
+    if (confirm("This will overwrite all characters and notes for this adventure. Are you sure?")) {
+        await chrome.storage.local.set({ [adventureId]: importObject.data.characters });
+        await chrome.storage.local.set({ [`notes_${adventureId}`]: importObject.data.notes });
+        return true;
+    }
+    return false;
+}
+
+function handleImport(file, mode) {
     if (!file) return;
 
     const reader = new FileReader();
     reader.onload = async (e) => {
         try {
             const importObject = JSON.parse(e.target.result);
-
             if (!importObject.data || !importObject.data.characters || !importObject.data.notes) {
                 throw new Error("Invalid file format.");
             }
@@ -51,17 +81,20 @@ function handleImport(event) {
                 return;
             }
 
-            if (confirm("This will overwrite all characters and notes for this adventure. Are you sure?")) {
-                await chrome.storage.local.set({ [adventureId]: importObject.data.characters });
-                await chrome.storage.local.set({ [`notes_${adventureId}`]: importObject.data.notes });
+            let successful = false;
+            if (mode === 'merge') {
+                await handleMergeImport(importObject, adventureId);
+                successful = true;
+            } else if (mode === 'replace') {
+                successful = await handleReplaceImport(importObject, adventureId);
+            }
 
+            if (successful) {
                 alert("Import successful! The page will now reload to apply changes.");
                 window.location.reload();
             }
         } catch (error) {
             alert(`Import failed: ${error.message}`);
-        } finally {
-            event.target.value = '';
         }
     };
     reader.readAsText(file);
@@ -76,14 +109,29 @@ async function setupShareEditor() {
         document.body.insertAdjacentHTML('beforeend', editorHtml);
         panel = document.getElementById('share-editor-panel');
 
+        let importMode = 'replace';
+
         panel.addEventListener('click', e => { if (e.target === panel) closePanel('share-editor-panel'); });
         document.getElementById('export-data-btn').addEventListener('click', handleExport);
 
-        const importBtn = document.getElementById('import-data-btn');
+        const importMergeBtn = document.getElementById('import-merge-data-btn');
+        const importReplaceBtn = document.getElementById('import-data-btn');
         const fileInput = document.getElementById('import-file-input');
-        importBtn.addEventListener('click', () => fileInput.click());
-        fileInput.addEventListener('change', handleImport);
-    }
 
+        importMergeBtn.addEventListener('click', () => {
+            importMode = 'merge';
+            fileInput.click();
+        });
+
+        importReplaceBtn.addEventListener('click', () => {
+            importMode = 'replace';
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (event) => {
+            handleImport(event.target.files[0], importMode);
+            event.target.value = '';
+        });
+    }
     setTimeout(() => panel.classList.add('visible'), 10);
 }
