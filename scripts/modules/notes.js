@@ -28,23 +28,44 @@ function renderNotes() {
     allAdventureNotes.forEach((note) => {
         const item = document.createElement('li');
         item.dataset.id = note.id;
-        item.style.borderLeft = `5px solid ${note.color || 'var(--c-core4, #3a4045)'}`; // If this ever gets wonky it's because Lat figured they'd change the CSS to screw this extension (in particular) over.
+        item.style.borderLeft = `5px solid ${note.color || 'var(--c-core4, #3a4045)'}`;
 
-        const tagsHTML = (note.tags || []).map(tag => `<span class="note-tag">${tag}</span>`).join('');
+        const dragHandle = document.createElement('span');
+        dragHandle.className = 'drag-handle material-symbols-outlined';
+        dragHandle.textContent = 'drag_indicator';
 
-        // This can probably be moves somewhere less garbage.
-        item.innerHTML = `
-            <span class="drag-handle material-symbols-outlined">drag_indicator</span>
-            <div class="note-content">
-                <p class="note-text">${note.text}</p>
-                <div class="note-tags">${tagsHTML}</div>
-            </div>
-            <button class="delete-note-btn" title="Delete Note">
-                <span class="material-symbols-outlined">delete</span>
-            </button>
-        `;
+        const noteContent = document.createElement('div');
+        noteContent.className = 'note-content';
 
-        item.querySelector('.delete-note-btn').addEventListener('click', () => deleteNote(note.id));
+        const noteText = document.createElement('p');
+        noteText.className = 'note-text';
+        noteText.textContent = note.text;
+
+        const noteTags = document.createElement('div');
+        noteTags.className = 'note-tags';
+        (note.tags || []).forEach(tagText => {
+            const tagSpan = document.createElement('span');
+            tagSpan.className = 'note-tag';
+            tagSpan.textContent = tagText;
+            noteTags.appendChild(tagSpan);
+        });
+
+        noteContent.appendChild(noteText);
+        noteContent.appendChild(noteTags);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-note-btn';
+        deleteBtn.title = 'Delete Note';
+
+        const deleteIcon = document.createElement('span');
+        deleteIcon.className = 'material-symbols-outlined';
+        deleteIcon.textContent = 'delete';
+        deleteBtn.appendChild(deleteIcon);
+        deleteBtn.addEventListener('click', () => deleteNote(note.id));
+
+        item.appendChild(dragHandle);
+        item.appendChild(noteContent);
+        item.appendChild(deleteBtn);
         listEl.appendChild(item);
     });
 }

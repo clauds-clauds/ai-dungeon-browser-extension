@@ -46,6 +46,15 @@ async function refreshAll() {
     reapplyAllHighlights();
 }
 
+function sanitizeUrl(url) {
+    if (!url) return '';
+    const validStarts = ['https://', 'http://', 'data:image/'];
+    if (validStarts.some(start => url.startsWith(start))) {
+        return url;
+    }
+    return '';
+}
+
 async function resizeImage(dataUrl, width, height, quality = 1.0) {
     return new Promise((resolve, reject) => {
         const img = new Image();

@@ -25,12 +25,25 @@ function renderCharacterList(charactersToRender = characterState.characters) {
     charactersToRender.forEach(char => {
         const item = document.createElement('li');
         item.dataset.id = char.id;
-        item.innerHTML = `
-            <span class="drag-handle material-symbols-outlined">drag_indicator</span>
-            <img src="${char.portraitUrl || ''}" style="border-radius: ${extensionSettings.borderRadius};" alt="${char.name}">
-            <span style="color: ${char.colorMode == "special" ? char.color : extensionSettings.sharedColor};">${char.name}</span>`;
 
-        item.querySelector('.drag-handle').addEventListener('mousedown', e => e.stopPropagation());
+        const dragHandle = document.createElement('span');
+        dragHandle.className = 'drag-handle material-symbols-outlined';
+        dragHandle.textContent = 'drag_indicator';
+
+        const portrait = document.createElement('img');
+        portrait.src = sanitizeUrl(char.portraitUrl);
+        portrait.style.borderRadius = extensionSettings.borderRadius;
+        portrait.alt = char.name;
+
+        const nameSpan = document.createElement('span');
+        nameSpan.style.color = char.colorMode == "special" ? char.color : extensionSettings.sharedColor
+        nameSpan.textContent = char.name;
+
+        item.appendChild(dragHandle);
+        item.appendChild(portrait);
+        item.appendChild(nameSpan);
+
+        dragHandle.addEventListener('mousedown', e => e.stopPropagation());
         item.addEventListener('click', () => showFormView(char.id));
         listEl.appendChild(item);
     });
