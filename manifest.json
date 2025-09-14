@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Dungeon Extension",
-    "version": "1.2.1",
+    "version": "1.0.0",
     "description": "An extension which adds some quality of life features to your AI Dungeon adventures.",
     "permissions": [
         "storage"
@@ -17,8 +17,7 @@
         {
             "matches": [
                 "https://play.aidungeon.com/*",
-                "https://beta.aidungeon.com/*",
-                "https://alpha.aidungeon.com/*"
+                "https://beta.aidungeon.com/*"
             ],
             "js": [
                 "scripts/libraries/Sortable.min.js",
