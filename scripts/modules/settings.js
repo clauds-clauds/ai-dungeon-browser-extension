@@ -19,11 +19,15 @@ function applySettingsStyles() {
         styleElement.id = styleId;
         document.head.appendChild(styleElement);
     }
+
+    const size = parseInt(extensionSettings.portraitSize, 10) || 28;
+    const radius = parseInt(extensionSettings.borderRadius, 10) || 0;
+
     styleElement.textContent = `
         .character-portrait {
-            width: ${extensionSettings.portraitSize}px;
-            height: ${extensionSettings.portraitSize}px;
-            border-radius: ${extensionSettings.borderRadius}%;
+            width: ${size}px;
+            height: ${size}px;
+            border-radius: ${radius}%;
         }
     `;
 }

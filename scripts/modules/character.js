@@ -32,7 +32,7 @@ function renderCharacterList(charactersToRender = characterState.characters) {
 
         const portrait = document.createElement('img');
         portrait.src = sanitizeUrl(char.portraitUrl);
-        portrait.style.borderRadius = extensionSettings.borderRadius;
+        portrait.style.borderRadius = extensionSettings.borderRadius + '%';
         portrait.alt = char.name;
 
         const nameSpan = document.createElement('span');
@@ -65,8 +65,10 @@ function showFormView(characterId = null) {
     const portraitPreview = document.getElementById('char-portrait-preview');
 
     form.reset();
-    portraitPreview.src = '';
-    portraitPreview.style.display = 'none';
+    if (portraitPreview) {
+        portraitPreview.src = '';
+        portraitPreview.style.display = 'none';
+    }
 
     if (characterId) {
         const char = characterState.characters.find(c => c.id === characterId);
@@ -75,7 +77,7 @@ function showFormView(characterId = null) {
         document.getElementById('char-nicknames').value = (char.nicknames || []).join(', ');
         document.getElementById('char-color').value = char.color;
         document.getElementById('char-color-mode').value = char.colorMode;
-        if (char.portraitUrl) {
+        if (portraitPreview && char.portraitUrl) {
             portraitPreview.src = sanitizeUrl(char.portraitUrl);
             portraitPreview.style.display = 'block';
         }
@@ -103,14 +105,14 @@ async function saveCharacterForm() {
             const file = fileInput.files[0];
             if (!file) {
                 const existingChar = characterState.characters.find(c => c.id === characterState.editingId);
-                resolve(existingChar ? existingChar.portraitUrl : '');
+                resolve(existingChar ? existingChar.portraitUrl : null);
                 return;
             }
 
             const reader = new FileReader();
             reader.onload = async (e) => {
                 if (extensionSettings.autoResizeEnabled) {
-                    const resizedDataUrl = await resizeImage(e.target.result, 64, 64);
+                    const resizedDataUrl = await resizeImage(e.target.result, 64, 64, 'image/png');
                     resolve(resizedDataUrl);
                 } else {
                     resolve(e.target.result);
@@ -127,17 +129,17 @@ async function saveCharacterForm() {
         nicknames: document.getElementById('char-nicknames').value.split(',').map(n => n.trim()).filter(Boolean),
         color: document.getElementById('char-color').value,
         colorMode: document.getElementById('char-color-mode').value,
+        portraitUrl: portraitUrl
     };
 
     if (characterState.editingId) {
         const char = characterState.characters.find(c => c.id === characterState.editingId);
         if (char) {
             Object.assign(char, formData);
-            if (portraitUrl !== undefined) char.portraitUrl = portraitUrl;
         }
     } else {
         const newId = Date.now();
-        characterState.characters.push({ id: newId, ...formData, portraitUrl: portraitUrl || '' });
+        characterState.characters.push({ id: newId, ...formData });
         characterState.editingId = newId;
     }
 
@@ -170,7 +172,7 @@ async function setupCharacterEditor() {
         panel.addEventListener('click', e => {
             if (e.target === panel) {
                 if (extensionSettings.autoSaveEnabled) saveCharacterForm();
-                closePanel('character-editor-panel');
+                closePanel('character-editor-panel', true);
             }
         });
 
@@ -208,7 +210,6 @@ async function setupCharacterEditor() {
 
     await loadCharacterData();
     characterState.characters = characterData;
-
     showListView();
     setTimeout(() => panel.classList.add('visible'), 10);
 }
