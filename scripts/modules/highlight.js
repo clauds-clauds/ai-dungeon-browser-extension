@@ -4,13 +4,12 @@ function highlightNamesInNode(node) {
     if (!characterData || characterData.length === 0) return;
 
     const allNames = characterData.flatMap(char => [char.name, ...(char.nicknames || [])]).filter(Boolean);
-
     if (allNames.length === 0) return;
 
     const pattern = allNames.map(name => escapeRegExp(name)).join('|');
-    const regex = new RegExp(`\\b(${pattern})\\b`, 'gi'); // Yeah.
-    const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+    const regex = new RegExp(`\\b(${pattern})('s)?\\b`, 'gi');
 
+    const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
     const textNodesToProcess = [];
     let currentNode;
 
@@ -23,15 +22,19 @@ function highlightNamesInNode(node) {
     for (const textNode of textNodesToProcess) {
         const originalText = textNode.textContent;
         if (!regex.test(originalText)) continue;
+
         const fragment = document.createDocumentFragment();
         let lastIndex = 0;
         let match;
         regex.lastIndex = 0;
+
         while ((match = regex.exec(originalText)) !== null) {
-            const matchedName = match[0];
+            const fullMatch = match[0];
+            const baseName = match[1];
+
             const char = characterData.find(c =>
-                matchedName.toLowerCase() === c.name.toLowerCase() ||
-                (c.nicknames || []).some(nick => nick.toLowerCase() === matchedName.toLowerCase())
+                baseName.toLowerCase() === c.name.toLowerCase() ||
+                (c.nicknames || []).some(nick => nick.toLowerCase() === baseName.toLowerCase())
             );
 
             if (!char) continue;
@@ -51,7 +54,7 @@ function highlightNamesInNode(node) {
                 span.appendChild(img);
             }
 
-            span.appendChild(document.createTextNode(matchedName));
+            span.appendChild(document.createTextNode(fullMatch));
             fragment.appendChild(span);
             lastIndex = regex.lastIndex;
         }
