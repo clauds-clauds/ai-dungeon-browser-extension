@@ -44,11 +44,12 @@ function highlightNamesInNode(node) {
             }
             const span = document.createElement('span');
             span.className = 'character-highlight';
-            span.style.color = (char.colorMode == "special" ? char.color : extensionSettings.sharedColor) || 'inherit';
+            const colorToApply = char.colorMode === "special" ? char.color : extensionSettings.sharedColor;
+            span.style.color = sanitizeColor(colorToApply) || 'inherit';
 
             if (char.portraitUrl) {
                 const img = document.createElement('img');
-                img.src = char.portraitUrl;
+                img.src = sanitizeUrl(char.portraitUrl);
                 img.className = 'character-portrait';
                 img.alt = char.name;
                 span.appendChild(img);

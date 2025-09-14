@@ -36,7 +36,8 @@ function renderCharacterList(charactersToRender = characterState.characters) {
         portrait.alt = char.name;
 
         const nameSpan = document.createElement('span');
-        nameSpan.style.color = char.colorMode == "special" ? char.color : extensionSettings.sharedColor
+        const colorToApply = char.colorMode === "special" ? char.color : extensionSettings.sharedColor;
+        nameSpan.style.color = sanitizeColor(colorToApply) || 'inherit';
         nameSpan.textContent = char.name;
 
         item.appendChild(dragHandle);
@@ -61,16 +62,23 @@ function showFormView(characterId = null) {
     const form = document.getElementById('character-form');
     const title = document.getElementById('form-title');
     const deleteBtn = document.getElementById('delete-char-btn');
+    const portraitPreview = document.getElementById('char-portrait-preview');
 
     form.reset();
+    portraitPreview.src = '';
+    portraitPreview.style.display = 'none';
 
     if (characterId) {
         const char = characterState.characters.find(c => c.id === characterId);
         title.textContent = 'Edit Character';
         document.getElementById('char-name').value = char.name;
-        document.getElementById('char-nicknames').value = char.nicknames.join(', ');
+        document.getElementById('char-nicknames').value = (char.nicknames || []).join(', ');
         document.getElementById('char-color').value = char.color;
         document.getElementById('char-color-mode').value = char.colorMode;
+        if (char.portraitUrl) {
+            portraitPreview.src = sanitizeUrl(char.portraitUrl);
+            portraitPreview.style.display = 'block';
+        }
         deleteBtn.classList.remove('hidden');
     } else {
         title.textContent = 'Add Character';
@@ -91,7 +99,8 @@ async function saveCharacterForm() {
 
     const getPortraitUrl = () => {
         return new Promise((resolve) => {
-            const file = document.getElementById('char-portrait-file').files[0];
+            const fileInput = document.getElementById('char-portrait-file');
+            const file = fileInput.files[0];
             if (!file) {
                 const existingChar = characterState.characters.find(c => c.id === characterState.editingId);
                 resolve(existingChar ? existingChar.portraitUrl : '');
@@ -142,9 +151,11 @@ async function handleSave(event) {
 }
 
 async function handleDelete() {
-    characterState.characters = characterState.characters.filter(c => c.id !== characterState.editingId);
-    await saveCharacters();
-    showListView();
+    if (confirm('Are you sure you want to delete this character?')) {
+        characterState.characters = characterState.characters.filter(c => c.id !== characterState.editingId);
+        await saveCharacters();
+        showListView();
+    }
 }
 
 async function setupCharacterEditor() {
@@ -166,7 +177,6 @@ async function setupCharacterEditor() {
         document.getElementById('show-add-form-btn').addEventListener('click', () => showFormView());
         document.getElementById('character-form').addEventListener('submit', handleSave);
 
-        // Auto saving stuff below:
         document.getElementById('back-to-list-btn').addEventListener('click', () => {
             if (extensionSettings.autoSaveEnabled) saveCharacterForm();
             showListView();

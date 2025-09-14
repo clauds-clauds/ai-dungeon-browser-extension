@@ -28,7 +28,7 @@ function renderNotes() {
     allAdventureNotes.forEach((note) => {
         const item = document.createElement('li');
         item.dataset.id = note.id;
-        item.style.borderLeft = `5px solid ${note.color || 'var(--c-core4, #3a4045)'}`;
+        item.style.borderLeft = `5px solid ${sanitizeColor(note.color) || 'var(--c-core4, #3a4045)'}`;
 
         const dragHandle = document.createElement('span');
         dragHandle.className = 'drag-handle material-symbols-rounded';

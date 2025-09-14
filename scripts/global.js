@@ -55,6 +55,13 @@ function sanitizeUrl(url) {
     return '';
 }
 
+function sanitizeColor(color) {
+    if (!color) return null;
+    const s = new Option().style;
+    s.color = color;
+    return s.color === color.toLowerCase() ? color : null;
+}
+
 async function resizeImage(dataUrl, width, height, quality = 1.0) {
     return new Promise((resolve, reject) => {
         const img = new Image();
