@@ -164,10 +164,7 @@ async function setupCharacterEditor() {
     let panel = document.getElementById('character-editor-panel');
     makePageInert();
     if (!panel) {
-        const editorUrl = chrome.runtime.getURL('resources/editor_character.html');
-        const editorHtml = await (await fetch(editorUrl)).text();
-        document.body.insertAdjacentHTML('beforeend', editorHtml);
-        panel = document.getElementById('character-editor-panel');
+        panel = await injectPanel('resources/editor_character.html');
 
         panel.addEventListener('click', e => {
             if (e.target === panel) {

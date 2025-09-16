@@ -105,10 +105,7 @@ async function setupNotesEditor() {
     makePageInert();
 
     if (!panel) {
-        const editorUrl = chrome.runtime.getURL('resources/editor_notes.html');
-        const editorHtml = await (await fetch(editorUrl)).text();
-        document.body.insertAdjacentHTML('beforeend', editorHtml);
-        panel = document.getElementById('notes-editor-panel');
+        panel = await injectPanel('resources/editor_notes.html');
 
         panel.addEventListener('click', e => { if (e.target === panel) closePanel('notes-editor-panel'); });
         document.getElementById('add-note-form').addEventListener('submit', addNote);

@@ -67,9 +67,9 @@ function sanitizeColor(color) {
 
 function sanitizeString(str) {
     if (typeof str !== 'string') return str;
-    const temp = document.createElement('div');
-    temp.innerHTML = str;
-    return temp.textContent || "";
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(str, 'text/html');
+    return doc.body.textContent || "";
 }
 
 async function resizeImage(dataUrl, width, height, quality = 1.0) {
@@ -115,4 +115,16 @@ function injectSymbols() {
         `;
         document.head.appendChild(fontStyleSheet);
     }
+}
+
+async function injectPanel(filePath) {
+    const url = chrome.runtime.getURL(filePath);
+    const html = await (await fetch(url)).text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const panel = doc.querySelector('div');
+    if (panel) {
+        document.body.appendChild(panel);
+    }
+    return panel;
 }

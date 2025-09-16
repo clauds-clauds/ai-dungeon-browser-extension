@@ -141,10 +141,7 @@ async function setupShareEditor() {
     let panel = document.getElementById('share-editor-panel');
     makePageInert();
     if (!panel) {
-        const editorUrl = chrome.runtime.getURL('resources/editor_share.html');
-        const editorHtml = await (await fetch(editorUrl)).text();
-        document.body.insertAdjacentHTML('beforeend', editorHtml);
-        panel = document.getElementById('share-editor-panel');
+        panel = await injectPanel('resources/editor_share.html');
 
         let importMode = 'replace';
 

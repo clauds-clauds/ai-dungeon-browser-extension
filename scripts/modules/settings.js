@@ -81,10 +81,7 @@ async function setupSettingsEditor() {
     let panel = document.getElementById('settings-editor-panel');
     makePageInert();
     if (!panel) {
-        const editorUrl = chrome.runtime.getURL('resources/editor_settings.html');
-        const editorHtml = await (await fetch(editorUrl)).text();
-        document.body.insertAdjacentHTML('beforeend', editorHtml);
-        panel = document.getElementById('settings-editor-panel');
+        panel = await injectPanel('resources/editor_settings.html');
         const form = document.getElementById('settings-form');
 
         panel.addEventListener('click', e => { if (e.target === panel) closePanel('settings-editor-panel', true); });
