@@ -65,6 +65,13 @@ function sanitizeColor(color) {
     return null;
 }
 
+function sanitizeString(str) {
+    if (typeof str !== 'string') return str;
+    const temp = document.createElement('div');
+    temp.innerHTML = str;
+    return temp.textContent || "";
+}
+
 async function resizeImage(dataUrl, width, height, quality = 1.0) {
     return new Promise((resolve, reject) => {
         const img = new Image();

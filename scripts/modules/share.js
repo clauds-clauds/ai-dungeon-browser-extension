@@ -1,5 +1,42 @@
 'use strict';
 
+function sanitizeAndValidateImportObject(importObject) {
+    if (!importObject || typeof importObject.data !== 'object' ||
+        !Array.isArray(importObject.data.characters) ||
+        !Array.isArray(importObject.data.notes)) {
+        throw new Error("Invalid file format or missing required data arrays.");
+    }
+
+    const sanitizedChars = importObject.data.characters.map((char, index) => {
+        if (!char.id || !char.name) throw new Error(`Character at index ${index} is missing required 'id' or 'name'.`);
+        return {
+            ...char,
+            name: sanitizeString(char.name),
+            nicknames: (char.nicknames || []).map(sanitizeString),
+            portraitUrl: sanitizeUrl(char.portraitUrl),
+            color: sanitizeColor(char.color),
+        };
+    });
+
+    const sanitizedNotes = importObject.data.notes.map((note, index) => {
+        if (!note.id || typeof note.text === 'undefined') throw new Error(`Note at index ${index} is missing required 'id' or 'text'.`);
+        return {
+            ...note,
+            text: sanitizeString(note.text),
+            tags: (note.tags || []).map(sanitizeString),
+            color: sanitizeColor(note.color),
+        };
+    });
+
+    return {
+        ...importObject,
+        data: {
+            characters: sanitizedChars,
+            notes: sanitizedNotes,
+        }
+    };
+}
+
 async function handleExport() {
     const adventureId = getAdventureId();
     if (!adventureId) {
@@ -72,9 +109,7 @@ function handleImport(file, mode) {
     reader.onload = async (e) => {
         try {
             const importObject = JSON.parse(e.target.result);
-            if (!importObject.data || !importObject.data.characters || !importObject.data.notes) {
-                throw new Error("Invalid file format.");
-            }
+            const sanitizedObject = sanitizeAndValidateImportObject(importObject); // New, might need additional testing if this interveres with user data somehow.
 
             const adventureId = getAdventureId();
             if (!adventureId) {
@@ -83,11 +118,12 @@ function handleImport(file, mode) {
             }
 
             let successful = false;
+
             if (mode === 'merge') {
-                await handleMergeImport(importObject, adventureId);
+                await handleMergeImport(sanitizedObject, adventureId);
                 successful = true;
             } else if (mode === 'replace') {
-                successful = await handleReplaceImport(importObject, adventureId);
+                successful = await handleReplaceImport(sanitizedObject, adventureId);
             }
 
             if (successful) {

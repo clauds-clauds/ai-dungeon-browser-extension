@@ -1,8 +1,9 @@
 {
     "manifest_version": 3,
     "name": "Dungeon Extension",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "An extension which adds some quality of life features to your AI Dungeon adventures.",
+    "author": "clauds-clauds",
     "permissions": [
         "storage"
     ],
@@ -12,6 +13,9 @@
         "48": "icons/icon_medium.png",
         "96": "icons/icon_medium_large.png",
         "128": "icons/icon_large.png"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'none';"
     },
     "content_scripts": [
         {
@@ -48,9 +52,14 @@
             ],
             "matches": [
                 "https://play.aidungeon.com/*",
-                "https://beta.aidungeon.com/*",
-                "https://alpha.aidungeon.com/*"
+                "https://beta.aidungeon.com/*"
             ]
         }
-    ]
+    ],
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "dungeon-extension@clauds-clauds",
+            "strict_min_version": "109.0"
+        }
+    }
 }
