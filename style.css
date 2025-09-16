@@ -2,7 +2,7 @@
     font-family: 'Material Symbols Rounded';
     font-style: normal;
     font-weight: 100 700;
-    src: url('chrome-extension://__MSG_@@extension_id__/resources/fonts/material_symbols_rounded.ttf') format('truetype');
+    src: url('/resources/fonts/material_symbols_rounded.ttf') format('truetype');
 }
 
 .material-symbols-rounded {
