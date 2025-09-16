@@ -10,7 +10,7 @@ function setupPermanentObservers() {
         for (const mutation of mutations) {
             if (mutation.addedNodes.length > 0) {
                 const hasNewContent = Array.from(mutation.addedNodes).some(node =>
-                    node.nodeType === Node.ELEMENT_NODE && (node.matches(SELECTORS.STORY_CONTAINER) || node.querySelector(SELECTORS.STORY_CONTAINER))
+                    node.nodeType === Node.ELEMENT_NODE && (node.matches(IDENTIFIERS.STORY_CONTAINER) || node.querySelector(IDENTIFIERS.STORY_CONTAINER))
                 );
                 if (hasNewContent) {
                     setTimeout(applyHighlights, 100);
@@ -36,13 +36,14 @@ async function loadAndApplyAdventureData() {
     applySettingsStyles();
     await loadCharacterData();
     applyHighlights();
+    injectSymbols();
 }
 
 let initializedAdventureId = null;
 setupPermanentObservers();
 
 const adventureChangeObserver = new MutationObserver(() => {
-    const storyContainerExists = document.querySelector(SELECTORS.STORY_CONTAINER);
+    const storyContainerExists = document.querySelector(IDENTIFIERS.STORY_CONTAINER);
     const currentAdventureId = getAdventureId();
 
     if (storyContainerExists && currentAdventureId && currentAdventureId !== initializedAdventureId) {

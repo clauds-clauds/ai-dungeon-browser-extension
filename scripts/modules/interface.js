@@ -41,7 +41,7 @@ function injectButton(config) {
 }
 
 function addCustomButtons() {
-    const exitGameButton = document.querySelector(SELECTORS.EXIT_GAME_BUTTON);
+    const exitGameButton = document.querySelector(IDENTIFIERS.EXIT_GAME_BUTTON);
     const listContainer = exitGameButton ? exitGameButton.parentElement : null;
     if (!listContainer) return;
 
@@ -56,7 +56,7 @@ function addCustomButtons() {
         { id: 'custom-btn-settings', label: 'Settings', icon: 'settings_heart', onClick: onSettingsClick },
         { id: 'custom-btn-share', label: 'Share', icon: 'share', onClick: onShareClick },
         { id: 'custom-btn-bugs', label: 'Bugs', icon: 'pest_control', onClick: onBugsClick }, // DEV FEATURE: REMOVE FROM STABLE PRODUCTION.
-        { id: 'custom-btn-refresh', label: 'Refresh', icon: 'refresh', onClick: onRefreshClick }, // DEV FEATURE: REMOVE FROM STABLE PRODUCTION.
+        // { id: 'custom-btn-refresh', label: 'Refresh', icon: 'refresh', onClick: onRefreshClick }, // DEV FEATURE: REMOVE FROM STABLE PRODUCTION.
         // { id: 'custom-btn-scripts', label: 'Scripts', icon: 'data_object', onClick: onScriptsClick },
         // { id: 'custom-btn-faq', label: 'FAQ', icon: 'contact_support', onClick: onHelpClick },
         // { id: 'custom-btn-language', label: 'Language', icon: 'glyphs', onClick: onLanguageClick } // HOW WOULD THEY UNDERSTAND IF THEY DO NOT SPEAK ENGLISH WITHOUT TAKING UP 3000 LINES ON THIS BAR?! TODO: SOMEHOW GET BROWSER LANGUAGE LOCALES.

@@ -82,3 +82,23 @@ async function resizeImage(dataUrl, width, height, quality = 1.0) {
         img.src = dataUrl;
     });
 }
+
+function injectSymbols() {
+    const injectId = IDENTIFIERS.FONT_INJECT;
+    if (!document.getElementById(injectId)) {
+        const browserApi = typeof browser !== 'undefined' ? browser : chrome;
+        const fontURL = browserApi.runtime.getURL("resources/fonts/material_symbols_rounded.ttf");
+
+        const fontStyleSheet = document.createElement("style");
+        fontStyleSheet.id = injectId;
+        fontStyleSheet.textContent = `
+        @font-face {
+            font-family: 'Material Symbols Rounded';
+            font-style: normal;
+            font-weight: 100 700;
+            src: url('${fontURL}') format('truetype');
+        }
+        `;
+        document.head.appendChild(fontStyleSheet);
+    }
+}

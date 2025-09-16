@@ -1,10 +1,3 @@
-@font-face {
-    font-family: 'Material Symbols Rounded';
-    font-style: normal;
-    font-weight: 100 700;
-    src: url('/resources/fonts/material_symbols_rounded.ttf') format('truetype');
-}
-
 .material-symbols-rounded {
     font-family: 'Material Symbols Rounded';
     font-weight: normal;
@@ -494,7 +487,7 @@ input[type=color]::-webkit-color-swatch {
     color: #000
 }
 
-/*Spooky*/
+/* Spooky */
 .sortable-ghost {
     opacity: .4;
     background: var(--c-core4, #3a4045)
@@ -504,7 +497,7 @@ input[type=color]::-webkit-color-swatch {
     opacity: .8 !important
 }
 
-/*Share Settings*/
+/* Share Settings */
 #share-form p {
     color: var(--c-core8, #828a92);
     line-height: 1.5;

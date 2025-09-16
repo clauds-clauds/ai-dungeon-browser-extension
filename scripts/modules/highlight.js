@@ -71,7 +71,7 @@ function highlightNamesInNode(node) {
 }
 
 function applyHighlights() {
-    const storyContainers = document.querySelectorAll(`${SELECTORS.STORY_CONTAINER}:not([data-chars-highlighted])`);
+    const storyContainers = document.querySelectorAll(`${IDENTIFIERS.STORY_CONTAINER}:not([data-chars-highlighted])`);
 
     for (const container of storyContainers) {
         container.setAttribute('data-chars-highlighted', 'true');
