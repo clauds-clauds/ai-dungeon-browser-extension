@@ -73,7 +73,14 @@ async function resizeImage(dataUrl, width, height, quality = 1.0) {
             canvas.width = width;
             canvas.height = height;
             const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
+
+            const sourceSize = Math.min(img.width, img.height);
+
+            const sx = (img.width - sourceSize) / 2;
+            const sy = (img.height - sourceSize) / 2;
+
+            ctx.drawImage(img, sx, sy, sourceSize, sourceSize, 0, 0, width, height);
+
             resolve(canvas.toDataURL('image/jpeg', quality));
         };
         img.onerror = (err) => {
