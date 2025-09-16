@@ -25,9 +25,9 @@ function applySettingsStyles() {
 
     styleElement.textContent = `
         .character-portrait {
-            width: ${size}px;
-            height: ${size}px;
-            border-radius: ${radius}%;
+            width: ${size}px !important;
+            height: ${size}px !important;
+            border-radius: ${radius}% !important;
         }
     `;
 }
@@ -49,6 +49,8 @@ function populateSettingsForm() {
     document.getElementById('setting-autosave').checked = extensionSettings.autoSaveEnabled;
     document.getElementById('setting-autosize').checked = extensionSettings.autoResizeEnabled;
 
+    document.getElementById('setting-default-note-color').value = extensionSettings.defaultNoteColor;
+
     document.getElementById('info-adventure-id').textContent = getAdventureId() || 'N/A';
     document.getElementById('info-plugin-version').textContent = "Alpha " + chrome.runtime.getManifest().version;
 }
@@ -64,6 +66,7 @@ async function saveSettings(event) {
     extensionSettings.borderRadius = document.getElementById('setting-border-radius').value;
     extensionSettings.autoSaveEnabled = document.getElementById('setting-autosave').checked;
     extensionSettings.autoResizeEnabled = document.getElementById('setting-autosize').checked;
+    extensionSettings.defaultNoteColor = document.getElementById('setting-default-note-color').value;
 
     await chrome.storage.local.set({ extensionSettings });
     applySettingsStyles();

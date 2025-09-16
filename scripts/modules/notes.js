@@ -104,9 +104,6 @@ async function setupNotesEditor() {
     let panel = document.getElementById('notes-editor-panel');
     makePageInert();
 
-    const settingsData = await chrome.storage.local.get('extensionSettings');
-    const currentSettings = { defaultNoteColor: '#3a4045', ...settingsData.extensionSettings };
-
     if (!panel) {
         const editorUrl = chrome.runtime.getURL('resources/editor_notes.html');
         const editorHtml = await (await fetch(editorUrl)).text();
@@ -130,7 +127,7 @@ async function setupNotesEditor() {
         });
     }
 
-    document.getElementById('new-note-color').value = currentSettings.defaultNoteColor;
+    document.getElementById('new-note-color').value = extensionSettings.defaultNoteColor;
     await loadNotes();
     setTimeout(() => panel.classList.add('visible'), 10);
 }
