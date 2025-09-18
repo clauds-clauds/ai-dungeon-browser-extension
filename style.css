@@ -543,6 +543,10 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 /* Notes Stuff */
+#add-note-form {
+    flex-grow: 0;
+}
+
 #notes-view {
     height: 80vh;
 }
