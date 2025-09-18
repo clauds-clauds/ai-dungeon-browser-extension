@@ -71,7 +71,7 @@ async function saveSettings(event) {
 
 async function setupSettingsEditor() {
     let panel = document.getElementById('settings-editor-panel');
-    makePageInert();
+    makePageInert('settings-editor-panel');
     if (!panel) {
         panel = await injectPanel('resources/editor_settings.html');
         const form = document.getElementById('settings-form');

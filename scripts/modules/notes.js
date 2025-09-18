@@ -100,7 +100,7 @@ async function deleteNote(id) {
 
 async function setupNotesEditor() {
     let panel = document.getElementById('notes-editor-panel');
-    makePageInert();
+    makePageInert('notes-editor-panel');
 
     if (!panel) {
         panel = await injectPanel('resources/editor_notes.html');

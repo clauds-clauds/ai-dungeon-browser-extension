@@ -35,6 +35,7 @@
                 "scripts/modules/notes.js",
                 "scripts/modules/share.js",
                 "scripts/modules/buttons.js",
+                "scripts/modules/menu.js",
                 "scripts/modules/interface.js",
                 "scripts/run.js"
             ],
@@ -50,6 +51,7 @@
                 "resources/editor_notes.html",
                 "resources/editor_settings.html",
                 "resources/editor_share.html",
+                "resources/editor_menu.html",
                 "resources/fonts/material_symbols_rounded.ttf"
             ],
             "matches": [

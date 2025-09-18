@@ -213,7 +213,7 @@ async function handleDelete() {
 
 async function setupCharacterEditor() {
     let panel = document.getElementById('character-editor-panel');
-    makePageInert();
+    makePageInert('character-editor-panel');
     if (!panel) {
         panel = await injectPanel('resources/editor_character.html');
 

@@ -738,3 +738,86 @@ input[type="color"]::-webkit-color-swatch {
 .sortable-drag {
     opacity: .8 !important;
 }
+
+/* Main Menu Panel Stuff */
+#main-menu-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9998;
+    visibility: hidden;
+    transition: background 0.2s ease-out, visibility 0s 0.2s;
+}
+
+#main-menu-panel.visible {
+    background: var(--c-blackA7, rgba(18, 21, 25, 0.8));
+    visibility: visible;
+    transition-delay: 0s;
+}
+
+#main-menu-view {
+    background: var(--c-core1, #1b1f22);
+    border: 1px solid var(--c-core2, #272c30);
+    border-radius: var(--t-radius-1, 8px);
+    padding: 24px;
+    width: 90%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}
+
+#main-menu-panel.visible #main-menu-view {
+    opacity: 1;
+    transform: scale(1);
+}
+
+#main-menu-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+}
+
+.main-menu-button {
+    background-image: linear-gradient(145deg, var(--c-core3, #2f3539), var(--c-core2, #272c30));
+    border: 1px solid var(--c-core4, #3a4045);
+    color: var(--c-core8, #828a92);
+    border-radius: 6px;
+    padding: 16px;
+    font-size: 0.9em;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.main-menu-button:hover {
+    border-color: var(--c-primary, #f8ae2c);
+    color: var(--c-coreA9, #fff);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.main-menu-button:hover .material-symbols-rounded {
+    color: var(--c-primary, #f8ae2c);
+}
+
+.main-menu-button .material-symbols-rounded {
+    font-size: 28px;
+    transition: color 0.2s ease;
+}

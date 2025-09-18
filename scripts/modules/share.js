@@ -155,7 +155,7 @@ function handleImport(file, mode) {
 
 async function setupShareEditor() {
     let panel = document.getElementById('share-editor-panel');
-    makePageInert();
+    makePageInert('share-editor-panel');
     if (!panel) {
         panel = await injectPanel('resources/editor_share.html');
 

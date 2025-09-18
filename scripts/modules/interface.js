@@ -43,32 +43,16 @@ function injectButton(config) {
 function addCustomButtons() {
     const exitGameButton = document.querySelector(IDENTIFIERS.EXIT_GAME_BUTTON);
     const listContainer = exitGameButton ? exitGameButton.parentElement : null;
-    if (!listContainer || document.getElementById('custom-buttons-wrapper')) return;
+    if (!listContainer) return;
 
-    const scrollableButtonArea = document.createElement('div');
-    scrollableButtonArea.id = 'custom-buttons-wrapper';
-    scrollableButtonArea.style.maxHeight = 'calc(100vh - 300px)';
-    scrollableButtonArea.style.overflowY = 'auto';
-    scrollableButtonArea.style.paddingRight = '8px';
+    const buttonConfig = {
+        id: 'custom-btn-main-menu',
+        label: 'Extension Menu',
+        icon: 'widgets',
+        onClick: setupMainMenu,
+        exitGameButton,
+        listContainer
+    };
 
-    scrollableButtonArea.style.display = 'flex';
-    scrollableButtonArea.style.flexDirection = 'column';
-    scrollableButtonArea.style.gap = '16px';
-
-    listContainer.insertBefore(scrollableButtonArea, exitGameButton);
-
-    const buttonConfigs = [
-        { id: 'custom-btn-characters', label: 'Characters', icon: 'group', onClick: onCharactersClick },
-        { id: 'custom-btn-notes', label: 'Notes', icon: 'description', onClick: onNotesClick },
-        { id: 'custom-btn-settings', label: 'Settings', icon: 'settings_heart', onClick: onSettingsClick },
-        { id: 'custom-btn-share', label: 'Share', icon: 'share', onClick: onShareClick },
-        { id: 'custom-btn-bugs', label: 'Bugs', icon: 'pest_control', onClick: onBugsClick },
-        { id: 'custom-btn-refresh', label: 'Force Refresh', icon: 'refresh', onClick: onRefreshClick },
-    ];
-
-    buttonConfigs.forEach(config => {
-        injectButton({ ...config, exitGameButton, listContainer: scrollableButtonArea });
-    });
-
-    scrollableButtonArea.appendChild(exitGameButton);
+    injectButton(buttonConfig);
 }

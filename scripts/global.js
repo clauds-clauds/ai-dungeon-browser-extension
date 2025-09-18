@@ -29,11 +29,10 @@ async function resizeImage(dataUrl, width, height, quality = 1.0) {
     });
 }
 
-function makePageInert() {
+function makePageInert(excludePanelId) {
     const selectors = 'body > div, body > main, body > header, body > footer';
-    const panelSelectors = '#notes-editor-panel, #settings-editor-panel, #character-editor-panel, #share-editor-panel';
     document.querySelectorAll(selectors).forEach(element => {
-        if (!element.closest(panelSelectors) && !element.querySelector(panelSelectors)) {
+        if (element.id !== excludePanelId && !element.querySelector(`#${excludePanelId}`)) {
             element.setAttribute('inert', '');
         }
     });
