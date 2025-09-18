@@ -21,13 +21,38 @@
         </div>
         <form id="character-form">
             <label>Portraits</label>
-            <div id="portrait-gallery-container">
-                <ul id="portrait-gallery"></ul>
-                <input type="file" id="char-portrait-file-input" accept="image/*" multiple style="display: none;">
-                <button type="button" id="add-portrait-btn" title="Add Portrait">
-                    <span class="material-symbols-rounded">add_photo_alternate</span>
+            <div id="portrait-hub">
+                <div id="portrait-list-container">
+                    <ul id="portrait-list-editor"></ul>
+                </div>
+                <button type="button" id="add-new-portrait-btn" title="Add New Portrait Slot">
+                    <span class="material-symbols-rounded">add</span> Add Portrait
                 </button>
             </div>
+            
+            <template id="portrait-editor-template">
+                <li class="portrait-editor-item">
+                    <div class="portrait-card">
+                        <div class="portrait-card-icon">
+                            <img src="" alt="Icon">
+                            <input type="file" class="icon-file-input" accept="image/*" style="display:none;">
+                        </div>
+                        <div class="portrait-card-full">
+                            <img src="" alt="Portrait Preview">
+                            <input type="file" class="full-file-input" accept="image/*" style="display:none;">
+                        </div>
+                    </div>
+                    <div class="portrait-card-actions">
+                        <button type="button" class="set-active-portrait-btn" title="Set as Active Portrait">
+                            <span class="material-symbols-rounded">push_pin</span>
+                        </button>
+                        <button type="button" class="delete-portrait-btn" title="Delete Portrait">
+                            <span class="material-symbols-rounded">delete</span>
+                        </button>
+                        <span class="drag-handle material-symbols-rounded">drag_indicator</span>
+                    </div>
+                </li>
+            </template>
 
             <label for="char-name">Name</label>
             <input type="text" id="char-name" autocomplete="off" required>

@@ -19,17 +19,12 @@ async function resizeImage(dataUrl, width, height, quality = 1.0) {
             const ctx = canvas.getContext('2d');
 
             const sourceSize = Math.min(img.width, img.height);
-
             const sx = (img.width - sourceSize) / 2;
             const sy = (img.height - sourceSize) / 2;
-
             ctx.drawImage(img, sx, sy, sourceSize, sourceSize, 0, 0, width, height);
-
             resolve(canvas.toDataURL('image/jpeg', quality));
         };
-        img.onerror = (err) => {
-            reject(err);
-        };
+        img.onerror = reject;
         img.src = dataUrl;
     });
 }
@@ -37,7 +32,6 @@ async function resizeImage(dataUrl, width, height, quality = 1.0) {
 function makePageInert() {
     const selectors = 'body > div, body > main, body > header, body > footer';
     const panelSelectors = '#notes-editor-panel, #settings-editor-panel, #character-editor-panel, #share-editor-panel';
-
     document.querySelectorAll(selectors).forEach(element => {
         if (!element.closest(panelSelectors) && !element.querySelector(panelSelectors)) {
             element.setAttribute('inert', '');
@@ -64,10 +58,7 @@ function sanitizeColor(color) {
     if (!color) return null;
     const s = new Option().style;
     s.color = color;
-    if (s.color) {
-        return color;
-    }
-    return null;
+    return s.color ? color : null;
 }
 
 function sanitizeString(str) {
@@ -88,8 +79,6 @@ function closePanel(id, refreshHighlights = false) {
     const panel = document.getElementById(id);
     if (panel) panel.classList.remove('visible');
     makePageInteractive();
-
-    // This is used for the settings panel, I could do it every save but performance and all that.
     if (refreshHighlights) reapplyAllHighlights();
 }
 
@@ -99,9 +88,7 @@ async function injectPanel(filePath) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
     const panel = doc.querySelector('div');
-    if (panel) {
-        document.body.appendChild(panel);
-    }
+    if (panel) document.body.appendChild(panel);
     return panel;
 }
 
@@ -110,17 +97,31 @@ function injectSymbols() {
     if (!document.getElementById(injectId)) {
         const browserApi = typeof browser !== 'undefined' ? browser : chrome;
         const fontURL = browserApi.runtime.getURL("resources/fonts/material_symbols_rounded.ttf");
-
         const fontStyleSheet = document.createElement("style");
         fontStyleSheet.id = injectId;
-        fontStyleSheet.textContent = `
-        @font-face {
-            font-family: 'Material Symbols Rounded';
-            font-style: normal;
-            font-weight: 100 700;
-            src: url('${fontURL}') format('truetype');
-        }
-        `;
+        fontStyleSheet.textContent = `@font-face { font-family: 'Material Symbols Rounded'; font-style: normal; font-weight: 100 700; src: url('${fontURL}') format('truetype'); }`;
         document.head.appendChild(fontStyleSheet);
     }
+}
+
+function injectTooltip() {
+    if (document.getElementById('portrait-hover-tooltip')) return;
+    const tooltip = document.createElement('div');
+    tooltip.id = 'portrait-hover-tooltip';
+
+    const img = document.createElement('img');
+    const prevBtn = document.createElement('button');
+    prevBtn.id = 'tooltip-prev-btn';
+    prevBtn.className = 'tooltip-nav-btn';
+    prevBtn.innerHTML = '<span class="material-symbols-rounded">arrow_back_ios</span>';
+
+    const nextBtn = document.createElement('button');
+    nextBtn.id = 'tooltip-next-btn';
+    nextBtn.className = 'tooltip-nav-btn';
+    nextBtn.innerHTML = '<span class="material-symbols-rounded">arrow_forward_ios</span>';
+
+    tooltip.appendChild(img);
+    tooltip.appendChild(prevBtn);
+    tooltip.appendChild(nextBtn);
+    document.body.appendChild(tooltip);
 }

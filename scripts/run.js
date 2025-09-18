@@ -24,13 +24,15 @@ function setupPermanentObservers() {
     chrome.storage.onChanged.addListener((changes, areaName) => {
         if (areaName === 'local') {
             const adventureId = getAdventureId();
-            // We need to check for settings changes as well as adventure data changes
+
+            // Check if settings or data have changed.
             if ((adventureId && changes[adventureId]) || changes.extensionSettings) {
-                // Reload settings if they changed, then reapply highlights
+                
+                // If so then load the correct settings and reapply all highlights.
                 if (changes.extensionSettings) {
                     loadSettingsFromStorage().then(() => reapplyAllHighlights());
                 } else {
-                    reapplyAllHighlights();
+                    reapplyAllHighlights(); // Otherwise just reapply all highlights.
                 }
             }
         }
@@ -38,11 +40,20 @@ function setupPermanentObservers() {
 }
 
 async function loadAndApplyAdventureData() {
+    // First load all the latest settings from storage.
     await loadSettingsFromStorage();
-    applySettingsStyles();
+    applySettingsStyles(); // Apply them.
+
+    // Load all the custom characters which users have made.
     await loadCharacterData();
-    applyHighlights();
-    injectSymbols();
+    applyHighlights(); // Apply them to the adventure and such.
+
+    // Inject some required functionality into the page.
+    injectSymbols(); // This ensures Material Symbols is usable.
+    injectTooltip(); // This injects a little tooltip to show higher res images.
+
+    // This applies event listeners and such to the tooltip.
+    applyTooltipStuff();
 }
 
 let initializedAdventureId = null;

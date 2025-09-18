@@ -26,6 +26,7 @@
             "js": [
                 "scripts/libraries/Sortable.min.js",
                 "scripts/config.js",
+                "scripts/modules/tooltip.js",
                 "scripts/global.js",
                 "scripts/store.js",
                 "scripts/modules/character.js",

@@ -44,12 +44,49 @@ function highlightNamesInNode(node) {
             }
             const span = document.createElement('span');
             span.className = 'character-highlight';
+            span.dataset.charId = char.id;
+
+            span.addEventListener('mouseenter', (e) => {
+                const tooltip = document.getElementById('portrait-hover-tooltip');
+                clearTimeout(hideTooltipTimeout);
+                if (!char.portraits || char.portraits.length === 0) return;
+
+                tooltip.portraits = char.portraits;
+                tooltip.sourceSpan = e.target;
+
+                const img = tooltip.querySelector('img');
+                const activeIndex = char.activePortraitIndex || 0;
+                const activePortrait = char.portraits[activeIndex];
+                tooltip.currentIndex = activeIndex;
+                img.src = sanitizeUrl(activePortrait?.fullUrl || activePortrait?.iconUrl);
+
+                const navButtons = tooltip.querySelectorAll('.tooltip-nav-btn');
+                navButtons.forEach(btn => {
+                    btn.style.display = char.portraits.length > 1 ? 'flex' : 'none';
+                });
+
+                const rect = e.target.getBoundingClientRect();
+                tooltip.style.left = `${rect.left + rect.width / 2}px`;
+                tooltip.style.top = `${rect.top}px`;
+                tooltip.style.transform = `translate(-50%, -100%) translateY(-10px)`;
+                tooltip.classList.add('visible');
+            });
+
+            span.addEventListener('mouseleave', () => {
+                hideTooltipTimeout = setTimeout(() => {
+                    const tooltip = document.getElementById('portrait-hover-tooltip');
+                    if (tooltip) tooltip.classList.remove('visible');
+                }, 300);
+            });
+
             const colorToApply = char.colorMode === "special" ? char.color : dataStore.settings.sharedColor;
             span.style.color = sanitizeColor(colorToApply) || 'inherit';
 
-            if (char.portraitUrls && char.portraitUrls.length > 0) {
+            if (char.portraits && char.portraits.length > 0) {
                 const img = document.createElement('img');
-                img.src = sanitizeUrl(char.portraitUrls[0]);
+                const activePortrait = char.portraits[char.activePortraitIndex] || char.portraits[0];
+
+                img.src = sanitizeUrl(activePortrait?.iconUrl || '');
                 img.className = 'character-portrait';
                 img.alt = char.name;
                 span.appendChild(img);

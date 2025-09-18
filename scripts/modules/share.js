@@ -9,20 +9,27 @@ function sanitizeAndValidateImportObject(importObject) {
 
     const sanitizedChars = importObject.data.characters.map((char, index) => {
         if (!char.id || !char.name) throw new Error(`Character at index ${index} is missing required 'id' or 'name'.`);
-        
-        let portraitUrls = [];
-        if (char.portraitUrls && Array.isArray(char.portraitUrls)) {
-            portraitUrls = char.portraitUrls.map(sanitizeUrl);
-        } else if (char.portraitUrl) {
-            portraitUrls = [sanitizeUrl(char.portraitUrl)];
+
+        let portraits = [];
+        if (char.portraits && Array.isArray(char.portraits)) {
+            portraits = char.portraits.map(p => ({
+                thumbnail: sanitizeUrl(p.thumbnail),
+                full: sanitizeUrl(p.full)
+            }));
+        } else if (char.portraitUrls && Array.isArray(char.portraitUrls)) { // Legacy.
+            portraits = char.portraitUrls.map(url => ({ thumbnail: sanitizeUrl(url), full: sanitizeUrl(url) }));
+        } else if (char.portraitUrl) { // Older older legacy.
+            const url = sanitizeUrl(char.portraitUrl);
+            portraits = [{ thumbnail: url, full: url }];
         }
 
         return {
             ...char,
             name: sanitizeString(char.name),
             nicknames: (char.nicknames || []).map(sanitizeString),
-            portraitUrls: portraitUrls,
+            portraits: portraits,
             portraitUrl: undefined,
+            portraitUrls: undefined,
             color: sanitizeColor(char.color),
         };
     });

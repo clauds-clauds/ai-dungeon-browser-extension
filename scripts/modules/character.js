@@ -1,5 +1,61 @@
 'use strict';
 
+function renderPortraitEditor(char) {
+    const list = document.getElementById('portrait-list-editor');
+    list.innerHTML = '';
+    char.portraits.forEach((p, index) => addPortraitEditorItem(p, index === char.activePortraitIndex));
+}
+
+function addPortraitEditorItem(portraitData = {}, isActive = false) {
+    const template = document.getElementById('portrait-editor-template');
+    const clone = template.content.cloneNode(true);
+    const item = clone.querySelector('li');
+    const id = portraitData.id || Date.now() + Math.random();
+    item.dataset.id = id;
+
+    if (isActive) item.classList.add('active');
+
+    const iconCard = item.querySelector('.portrait-card-icon');
+    const iconImg = iconCard.querySelector('img');
+    const iconInput = iconCard.querySelector('.icon-file-input');
+    if (portraitData.iconUrl) iconImg.src = portraitData.iconUrl;
+
+    const fullCard = item.querySelector('.portrait-card-full');
+    const fullImg = fullCard.querySelector('img');
+    const fullInput = fullCard.querySelector('.full-file-input');
+    if (portraitData.fullUrl) fullImg.src = portraitData.fullUrl;
+
+    const setupFileInput = (card, img, input, isIcon) => {
+        card.addEventListener('click', () => input.click());
+        input.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = async (event) => {
+                let finalUrl = event.target.result;
+                if (isIcon) {
+                    finalUrl = await resizeImage(finalUrl, 64, 64, 'image/jpeg');
+                }
+                img.src = finalUrl;
+            };
+            reader.readAsDataURL(file);
+            input.value = '';
+        });
+    };
+
+    setupFileInput(iconCard, iconImg, iconInput, true);
+    setupFileInput(fullCard, fullImg, fullInput, false);
+
+    item.querySelector('.delete-portrait-btn').addEventListener('click', () => item.remove());
+    item.querySelector('.set-active-portrait-btn').addEventListener('click', () => {
+        document.querySelectorAll('.portrait-editor-item.active').forEach(el => el.classList.remove('active'));
+        item.classList.add('active');
+    });
+
+    document.getElementById('portrait-list-editor').appendChild(item);
+}
+
 async function loadCharacterData() {
     const adventureId = getAdventureId();
     if (!adventureId) {
@@ -7,17 +63,27 @@ async function loadCharacterData() {
         return;
     }
     const storageData = await chrome.storage.local.get(adventureId);
-    const characters = storageData[adventureId] || [];
+    let characters = storageData[adventureId] || [];
 
-    characters.forEach(char => {
-        if (char.portraitUrl && !char.portraitUrls) {
-            char.portraitUrls = [char.portraitUrl];
-            delete char.portraitUrl;
-        } else if (!char.portraitUrls) {
-            char.portraitUrls = [];
+    characters = characters.map(char => {
+        if (!char.portraits || typeof char.portraits[0] === 'string' || !char.portraits[0]?.iconUrl) {
+            const oldPortraits = char.portraits || char.portraitUrls || (char.portraitUrl ? [char.portraitUrl] : []);
+            char.portraits = oldPortraits.map(p => {
+                const url = typeof p === 'string' ? p : (p.thumbnail || p.full);
+                return {
+                    id: Date.now() + Math.random(),
+                    iconUrl: url,
+                    fullUrl: url
+                };
+            });
         }
+        if (typeof char.activePortraitIndex !== 'number' || char.activePortraitIndex >= char.portraits.length) {
+            char.activePortraitIndex = 0;
+        }
+        delete char.portraitUrl;
+        delete char.portraitUrls;
+        return char;
     });
-
     dataStore.characters = characters;
 }
 
@@ -25,28 +91,6 @@ async function saveCharacters() {
     const adventureId = getAdventureId();
     if (!adventureId) return;
     await chrome.storage.local.set({ [adventureId]: dataStore.characters });
-}
-
-function renderPortraitsInForm(urls = []) {
-    const gallery = document.getElementById('portrait-gallery');
-    gallery.innerHTML = '';
-    urls.forEach(url => {
-        const li = document.createElement('li');
-        li.dataset.url = url;
-
-        const img = document.createElement('img');
-        img.src = sanitizeUrl(url);
-        li.appendChild(img);
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.type = 'button';
-        deleteBtn.className = 'delete-portrait-btn';
-        deleteBtn.innerHTML = '<span class="material-symbols-rounded">close</span>';
-        deleteBtn.onclick = () => li.remove();
-        li.appendChild(deleteBtn);
-
-        gallery.appendChild(li);
-    });
 }
 
 function renderCharacterList(charactersToRender = dataStore.characters) {
@@ -62,9 +106,8 @@ function renderCharacterList(charactersToRender = dataStore.characters) {
         dragHandle.textContent = 'drag_indicator';
 
         const portrait = document.createElement('img');
-        portrait.src = sanitizeUrl(char.portraitUrls?.[0] || '');
-        portrait.style.borderRadius = dataStore.settings.borderRadius + '%';
-        portrait.style.borderWidth = dataStore.settings.borderWidth + "px solid rgba(255, 255, 255, .3)" 
+        const activePortrait = char.portraits[char.activePortraitIndex] || char.portraits[0];
+        portrait.src = sanitizeUrl(activePortrait?.iconUrl || '');
         portrait.alt = char.name;
 
         const nameSpan = document.createElement('span');
@@ -104,15 +147,13 @@ function showFormView(characterId = null) {
         document.getElementById('char-nicknames').value = (char.nicknames || []).join(', ');
         document.getElementById('char-color').value = char.color;
         document.getElementById('char-color-mode').value = char.colorMode;
-
-        renderPortraitsInForm(char.portraitUrls);
-
         deleteBtn.classList.remove('hidden');
+        renderPortraitEditor(char);
     } else {
-        renderPortraitsInForm([]);
         title.textContent = 'Add Character';
         document.getElementById('char-color').value = dataStore.settings.defaultColor;
         deleteBtn.classList.add('hidden');
+        document.getElementById('portrait-list-editor').innerHTML = '';
     }
 
     document.getElementById('character-list-view').style.display = 'none';
@@ -126,54 +167,33 @@ async function saveCharacterForm() {
     const name = document.getElementById('char-name').value;
     if (!name.trim()) return;
 
-    const processFiles = async (files) => {
-        const urls = [];
-        for (const file of files) {
-            const reader = new FileReader();
-            const promise = new Promise(resolve => {
-                reader.onload = async (e) => {
-                    if (dataStore.settings.autoResizeEnabled) {
-                        resolve(await resizeImage(e.target.result, 64, 64, 'image/jpeg'));
-                    } else {
-                        resolve(e.target.result);
-                    }
-                };
-            });
-            reader.readAsDataURL(file);
-            urls.push(await promise);
-        }
-        return urls;
-    };
+    const portraitItems = document.querySelectorAll('#portrait-list-editor .portrait-editor-item');
+    const portraits = Array.from(portraitItems).map(item => ({
+        id: item.dataset.id,
+        iconUrl: item.querySelector('.portrait-card-icon img').src,
+        fullUrl: item.querySelector('.portrait-card-full img').src || item.querySelector('.portrait-card-icon img').src
+    }));
 
-    const fileInput = document.getElementById('char-portrait-file-input');
-    const newPortraitUrls = await processFiles(fileInput.files);
-    fileInput.value = '';
-
-    const existingPortraitUrls = Array.from(document.querySelectorAll('#portrait-gallery li'))
-        .map(li => li.dataset.url);
-
-    const allPortraitUrls = [...existingPortraitUrls, ...newPortraitUrls];
+    const activeItem = document.querySelector('#portrait-list-editor .portrait-editor-item.active');
+    const activePortraitIndex = activeItem ? Array.from(portraitItems).indexOf(activeItem) : 0;
 
     const formData = {
         name: document.getElementById('char-name').value,
         nicknames: document.getElementById('char-nicknames').value.split(',').map(n => n.trim()).filter(Boolean),
         color: document.getElementById('char-color').value,
         colorMode: document.getElementById('char-color-mode').value,
-        portraitUrls: allPortraitUrls
+        portraits: portraits,
+        activePortraitIndex: activePortraitIndex
     };
 
     if (dataStore.ui.editingCharacterId) {
         const char = dataStore.characters.find(c => c.id === dataStore.ui.editingCharacterId);
-        if (char) {
-            Object.assign(char, formData);
-            delete char.portraitUrl;
-        }
+        if (char) Object.assign(char, formData);
     } else {
         const newId = Date.now();
         dataStore.characters.push({ id: newId, ...formData });
         dataStore.ui.editingCharacterId = newId;
     }
-
     await saveCharacters();
 }
 
@@ -213,6 +233,7 @@ async function setupCharacterEditor() {
         });
 
         document.getElementById('delete-char-btn').addEventListener('click', handleDelete);
+        document.getElementById('add-new-portrait-btn').addEventListener('click', () => addPortraitEditorItem({}, false));
 
         document.getElementById('char-search-input').addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
@@ -223,53 +244,10 @@ async function setupCharacterEditor() {
             renderCharacterList(filteredChars);
         });
 
-        const addPortraitBtn = document.getElementById('add-portrait-btn');
-        const portraitFileInput = document.getElementById('char-portrait-file-input');
-
-        addPortraitBtn.addEventListener('click', () => portraitFileInput.click());
-
-        portraitFileInput.addEventListener('change', async (event) => {
-            const files = Array.from(event.target.files);
-            if (!files.length) return;
-
-            const gallery = document.getElementById('portrait-gallery');
-
-            for (const file of files) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const li = document.createElement('li');
-
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    li.appendChild(img);
-
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.type = 'button';
-                    deleteBtn.className = 'delete-portrait-btn';
-                    deleteBtn.innerHTML = '<span class="material-symbols-rounded">close</span>';
-                    deleteBtn.onclick = () => li.remove();
-                    li.appendChild(deleteBtn);
-
-                    gallery.appendChild(li);
-
-                    const tempReader = new FileReader();
-                    tempReader.onload = async (readEvent) => {
-                        const finalUrl = dataStore.settings.autoResizeEnabled
-                            ? await resizeImage(readEvent.target.result, 64, 64, 'image/jpeg')
-                            : readEvent.target.result;
-                        li.dataset.url = finalUrl;
-                    };
-                    tempReader.readAsDataURL(file);
-                };
-                reader.readAsDataURL(file);
-            }
-            portraitFileInput.value = '';
-        });
-
-        const galleryEl = document.getElementById('portrait-gallery');
-        new Sortable(galleryEl, {
+        const editorListEl = document.getElementById('portrait-list-editor');
+        new Sortable(editorListEl, {
             animation: 150,
-            ghostClass: 'sortable-ghost',
+            handle: '.drag-handle',
             forceFallback: true,
         });
 
