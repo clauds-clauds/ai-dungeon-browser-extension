@@ -428,6 +428,12 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 /* Settings & Share Stuff */
+#settings-form {
+    overflow-y: auto;
+    max-height: 65vh;
+    padding-right: 12px;
+}
+
 #settings-form fieldset,
 #share-form fieldset {
     border: 1px solid var(--c-core2, #272c30);

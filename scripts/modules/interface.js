@@ -37,30 +37,38 @@ function injectButton(config) {
         if (onClick) onClick();
     });
 
-    listContainer.insertBefore(button, exitGameButton);
+    listContainer.appendChild(button);
 }
 
 function addCustomButtons() {
     const exitGameButton = document.querySelector(IDENTIFIERS.EXIT_GAME_BUTTON);
     const listContainer = exitGameButton ? exitGameButton.parentElement : null;
-    if (!listContainer) return;
+    if (!listContainer || document.getElementById('custom-buttons-wrapper')) return;
+
+    const scrollableButtonArea = document.createElement('div');
+    scrollableButtonArea.id = 'custom-buttons-wrapper';
+    scrollableButtonArea.style.maxHeight = 'calc(100vh - 300px)';
+    scrollableButtonArea.style.overflowY = 'auto';
+    scrollableButtonArea.style.paddingRight = '8px';
+
+    scrollableButtonArea.style.display = 'flex';
+    scrollableButtonArea.style.flexDirection = 'column';
+    scrollableButtonArea.style.gap = '16px';
+
+    listContainer.insertBefore(scrollableButtonArea, exitGameButton);
 
     const buttonConfigs = [
-        /* 
-        You can define any and all new buttons here, it's pretty modular.
-        Also, I use some cute Material Icons by Google from here:
-        https://fonts.google.com/icons?selected=Material+Symbols+Outlined
-        */
         { id: 'custom-btn-characters', label: 'Characters', icon: 'group', onClick: onCharactersClick },
         { id: 'custom-btn-notes', label: 'Notes', icon: 'description', onClick: onNotesClick },
         { id: 'custom-btn-settings', label: 'Settings', icon: 'settings_heart', onClick: onSettingsClick },
         { id: 'custom-btn-share', label: 'Share', icon: 'share', onClick: onShareClick },
-        { id: 'custom-btn-bugs', label: 'Bugs', icon: 'pest_control', onClick: onBugsClick }, // DEV FEATURE: REMOVE FROM STABLE PRODUCTION.
-        { id: 'custom-btn-refresh', label: 'Force Refresh', icon: 'refresh', onClick: onRefreshClick }, // DEV FEATURE: REMOVE FROM STABLE PRODUCTION.
-        // { id: 'custom-btn-scripts', label: 'Scripts', icon: 'data_object', onClick: onScriptsClick },
-        // { id: 'custom-btn-faq', label: 'FAQ', icon: 'contact_support', onClick: onHelpClick },
-        // { id: 'custom-btn-language', label: 'Language', icon: 'glyphs', onClick: onLanguageClick } // HOW WOULD THEY UNDERSTAND IF THEY DO NOT SPEAK ENGLISH WITHOUT TAKING UP 3000 LINES ON THIS BAR?! TODO: SOMEHOW GET BROWSER LANGUAGE LOCALES.
+        { id: 'custom-btn-bugs', label: 'Bugs', icon: 'pest_control', onClick: onBugsClick },
+        { id: 'custom-btn-refresh', label: 'Force Refresh', icon: 'refresh', onClick: onRefreshClick },
     ];
 
-    buttonConfigs.forEach(config => injectButton({ ...config, exitGameButton, listContainer }));
+    buttonConfigs.forEach(config => {
+        injectButton({ ...config, exitGameButton, listContainer: scrollableButtonArea });
+    });
+
+    scrollableButtonArea.appendChild(exitGameButton);
 }
