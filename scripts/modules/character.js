@@ -7,13 +7,46 @@ async function loadCharacterData() {
         return;
     }
     const storageData = await chrome.storage.local.get(adventureId);
-    dataStore.characters = storageData[adventureId] || [];
+    const characters = storageData[adventureId] || [];
+
+    characters.forEach(char => {
+        if (char.portraitUrl && !char.portraitUrls) {
+            char.portraitUrls = [char.portraitUrl];
+            delete char.portraitUrl;
+        } else if (!char.portraitUrls) {
+            char.portraitUrls = [];
+        }
+    });
+
+    dataStore.characters = characters;
 }
 
 async function saveCharacters() {
     const adventureId = getAdventureId();
     if (!adventureId) return;
     await chrome.storage.local.set({ [adventureId]: dataStore.characters });
+}
+
+function renderPortraitsInForm(urls = []) {
+    const gallery = document.getElementById('portrait-gallery');
+    gallery.innerHTML = '';
+    urls.forEach(url => {
+        const li = document.createElement('li');
+        li.dataset.url = url;
+
+        const img = document.createElement('img');
+        img.src = sanitizeUrl(url);
+        li.appendChild(img);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = 'delete-portrait-btn';
+        deleteBtn.innerHTML = '<span class="material-symbols-rounded">close</span>';
+        deleteBtn.onclick = () => li.remove();
+        li.appendChild(deleteBtn);
+
+        gallery.appendChild(li);
+    });
 }
 
 function renderCharacterList(charactersToRender = dataStore.characters) {
@@ -29,7 +62,7 @@ function renderCharacterList(charactersToRender = dataStore.characters) {
         dragHandle.textContent = 'drag_indicator';
 
         const portrait = document.createElement('img');
-        portrait.src = sanitizeUrl(char.portraitUrl);
+        portrait.src = sanitizeUrl(char.portraitUrls?.[0] || '');
         portrait.style.borderRadius = dataStore.settings.borderRadius + '%';
         portrait.alt = char.name;
 
@@ -60,13 +93,8 @@ function showFormView(characterId = null) {
     const form = document.getElementById('character-form');
     const title = document.getElementById('form-title');
     const deleteBtn = document.getElementById('delete-char-btn');
-    const portraitPreview = document.getElementById('char-portrait-preview');
 
     form.reset();
-    if (portraitPreview) {
-        portraitPreview.src = '';
-        portraitPreview.style.display = 'none';
-    }
 
     if (characterId) {
         const char = dataStore.characters.find(c => c.id === characterId);
@@ -75,12 +103,12 @@ function showFormView(characterId = null) {
         document.getElementById('char-nicknames').value = (char.nicknames || []).join(', ');
         document.getElementById('char-color').value = char.color;
         document.getElementById('char-color-mode').value = char.colorMode;
-        if (portraitPreview && char.portraitUrl) {
-            portraitPreview.src = sanitizeUrl(char.portraitUrl);
-            portraitPreview.style.display = 'block';
-        }
+
+        renderPortraitsInForm(char.portraitUrls);
+
         deleteBtn.classList.remove('hidden');
     } else {
+        renderPortraitsInForm([]);
         title.textContent = 'Add Character';
         document.getElementById('char-color').value = dataStore.settings.defaultColor;
         deleteBtn.classList.add('hidden');
@@ -97,43 +125,47 @@ async function saveCharacterForm() {
     const name = document.getElementById('char-name').value;
     if (!name.trim()) return;
 
-    const getPortraitUrl = () => {
-        return new Promise((resolve) => {
-            const fileInput = document.getElementById('char-portrait-file');
-            const file = fileInput.files[0];
-            if (!file) {
-                const existingChar = dataStore.characters.find(c => c.id === dataStore.ui.editingCharacterId);
-                resolve(existingChar ? existingChar.portraitUrl : null);
-                return;
-            }
-
+    const processFiles = async (files) => {
+        const urls = [];
+        for (const file of files) {
             const reader = new FileReader();
-            reader.onload = async (e) => {
-                if (dataStore.settings.autoResizeEnabled) {
-                    const resizedDataUrl = await resizeImage(e.target.result, 64, 64, 'image/png');
-                    resolve(resizedDataUrl);
-                } else {
-                    resolve(e.target.result);
-                }
-            };
+            const promise = new Promise(resolve => {
+                reader.onload = async (e) => {
+                    if (dataStore.settings.autoResizeEnabled) {
+                        resolve(await resizeImage(e.target.result, 64, 64, 'image/jpeg'));
+                    } else {
+                        resolve(e.target.result);
+                    }
+                };
+            });
             reader.readAsDataURL(file);
-        });
+            urls.push(await promise);
+        }
+        return urls;
     };
 
-    const portraitUrl = await getPortraitUrl();
+    const fileInput = document.getElementById('char-portrait-file-input');
+    const newPortraitUrls = await processFiles(fileInput.files);
+    fileInput.value = '';
+
+    const existingPortraitUrls = Array.from(document.querySelectorAll('#portrait-gallery li'))
+        .map(li => li.dataset.url);
+
+    const allPortraitUrls = [...existingPortraitUrls, ...newPortraitUrls];
 
     const formData = {
         name: document.getElementById('char-name').value,
         nicknames: document.getElementById('char-nicknames').value.split(',').map(n => n.trim()).filter(Boolean),
         color: document.getElementById('char-color').value,
         colorMode: document.getElementById('char-color-mode').value,
-        portraitUrl: portraitUrl
+        portraitUrls: allPortraitUrls
     };
 
     if (dataStore.ui.editingCharacterId) {
         const char = dataStore.characters.find(c => c.id === dataStore.ui.editingCharacterId);
         if (char) {
             Object.assign(char, formData);
+            delete char.portraitUrl;
         }
     } else {
         const newId = Date.now();
@@ -188,6 +220,56 @@ async function setupCharacterEditor() {
                 (char.nicknames || []).some(nick => nick.toLowerCase().includes(searchTerm))
             );
             renderCharacterList(filteredChars);
+        });
+
+        const addPortraitBtn = document.getElementById('add-portrait-btn');
+        const portraitFileInput = document.getElementById('char-portrait-file-input');
+
+        addPortraitBtn.addEventListener('click', () => portraitFileInput.click());
+
+        portraitFileInput.addEventListener('change', async (event) => {
+            const files = Array.from(event.target.files);
+            if (!files.length) return;
+
+            const gallery = document.getElementById('portrait-gallery');
+
+            for (const file of files) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const li = document.createElement('li');
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    li.appendChild(img);
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.type = 'button';
+                    deleteBtn.className = 'delete-portrait-btn';
+                    deleteBtn.innerHTML = '<span class="material-symbols-rounded">close</span>';
+                    deleteBtn.onclick = () => li.remove();
+                    li.appendChild(deleteBtn);
+
+                    gallery.appendChild(li);
+
+                    const tempReader = new FileReader();
+                    tempReader.onload = async (readEvent) => {
+                        const finalUrl = dataStore.settings.autoResizeEnabled
+                            ? await resizeImage(readEvent.target.result, 64, 64, 'image/jpeg')
+                            : readEvent.target.result;
+                        li.dataset.url = finalUrl;
+                    };
+                    tempReader.readAsDataURL(file);
+                };
+                reader.readAsDataURL(file);
+            }
+            portraitFileInput.value = '';
+        });
+
+        const galleryEl = document.getElementById('portrait-gallery');
+        new Sortable(galleryEl, {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            forceFallback: true,
         });
 
         const listEl = document.getElementById('character-list');

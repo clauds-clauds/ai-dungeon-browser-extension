@@ -20,8 +20,14 @@
             </button>
         </div>
         <form id="character-form">
-            <label for="char-portrait-file">Portrait</label>
-            <input type="file" id="char-portrait-file" accept="image/*">
+            <label>Portraits</label>
+            <div id="portrait-gallery-container">
+                <ul id="portrait-gallery"></ul>
+                <input type="file" id="char-portrait-file-input" accept="image/*" multiple style="display: none;">
+                <button type="button" id="add-portrait-btn" title="Add Portrait">
+                    <span class="material-symbols-rounded">add_photo_alternate</span>
+                </button>
+            </div>
 
             <label for="char-name">Name</label>
             <input type="text" id="char-name" autocomplete="off" required>

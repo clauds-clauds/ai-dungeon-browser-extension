@@ -9,11 +9,20 @@ function sanitizeAndValidateImportObject(importObject) {
 
     const sanitizedChars = importObject.data.characters.map((char, index) => {
         if (!char.id || !char.name) throw new Error(`Character at index ${index} is missing required 'id' or 'name'.`);
+        
+        let portraitUrls = [];
+        if (char.portraitUrls && Array.isArray(char.portraitUrls)) {
+            portraitUrls = char.portraitUrls.map(sanitizeUrl);
+        } else if (char.portraitUrl) {
+            portraitUrls = [sanitizeUrl(char.portraitUrl)];
+        }
+
         return {
             ...char,
             name: sanitizeString(char.name),
             nicknames: (char.nicknames || []).map(sanitizeString),
-            portraitUrl: sanitizeUrl(char.portraitUrl),
+            portraitUrls: portraitUrls,
+            portraitUrl: undefined,
             color: sanitizeColor(char.color),
         };
     });

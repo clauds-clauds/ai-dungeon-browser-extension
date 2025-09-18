@@ -47,9 +47,9 @@ function highlightNamesInNode(node) {
             const colorToApply = char.colorMode === "special" ? char.color : dataStore.settings.sharedColor;
             span.style.color = sanitizeColor(colorToApply) || 'inherit';
 
-            if (char.portraitUrl) {
+            if (char.portraitUrls && char.portraitUrls.length > 0) {
                 const img = document.createElement('img');
-                img.src = sanitizeUrl(char.portraitUrl);
+                img.src = sanitizeUrl(char.portraitUrls[0]);
                 img.className = 'character-portrait';
                 img.alt = char.name;
                 span.appendChild(img);
