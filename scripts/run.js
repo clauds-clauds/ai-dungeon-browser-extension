@@ -24,8 +24,14 @@ function setupPermanentObservers() {
     chrome.storage.onChanged.addListener((changes, areaName) => {
         if (areaName === 'local') {
             const adventureId = getAdventureId();
-            if (adventureId && changes[adventureId]) {
-                reapplyAllHighlights();
+            // We need to check for settings changes as well as adventure data changes
+            if ((adventureId && changes[adventureId]) || changes.extensionSettings) {
+                // Reload settings if they changed, then reapply highlights
+                if (changes.extensionSettings) {
+                    loadSettingsFromStorage().then(() => reapplyAllHighlights());
+                } else {
+                    reapplyAllHighlights();
+                }
             }
         }
     });

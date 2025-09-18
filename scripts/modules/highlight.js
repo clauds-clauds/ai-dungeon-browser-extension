@@ -1,9 +1,9 @@
 'use strict';
 
 function highlightNamesInNode(node) {
-    if (!characterData || characterData.length === 0) return;
+    if (!dataStore.characters || dataStore.characters.length === 0) return;
 
-    const allNames = characterData.flatMap(char => [char.name, ...(char.nicknames || [])]).filter(Boolean);
+    const allNames = dataStore.characters.flatMap(char => [char.name, ...(char.nicknames || [])]).filter(Boolean);
     if (allNames.length === 0) return;
 
     const pattern = allNames.map(name => escapeRegExp(name)).join('|');
@@ -32,7 +32,7 @@ function highlightNamesInNode(node) {
             const fullMatch = match[0];
             const baseName = match[1];
 
-            const char = characterData.find(c =>
+            const char = dataStore.characters.find(c =>
                 baseName.toLowerCase() === c.name.toLowerCase() ||
                 (c.nicknames || []).some(nick => nick.toLowerCase() === baseName.toLowerCase())
             );
@@ -44,7 +44,7 @@ function highlightNamesInNode(node) {
             }
             const span = document.createElement('span');
             span.className = 'character-highlight';
-            const colorToApply = char.colorMode === "special" ? char.color : extensionSettings.sharedColor;
+            const colorToApply = char.colorMode === "special" ? char.color : dataStore.settings.sharedColor;
             span.style.color = sanitizeColor(colorToApply) || 'inherit';
 
             if (char.portraitUrl) {

@@ -1,24 +1,22 @@
 'use strict';
 
-let characterState = { characters: [], editingId: null };
-
 async function loadCharacterData() {
     const adventureId = getAdventureId();
     if (!adventureId) {
-        characterData = [];
+        dataStore.characters = [];
         return;
     }
     const storageData = await chrome.storage.local.get(adventureId);
-    characterData = storageData[adventureId] || [];
+    dataStore.characters = storageData[adventureId] || [];
 }
 
 async function saveCharacters() {
     const adventureId = getAdventureId();
     if (!adventureId) return;
-    await chrome.storage.local.set({ [adventureId]: characterState.characters });
+    await chrome.storage.local.set({ [adventureId]: dataStore.characters });
 }
 
-function renderCharacterList(charactersToRender = characterState.characters) {
+function renderCharacterList(charactersToRender = dataStore.characters) {
     const listEl = document.getElementById('character-list');
     listEl.innerHTML = '';
 
@@ -32,11 +30,11 @@ function renderCharacterList(charactersToRender = characterState.characters) {
 
         const portrait = document.createElement('img');
         portrait.src = sanitizeUrl(char.portraitUrl);
-        portrait.style.borderRadius = extensionSettings.borderRadius + '%';
+        portrait.style.borderRadius = dataStore.settings.borderRadius + '%';
         portrait.alt = char.name;
 
         const nameSpan = document.createElement('span');
-        const colorToApply = char.colorMode === "special" ? char.color : extensionSettings.sharedColor;
+        const colorToApply = char.colorMode === "special" ? char.color : dataStore.settings.sharedColor;
         nameSpan.style.color = sanitizeColor(colorToApply) || 'inherit';
         nameSpan.textContent = char.name;
 
@@ -58,7 +56,7 @@ function showListView() {
 }
 
 function showFormView(characterId = null) {
-    characterState.editingId = characterId;
+    dataStore.ui.editingCharacterId = characterId;
     const form = document.getElementById('character-form');
     const title = document.getElementById('form-title');
     const deleteBtn = document.getElementById('delete-char-btn');
@@ -71,7 +69,7 @@ function showFormView(characterId = null) {
     }
 
     if (characterId) {
-        const char = characterState.characters.find(c => c.id === characterId);
+        const char = dataStore.characters.find(c => c.id === characterId);
         title.textContent = 'Edit Character';
         document.getElementById('char-name').value = char.name;
         document.getElementById('char-nicknames').value = (char.nicknames || []).join(', ');
@@ -84,7 +82,7 @@ function showFormView(characterId = null) {
         deleteBtn.classList.remove('hidden');
     } else {
         title.textContent = 'Add Character';
-        document.getElementById('char-color').value = extensionSettings.defaultColor;
+        document.getElementById('char-color').value = dataStore.settings.defaultColor;
         deleteBtn.classList.add('hidden');
     }
 
@@ -104,14 +102,14 @@ async function saveCharacterForm() {
             const fileInput = document.getElementById('char-portrait-file');
             const file = fileInput.files[0];
             if (!file) {
-                const existingChar = characterState.characters.find(c => c.id === characterState.editingId);
+                const existingChar = dataStore.characters.find(c => c.id === dataStore.ui.editingCharacterId);
                 resolve(existingChar ? existingChar.portraitUrl : null);
                 return;
             }
 
             const reader = new FileReader();
             reader.onload = async (e) => {
-                if (extensionSettings.autoResizeEnabled) {
+                if (dataStore.settings.autoResizeEnabled) {
                     const resizedDataUrl = await resizeImage(e.target.result, 64, 64, 'image/png');
                     resolve(resizedDataUrl);
                 } else {
@@ -132,15 +130,15 @@ async function saveCharacterForm() {
         portraitUrl: portraitUrl
     };
 
-    if (characterState.editingId) {
-        const char = characterState.characters.find(c => c.id === characterState.editingId);
+    if (dataStore.ui.editingCharacterId) {
+        const char = dataStore.characters.find(c => c.id === dataStore.ui.editingCharacterId);
         if (char) {
             Object.assign(char, formData);
         }
     } else {
         const newId = Date.now();
-        characterState.characters.push({ id: newId, ...formData });
-        characterState.editingId = newId;
+        dataStore.characters.push({ id: newId, ...formData });
+        dataStore.ui.editingCharacterId = newId;
     }
 
     await saveCharacters();
@@ -154,7 +152,7 @@ async function handleSave(event) {
 
 async function handleDelete() {
     if (confirm('Are you sure you want to delete this character?')) {
-        characterState.characters = characterState.characters.filter(c => c.id !== characterState.editingId);
+        dataStore.characters = dataStore.characters.filter(c => c.id !== dataStore.ui.editingCharacterId);
         await saveCharacters();
         showListView();
     }
@@ -168,7 +166,7 @@ async function setupCharacterEditor() {
 
         panel.addEventListener('click', e => {
             if (e.target === panel) {
-                if (extensionSettings.autoSaveEnabled) saveCharacterForm();
+                if (dataStore.settings.autoSaveEnabled) saveCharacterForm();
                 closePanel('character-editor-panel', true);
             }
         });
@@ -177,7 +175,7 @@ async function setupCharacterEditor() {
         document.getElementById('character-form').addEventListener('submit', handleSave);
 
         document.getElementById('back-to-list-btn').addEventListener('click', () => {
-            if (extensionSettings.autoSaveEnabled) saveCharacterForm();
+            if (dataStore.settings.autoSaveEnabled) saveCharacterForm();
             showListView();
         });
 
@@ -185,7 +183,7 @@ async function setupCharacterEditor() {
 
         document.getElementById('char-search-input').addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
-            const filteredChars = characterState.characters.filter(char =>
+            const filteredChars = dataStore.characters.filter(char =>
                 char.name.toLowerCase().includes(searchTerm) ||
                 (char.nicknames || []).some(nick => nick.toLowerCase().includes(searchTerm))
             );
@@ -198,15 +196,14 @@ async function setupCharacterEditor() {
             handle: '.drag-handle',
             forceFallback: true,
             onEnd: async (evt) => {
-                const [movedItem] = characterState.characters.splice(evt.oldIndex, 1);
-                characterState.characters.splice(evt.newIndex, 0, movedItem);
+                const [movedItem] = dataStore.characters.splice(evt.oldIndex, 1);
+                dataStore.characters.splice(evt.newIndex, 0, movedItem);
                 await saveCharacters();
             }
         });
     }
 
     await loadCharacterData();
-    characterState.characters = characterData;
     showListView();
     setTimeout(() => panel.classList.add('visible'), 10);
 }

@@ -1,14 +1,12 @@
 'use strict';
 
-let allAdventureNotes = [];
-
 async function loadNotes() {
     const adventureId = getAdventureId();
     if (!adventureId) return;
 
     const key = `notes_${adventureId}`;
     const data = await chrome.storage.local.get(key);
-    allAdventureNotes = data[key] || [];
+    dataStore.notes = data[key] || [];
     renderNotes();
 }
 
@@ -17,7 +15,7 @@ async function saveNotes() {
     if (!adventureId) return;
 
     const key = `notes_${adventureId}`;
-    await chrome.storage.local.set({ [key]: allAdventureNotes });
+    await chrome.storage.local.set({ [key]: dataStore.notes });
 }
 
 function renderNotes() {
@@ -25,7 +23,7 @@ function renderNotes() {
     if (!listEl) return;
     listEl.innerHTML = '';
 
-    allAdventureNotes.forEach((note) => {
+    dataStore.notes.forEach((note) => {
         const item = document.createElement('li');
         item.dataset.id = note.id;
         item.style.borderLeft = `5px solid ${sanitizeColor(note.color) || 'var(--c-core4, #3a4045)'}`;
@@ -85,7 +83,7 @@ async function addNote(event) {
             tags: tagsInput.value.split(',').map(tag => tag.trim()).filter(Boolean)
         };
 
-        allAdventureNotes.unshift(newNote);
+        dataStore.notes.unshift(newNote);
         input.value = '';
         tagsInput.value = '';
 
@@ -95,7 +93,7 @@ async function addNote(event) {
 }
 
 async function deleteNote(id) {
-    allAdventureNotes = allAdventureNotes.filter(note => note.id !== id);
+    dataStore.notes = dataStore.notes.filter(note => note.id !== id);
     await saveNotes();
     renderNotes();
 }
@@ -116,15 +114,14 @@ async function setupNotesEditor() {
             handle: '.drag-handle',
             forceFallback: true,
             onEnd: async (evt) => {
-                const [movedItem] = allAdventureNotes.splice(evt.oldIndex, 1);
-                allAdventureNotes.splice(evt.newIndex, 0, movedItem);
-
+                const [movedItem] = dataStore.notes.splice(evt.oldIndex, 1);
+                dataStore.notes.splice(evt.newIndex, 0, movedItem);
                 await saveNotes();
             }
         });
     }
 
-    document.getElementById('new-note-color').value = extensionSettings.defaultNoteColor;
+    document.getElementById('new-note-color').value = dataStore.settings.defaultNoteColor;
     await loadNotes();
     setTimeout(() => panel.classList.add('visible'), 10);
 }

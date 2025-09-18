@@ -1,16 +1,5 @@
 'use strict';
 
-let extensionSettings = {
-    defaultColor: '#c8aa64',
-    sharedColor: '#c8aa64',
-    portraitSize: 28,
-    borderRadius: 0,
-    notesPerPage: 16,
-    defaultNoteColor: '#3a4045',
-    autoSaveEnabled: true,
-    autoResizeEnabled: true
-};
-
 function applySettingsStyles() {
     const styleId = 'character-highlight-styles';
     let styleElement = document.getElementById(styleId);
@@ -20,8 +9,8 @@ function applySettingsStyles() {
         document.head.appendChild(styleElement);
     }
 
-    const size = parseInt(extensionSettings.portraitSize, 10) || 28;
-    const radius = parseInt(extensionSettings.borderRadius, 10) || 0;
+    const size = parseInt(dataStore.settings.portraitSize, 10) || 28;
+    const radius = parseInt(dataStore.settings.borderRadius, 10) || 0;
 
     styleElement.textContent = `
         .character-portrait {
@@ -34,22 +23,23 @@ function applySettingsStyles() {
 
 async function loadSettingsFromStorage() {
     const data = await chrome.storage.local.get('extensionSettings');
-    Object.assign(extensionSettings, data.extensionSettings);
+    // Merge stored settings into our dataStore, overwriting defaults
+    Object.assign(dataStore.settings, data.extensionSettings);
 }
 
 function populateSettingsForm() {
     const form = document.getElementById('settings-form');
     if (!form) return;
 
-    document.getElementById('setting-default-color').value = extensionSettings.defaultColor;
-    document.getElementById('setting-shared-color').value = extensionSettings.sharedColor;
-    document.getElementById('setting-portrait-size').value = extensionSettings.portraitSize;
-    document.getElementById('setting-border-radius').value = extensionSettings.borderRadius;
+    document.getElementById('setting-default-color').value = dataStore.settings.defaultColor;
+    document.getElementById('setting-shared-color').value = dataStore.settings.sharedColor;
+    document.getElementById('setting-portrait-size').value = dataStore.settings.portraitSize;
+    document.getElementById('setting-border-radius').value = dataStore.settings.borderRadius;
 
-    document.getElementById('setting-autosave').checked = extensionSettings.autoSaveEnabled;
-    document.getElementById('setting-autosize').checked = extensionSettings.autoResizeEnabled;
+    document.getElementById('setting-autosave').checked = dataStore.settings.autoSaveEnabled;
+    document.getElementById('setting-autosize').checked = dataStore.settings.autoResizeEnabled;
 
-    document.getElementById('setting-default-note-color').value = extensionSettings.defaultNoteColor;
+    document.getElementById('setting-default-note-color').value = dataStore.settings.defaultNoteColor;
 
     document.getElementById('info-adventure-id').textContent = getAdventureId() || 'N/A';
     document.getElementById('info-plugin-version').textContent = "Alpha " + chrome.runtime.getManifest().version;
@@ -60,21 +50,16 @@ async function saveSettings(event) {
         event.preventDefault();
     }
 
-    extensionSettings.defaultColor = document.getElementById('setting-default-color').value;
-    extensionSettings.sharedColor = document.getElementById('setting-shared-color').value;
-    extensionSettings.portraitSize = document.getElementById('setting-portrait-size').value;
-    extensionSettings.borderRadius = document.getElementById('setting-border-radius').value;
-    extensionSettings.autoSaveEnabled = document.getElementById('setting-autosave').checked;
-    extensionSettings.autoResizeEnabled = document.getElementById('setting-autosize').checked;
-    extensionSettings.defaultNoteColor = document.getElementById('setting-default-note-color').value;
+    dataStore.settings.defaultColor = document.getElementById('setting-default-color').value;
+    dataStore.settings.sharedColor = document.getElementById('setting-shared-color').value;
+    dataStore.settings.portraitSize = document.getElementById('setting-portrait-size').value;
+    dataStore.settings.borderRadius = document.getElementById('setting-border-radius').value;
+    dataStore.settings.autoSaveEnabled = document.getElementById('setting-autosave').checked;
+    dataStore.settings.autoResizeEnabled = document.getElementById('setting-autosize').checked;
+    dataStore.settings.defaultNoteColor = document.getElementById('setting-default-note-color').value;
 
-    await chrome.storage.local.set({ extensionSettings });
+    await chrome.storage.local.set({ extensionSettings: dataStore.settings });
     applySettingsStyles();
-
-    /*
-    const saveBtn = document.getElementById('save-settings-btn');
-    saveBtn.style.backgroundColor = 'var(--c-healthBarGreen, #22c55e)';
-    setTimeout(() => { saveBtn.style.backgroundColor = 'transparent'; }, 1000); */
 }
 
 async function setupSettingsEditor() {
@@ -90,7 +75,7 @@ async function setupSettingsEditor() {
         form.addEventListener('input', (event) => {
             if (event.target.id === 'setting-autosave') {
                 saveSettings();
-            } else if (extensionSettings.autoSaveEnabled) {
+            } else if (dataStore.settings.autoSaveEnabled) {
                 saveSettings();
             }
         });
