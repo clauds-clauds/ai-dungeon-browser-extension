@@ -5,7 +5,10 @@
             <div class="search-container">
                 <input type="search" id="char-search-input" placeholder="Search characters..." autocomplete="off">
             </div>
-            <button id="show-add-form-btn" title="Add New Character">
+            <button id="character-list-back-to-menu-btn" class="header-action-btn" title="Return to Menu">
+                <span class="material-symbols-rounded">widgets</span>
+            </button>
+            <button id="show-add-form-btn" class="header-action-btn" title="Add New Character">
                 <span class="material-symbols-rounded">add</span>
             </button>
         </div>
@@ -15,9 +18,14 @@
     <div id="character-form-view" style="display: none;">
         <div class="view-header">
             <h3 id="form-title">Add Character</h3>
-            <button id="back-to-list-btn" title="Back to list">
-                <span class="material-symbols-rounded">arrow_back</span>
-            </button>
+            <div>
+                <button id="character-form-back-to-menu-btn" class="header-action-btn" title="Return to Menu">
+                    <span class="material-symbols-rounded">widgets</span>
+                </button>
+                <button id="back-to-list-btn" class="header-action-btn" title="Back to list">
+                    <span class="material-symbols-rounded">arrow_back</span>
+                </button>
+            </div>
         </div>
         <form id="character-form">
             <label>Portraits</label>

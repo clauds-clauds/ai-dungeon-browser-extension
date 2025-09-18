@@ -383,9 +383,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 /* Character Editor Buttons */
-#show-add-form-btn,
-#back-to-list-btn,
-.form-actions button {
+.header-action-btn {
     background: transparent;
     border: none;
     color: var(--c-core8, #828a92);
@@ -398,6 +396,16 @@ input[type="color"]::-webkit-color-swatch {
     align-items: center;
     justify-content: center;
     transition: background-color .2s, color .2s;
+}
+
+.header-action-btn span {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.header-action-btn:hover {
+    background-color: var(--c-core3, #2f3539);
+    color: var(--c-coreA9, #fff);
 }
 
 #show-add-form-btn span,

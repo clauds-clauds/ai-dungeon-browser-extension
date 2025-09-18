@@ -74,6 +74,12 @@ async function setupSettingsEditor() {
     makePageInert('settings-editor-panel');
     if (!panel) {
         panel = await injectPanel('resources/editor_settings.html');
+
+        document.getElementById('settings-back-to-menu-btn').addEventListener('click', () => {
+            closePanel('settings-editor-panel', true);
+            setTimeout(setupMainMenu, 250);
+        });
+        
         const form = document.getElementById('settings-form');
 
         panel.addEventListener('click', e => { if (e.target === panel) closePanel('settings-editor-panel', true); });

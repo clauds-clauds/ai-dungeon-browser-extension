@@ -159,6 +159,11 @@ async function setupShareEditor() {
     if (!panel) {
         panel = await injectPanel('resources/editor_share.html');
 
+        document.getElementById('share-back-to-menu-btn').addEventListener('click', () => {
+            closePanel('share-editor-panel');
+            setTimeout(setupMainMenu, 250);
+        });
+
         let importMode = 'replace';
 
         panel.addEventListener('click', e => { if (e.target === panel) closePanel('share-editor-panel'); });

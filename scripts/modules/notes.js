@@ -105,6 +105,11 @@ async function setupNotesEditor() {
     if (!panel) {
         panel = await injectPanel('resources/editor_notes.html');
 
+        document.getElementById('notes-back-to-menu-btn').addEventListener('click', () => {
+            closePanel('notes-editor-panel');
+            setTimeout(setupMainMenu, 250);
+        });
+
         panel.addEventListener('click', e => { if (e.target === panel) closePanel('notes-editor-panel'); });
         document.getElementById('add-note-form').addEventListener('submit', addNote);
 

@@ -217,6 +217,18 @@ async function setupCharacterEditor() {
     if (!panel) {
         panel = await injectPanel('resources/editor_character.html');
 
+        // QoL for the return to menu thing.
+        document.getElementById('character-list-back-to-menu-btn').addEventListener('click', () => {
+            closePanel('character-editor-panel');
+            setTimeout(setupMainMenu, 250);
+        });
+
+        document.getElementById('character-form-back-to-menu-btn').addEventListener('click', () => {
+            if (dataStore.settings.autoSaveEnabled) saveCharacterForm();
+            closePanel('character-editor-panel');
+            setTimeout(setupMainMenu, 250);
+        });
+
         panel.addEventListener('click', e => {
             if (e.target === panel) {
                 if (dataStore.settings.autoSaveEnabled) saveCharacterForm();
