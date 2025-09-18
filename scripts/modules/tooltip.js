@@ -30,6 +30,9 @@ function applyTooltipStuff() {
         if (char) {
             const [movedPortrait] = char.portraits.splice(validIndex, 1);
             char.portraits.unshift(movedPortrait);
+
+            tooltip.portraits = char.portraits;
+
             tooltip.currentIndex = 0;
             saveCharacters();
         }
