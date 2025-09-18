@@ -11,12 +11,14 @@ function applySettingsStyles() {
 
     const size = parseInt(dataStore.settings.portraitSize, 10) || 28;
     const radius = parseInt(dataStore.settings.borderRadius, 10) || 0;
+    const width = parseInt(dataStore.settings.borderWidth, 10) || 0;
 
     styleElement.textContent = `
         .character-portrait {
             width: ${size}px !important;
             height: ${size}px !important;
             border-radius: ${radius}% !important;
+            border: ${width}px solid rgba(255, 255, 255, .3) !important;
         }
     `;
 }
@@ -34,7 +36,9 @@ function populateSettingsForm() {
     document.getElementById('setting-default-color').value = dataStore.settings.defaultColor;
     document.getElementById('setting-shared-color').value = dataStore.settings.sharedColor;
     document.getElementById('setting-portrait-size').value = dataStore.settings.portraitSize;
+
     document.getElementById('setting-border-radius').value = dataStore.settings.borderRadius;
+    document.getElementById('setting-border-width').value = dataStore.settings.borderWidth;
 
     document.getElementById('setting-autosave').checked = dataStore.settings.autoSaveEnabled;
     document.getElementById('setting-autosize').checked = dataStore.settings.autoResizeEnabled;
@@ -53,7 +57,10 @@ async function saveSettings(event) {
     dataStore.settings.defaultColor = document.getElementById('setting-default-color').value;
     dataStore.settings.sharedColor = document.getElementById('setting-shared-color').value;
     dataStore.settings.portraitSize = document.getElementById('setting-portrait-size').value;
+
     dataStore.settings.borderRadius = document.getElementById('setting-border-radius').value;
+    dataStore.settings.borderWidth = document.getElementById('setting-border-width').value;
+
     dataStore.settings.autoSaveEnabled = document.getElementById('setting-autosave').checked;
     dataStore.settings.autoResizeEnabled = document.getElementById('setting-autosize').checked;
     dataStore.settings.defaultNoteColor = document.getElementById('setting-default-note-color').value;

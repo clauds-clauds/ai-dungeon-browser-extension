@@ -64,6 +64,7 @@ function renderCharacterList(charactersToRender = dataStore.characters) {
         const portrait = document.createElement('img');
         portrait.src = sanitizeUrl(char.portraitUrls?.[0] || '');
         portrait.style.borderRadius = dataStore.settings.borderRadius + '%';
+        portrait.style.borderWidth = dataStore.settings.borderWidth + "px solid rgba(255, 255, 255, .3)" 
         portrait.alt = char.name;
 
         const nameSpan = document.createElement('span');
