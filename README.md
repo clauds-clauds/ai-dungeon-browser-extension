@@ -3,6 +3,8 @@ This largely depends on browser, with individual steps down below.
 
 **Note: Firefox only has the option to add temporary add-ons, so you'd have to re-add `Dungeon Extension` every time you close and reopen Firefox.**
 
+**EDIT: SOME OF THE STUFF I WROTE DOWN BELOW HAS ALREADY BECOME OUTDATED. I WILL UPDATE THIS WHOLE THING WHEN I'VE GOT THE TIME. THANKS!**
+
 ## Chrome
 1. Download and unpack one of the releases from the side-bar.
 2. Navigate to the search bar.
