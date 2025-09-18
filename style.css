@@ -15,7 +15,7 @@
     -webkit-font-smoothing: antialiased;
 }
 
-/* Character Panel Stuff */
+/* Global Panel & View Styles */
 #character-editor-panel,
 #settings-editor-panel,
 #notes-editor-panel,
@@ -78,14 +78,122 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--c-core2, #272c30);
-    padding-bottom: 16px
+    padding-bottom: 16px;
 }
 
 .view-header h3 {
     font-family: var(--f-family-heading, 'IBMPlexSerif', serif);
     color: var(--c-coreA9, #fff);
     margin: 0;
-    font-size: 1.5em
+    font-size: 1.5em;
+}
+
+/* Global Form Styles */
+#character-form,
+#settings-form,
+#share-form,
+#add-note-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex-grow: 1;
+}
+
+#character-form label,
+#settings-form label,
+#share-form label {
+    color: var(--c-core8, #828a92);
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+#character-form input[type="text"],
+#character-form input[type="file"],
+#character-form select,
+#add-note-form textarea,
+#note-meta-inputs input[type="text"],
+#char-search-input {
+    background-color: var(--c-core0, #000);
+    border: 1px solid var(--c-core4, #3a4045);
+    border-radius: 4px;
+    padding: 10px;
+    color: var(--c-coreA85, #eee);
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#character-form input:focus,
+#character-form select:focus,
+#char-search-input:focus {
+    border-color: var(--c-primary, #f8ae2c);
+    outline: none;
+}
+
+input[type="color"] {
+    width: 100%;
+    height: 42px;
+    background-color: transparent;
+    border: 1px solid var(--c-core4, #3a4045);
+    border-radius: 4px;
+    padding: 4px;
+    cursor: pointer;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 2px;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+}
+
+.form-row>div {
+    flex: 1;
+}
+
+.form-row label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    border-top: 1px solid var(--c-core2, #272c30);
+    padding-top: 16px;
+    margin-top: auto;
+}
+
+/* Character Panel Stuff */
+.character-highlight {
+    display: inline-flex;
+    align-items: baseline;
+    white-space: nowrap;
+}
+
+.character-portrait {
+    width: 22px;
+    height: 22px;
+    border-radius: 10%;
+    margin-right: 5px;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, .3);
+    align-self: center;
+}
+
+.search-container {
+    flex-grow: 1;
+    margin: 0 16px;
+}
+
+#char-search-input {
+    padding: 8px 12px;
+    font-size: .9em;
 }
 
 #character-list {
@@ -93,7 +201,7 @@
     padding: 0;
     margin: 0;
     max-height: 60vh;
-    overflow-y: auto
+    overflow-y: auto;
 }
 
 #character-list li {
@@ -103,99 +211,178 @@
     padding: 10px;
     border-radius: 4px;
     cursor: pointer;
-    color: var(--c-core8, #828a92)
+    color: var(--c-core8, #828a92);
 }
 
 #character-list li:hover {
-    background-color: var(--c-core2, #272c30)
+    background-color: var(--c-core2, #272c30);
 }
 
 #character-list img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    object-fit: cover
+    object-fit: cover;
 }
 
-#character-form,
-#settings-form,
-#share-form {
+.drag-handle {
+    cursor: grab;
+    user-select: none;
+    color: var(--c-core8, #828a92);
+}
+
+#character-list li .drag-handle {
+    opacity: .5;
+    transition: opacity .2s;
+}
+
+#character-list li:hover .drag-handle,
+.drag-handle:hover {
+    opacity: 1;
+}
+
+/* Portrait Editor Grid */
+#portrait-hub {
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    flex-grow: 1
+    gap: 12px;
 }
 
-#character-form label,
-#settings-form label,
-#share-form label {
-    color: var(--c-core8, #828a92);
-    font-size: 0.9em;
-    font-weight: 500
-}
-
-#character-form input[type=text],
-#character-form input[type=file],
-#character-form select,
-#add-note-form textarea,
-#note-meta-inputs input[type=text],
-#char-search-input {
-    background-color: var(--c-core0, #000);
-    border: 1px solid var(--c-core4, #3a4045);
-    border-radius: 4px;
-    padding: 10px;
-    color: var(--c-coreA85, #eee);
-    font-size: 1em;
-    width: 100%;
-    box-sizing: border-box
-}
-
-#character-form input:focus,
-#character-form select:focus,
-#char-search-input:focus {
-    border-color: var(--c-primary, #f8ae2c);
-    outline: none
-}
-
-.form-row {
-    display: flex;
-    gap: 16px;
-    align-items: flex-end
-}
-
-.form-row>div {
-    flex: 1
-}
-
-.form-row label {
-    display: block;
-    margin-bottom: 8px
-}
-
-input[type=color] {
-    width: 100%;
-    height: 42px;
+#portrait-list-container {
+    max-height: 220px;
+    overflow-y: auto;
     background-color: transparent;
-    border: 1px solid var(--c-core4, #3a4045);
-    border-radius: 4px;
-    padding: 4px;
-    cursor: pointer
 }
 
-input[type=color]::-webkit-color-swatch {
-    border: none;
-    border-radius: 2px
+#portrait-list-editor {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
 }
 
-.form-actions {
+.portrait-editor-item {
     display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-    border-top: 1px solid var(--c-core2, #272c30);
-    padding-top: 16px;
-    margin-top: auto
+    align-items: center;
+    gap: 8px;
+    background-color: var(--c-core1, #1b1f22);
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid var(--c-core4, #3a4045);
+    min-width: 0;
 }
 
+.portrait-editor-item.active {
+    border-color: var(--c-primary, #f8ae2c);
+}
+
+.portrait-card {
+    display: flex;
+    gap: 8px;
+    flex-grow: 1;
+}
+
+.portrait-card-icon,
+.portrait-card-full {
+    width: 48px;
+    height: 48px;
+    border: 2px dashed var(--c-core3, #2f3539);
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: border-color 0.2s;
+}
+
+.portrait-card-icon:hover,
+.portrait-card-full:hover {
+    border-color: var(--c-primary, #f8ae2c);
+}
+
+.portrait-card-icon::after,
+.portrait-card-full::after {
+    font-family: 'Material Symbols Rounded';
+    font-size: 20px;
+    color: var(--c-core4, #3a4045);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.portrait-card-icon::after {
+    content: 'add_photo_alternate';
+}
+
+.portrait-card-full::after {
+    content: 'add_a_photo';
+}
+
+.portrait-card-icon img,
+.portrait-card-full img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
+}
+
+.portrait-card-icon img:not([src]),
+.portrait-card-full img:not([src]) {
+    display: none;
+}
+
+.portrait-card-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.portrait-card-actions button {
+    background: transparent;
+    border: none;
+    color: var(--c-core8, #828a92);
+    cursor: pointer;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.portrait-card-actions .set-active-portrait-btn .material-symbols-rounded {
+    transform: rotate(45deg);
+}
+
+.portrait-editor-item.active .set-active-portrait-btn {
+    color: var(--c-primary, #f8ae2c);
+}
+
+.portrait-card-actions .delete-portrait-btn:hover {
+    background-color: var(--c-healthBarRed, #ef4444);
+    color: white;
+}
+
+#add-new-portrait-btn {
+    border: 2px dashed var(--c-core4, #3a4045);
+    background: transparent;
+    color: var(--c-core8, #828a92);
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+/* Character Editor Buttons */
 #show-add-form-btn,
 #back-to-list-btn,
 .form-actions button {
@@ -210,76 +397,37 @@ input[type=color]::-webkit-color-swatch {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color .2s, color .2s
+    transition: background-color .2s, color .2s;
 }
 
 #show-add-form-btn span,
 #back-to-list-btn span,
 .form-actions button span {
     font-size: 22px;
-    line-height: 1
+    line-height: 1;
 }
 
 #show-add-form-btn:hover,
 #back-to-list-btn:hover {
     background-color: var(--c-core3, #2f3539);
-    color: var(--c-coreA9, #fff)
+    color: var(--c-coreA9, #fff);
 }
 
 #save-char-btn:hover {
     background-color: var(--c-healthBarGreen, #22c55e);
-    color: var(--c-coreA9, #fff)
+    color: var(--c-coreA9, #fff);
 }
 
 #delete-char-btn:hover {
     background-color: var(--c-healthBarRed, #ef4444);
-    color: var(--c-coreA9, #fff)
+    color: var(--c-coreA9, #fff);
 }
 
 .hidden {
-    display: none !important
+    display: none !important;
 }
 
-.drag-handle {
-    cursor: grab;
-    opacity: .5;
-    transition: opacity .2s;
-    user-select: none;
-    color: var(--c-core8, #828a92)
-}
-
-#character-list li:hover .drag-handle,
-.drag-handle:hover {
-    opacity: 1
-}
-
-.search-container {
-    flex-grow: 1;
-    margin: 0 16px
-}
-
-#char-search-input {
-    padding: 8px 12px;
-    font-size: .9em
-}
-
-.character-highlight {
-    display: inline-flex;
-    align-items: baseline;
-    white-space: nowrap
-}
-
-.character-portrait {
-    width: 22px;
-    height: 22px;
-    border-radius: 10%;
-    margin-right: 5px;
-    object-fit: cover;
-    border: 1px solid rgba(255, 255, 255, .3);
-    align-self: center
-}
-
-/* Settings Stuff */
+/* Settings & Share Stuff */
 #settings-form fieldset,
 #share-form fieldset {
     border: 1px solid var(--c-core2, #272c30);
@@ -288,7 +436,7 @@ input[type=color]::-webkit-color-swatch {
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 16px
+    gap: 16px;
 }
 
 #settings-form legend,
@@ -296,14 +444,14 @@ input[type=color]::-webkit-color-swatch {
     color: var(--c-core8, #828a92);
     font-weight: 500;
     padding: 0 8px;
-    margin-left: 8px
+    margin-left: 8px;
 }
 
 .info-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--c-core8, #828a92)
+    color: var(--c-core8, #828a92);
 }
 
 .info-row code {
@@ -311,15 +459,15 @@ input[type=color]::-webkit-color-swatch {
     padding: 4px 8px;
     border-radius: 4px;
     font-size: .9em;
-    color: var(--c-coreA85, #eee)
+    color: var(--c-coreA85, #eee);
 }
 
 #save-settings-btn {
-    transition: transform .3s ease, color .2s ease
+    transition: transform .3s ease, color .2s ease;
 }
 
 #save-settings-btn:hover {
-    transform: scale(1.1)
+    transform: scale(1.1);
 }
 
 #setting-autosave,
@@ -358,9 +506,45 @@ input[type=color]::-webkit-color-swatch {
     transform: scale(1);
 }
 
+#share-form p {
+    color: var(--c-core8, #828a92);
+    line-height: 1.5;
+    margin: 0;
+}
+
+#share-form .warning-text-orange strong {
+    color: var(--c-primary, #f8ae2c);
+}
+
+#share-form .warning-text strong {
+    color: var(--c-healthBarRed, #ef4444);
+}
+
+#share-form .form-actions button {
+    background-color: var(--c-core2, #272c30);
+    border: 1px solid var(--c-core4, #3a4045);
+    border-radius: 4px;
+    padding: 8px;
+    width: 40px;
+    height: 40px;
+    font-weight: 500;
+    gap: 0;
+}
+
+#share-form .form-actions button:hover {
+    background-color: var(--c-core3, #2f3539);
+    border-color: var(--c-core5, #495057);
+    color: var(--c-coreA9, #fff);
+}
+
+#share-form .form-actions button .material-symbols-rounded {
+    font-size: 24px;
+    color: inherit;
+}
+
 /* Notes Stuff */
 #notes-view {
-    height: 80vh
+    height: 80vh;
 }
 
 #notes-list {
@@ -368,7 +552,7 @@ input[type=color]::-webkit-color-swatch {
     padding: 0;
     margin: 0;
     overflow-y: auto;
-    flex-grow: 1
+    flex-grow: 1;
 }
 
 #notes-list li {
@@ -380,25 +564,25 @@ input[type=color]::-webkit-color-swatch {
     background-color: var(--c-core2, #272c30);
     margin-bottom: 8px;
     color: var(--c-core8, #828a92);
-    user-select: none
+    user-select: none;
 }
 
 .note-content {
     flex-grow: 1;
-    padding-right: 10px
+    padding-right: 10px;
 }
 
 .note-text {
     margin: 0;
     color: var(--c-coreA85, #eee);
-    white-space: pre-wrap
+    white-space: pre-wrap;
 }
 
 .note-tags {
     margin-top: 8px;
     display: flex;
     flex-wrap: wrap;
-    gap: 6px
+    gap: 6px;
 }
 
 .note-tag {
@@ -406,7 +590,7 @@ input[type=color]::-webkit-color-swatch {
     color: var(--c-coreA85, #eee);
     font-size: .75em;
     padding: 2px 8px;
-    border-radius: 10px
+    border-radius: 10px;
 }
 
 .delete-note-btn {
@@ -423,208 +607,124 @@ input[type=color]::-webkit-color-swatch {
     justify-content: center;
     flex-shrink: 0;
     opacity: 0;
-    transition: opacity .2s ease, transform .2s ease
+    transition: opacity .2s ease, transform .2s ease;
 }
 
 #notes-list li:hover .delete-note-btn {
-    opacity: 1
+    opacity: 1;
 }
 
 .delete-note-btn:hover {
     background-color: var(--c-healthBarRed, #ef4444) !important;
-    color: var(--c-coreA9, #fff) !important
+    color: var(--c-coreA9, #fff) !important;
 }
 
 #add-note-form {
-    display: flex;
-    flex-direction: column;
     gap: 8px;
     border-top: 1px solid var(--c-core2, #272c30);
-    padding-top: 16px
+    padding-top: 16px;
 }
 
 #add-note-form textarea {
     resize: vertical;
-    min-height: 50px
+    min-height: 50px;
 }
 
 #note-meta-inputs {
     display: flex;
     gap: 8px;
-    align-items: center
+    align-items: center;
 }
 
-#note-meta-inputs input[type=text] {
+#note-meta-inputs input[type="text"] {
     flex-grow: 1;
     padding: 8px 10px;
-    font-size: .9em
-}
-
-#note-meta-inputs input[type=color] {
-    height: 36px;
-    width: 36px;
-    padding: 2px
-}
-
-#add-note-form button {
-    border: 1px solid var(--c-core4, #3a4045);
-    color: var(--c-core8, #828a92);
-    cursor: pointer;
-    width: 36px;
-    height: 36px;
-    padding: 0;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color .2s, color .2s;
-    flex-shrink: 0
-}
-
-#add-note-form button:hover {
-    background-color: var(--c-primary, #f8ae2c);
-    border-color: var(--c-primary, #f8ae2c);
-    color: #000
-}
-
-/* Spooky */
-.sortable-ghost {
-    opacity: .4;
-    background: var(--c-core4, #3a4045)
-}
-
-.sortable-drag {
-    opacity: .8 !important
-}
-
-/* Share Settings */
-#share-form p {
-    color: var(--c-core8, #828a92);
-    line-height: 1.5;
-    margin: 0
-}
-
-#share-form .warning-text-orange strong {
-    color: var(--c-healthBarRed, #f8ae2c)
-}
-
-#share-form .warning-text strong {
-    color: var(--c-healthBarRed, #ef4444)
-}
-
-#share-form .form-actions button {
-    background-color: var(--c-core2, #272c30);
-    color: var(--c-core8, #828a92);
-    border: 1px solid var(--c-core4, #3a4045);
-    border-radius: 4px;
-    padding: 8px;
-    width: 40px;
-    height: 40px;
     font-size: .9em;
-    font-weight: 500;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    transition: background-color .2s ease, border-color .2s ease, color .2s ease
 }
 
-#share-form .form-actions button:hover {
-    background-color: var(--c-core3, #2f3539);
-    border-color: var(--c-core5, #495057);
-    color: var(--c-coreA9, #fff)
+#note-meta-inputs input[type="color"] {
+    height: 36px;
+    width: 36px;
+    padding: 2px;
 }
 
-#share-form .form-actions button .material-symbols-rounded {
-    font-size: 24px;
-    color: inherit
-}
-
-/* DEV TEST: */
-#portrait-gallery-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background-color: var(--c-core0, #000);
+/* Hover Tooltip */
+#portrait-hover-tooltip {
+    position: fixed;
+    z-index: 10000;
+    background-color: var(--c-core1, #1b1f22);
     border: 1px solid var(--c-core4, #3a4045);
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 8px;
-    min-height: 80px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    pointer-events: auto;
+    opacity: 0;
+    max-width: 272px;
+    transition: opacity 0.1s ease-out;
 }
 
-#portrait-gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    flex-grow: 1;
+#portrait-hover-tooltip.visible {
+    opacity: 1;
 }
 
-#portrait-gallery li {
-    position: relative;
-    width: 64px;
-    height: 64px;
-    border-radius: 4px;
-    overflow: hidden;
-    cursor: grab;
-}
-
-#portrait-gallery img {
+#portrait-hover-tooltip img {
+    display: block;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    border-radius: 4px;
 }
 
-.delete-portrait-btn {
+.tooltip-nav-btn {
     position: absolute;
-    top: 2px;
-    right: 2px;
-    width: 20px;
-    height: 20px;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: white;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(18, 21, 25, 0.6);
+    color: #fff;
     border: none;
     border-radius: 50%;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     opacity: 0;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
     padding: 0;
 }
 
-#portrait-gallery li:hover .delete-portrait-btn {
+#portrait-hover-tooltip:hover .tooltip-nav-btn {
     opacity: 1;
 }
 
-.delete-portrait-btn .material-symbols-rounded {
-    font-size: 16px;
+.tooltip-nav-btn:hover {
+    background-color: rgba(18, 21, 25, 0.9);
 }
 
-#add-portrait-btn {
-    width: 64px;
-    height: 64px;
-    border: 2px dashed var(--c-core4, #3a4045);
-    background-color: transparent;
-    color: var(--c-core8, #828a92);
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: border-color 0.2s, color 0.2s;
+#tooltip-prev-btn {
+    left: 8px;
 }
 
-#add-portrait-btn:hover {
-    border-color: var(--c-primary, #f8ae2c);
-    color: var(--c-primary, #f8ae2c);
+#tooltip-prev-btn .material-symbols-rounded {
+    font-size: 18px;
+    margin-left: -2px;
 }
 
-#add-portrait-btn .material-symbols-rounded {
-    font-size: 32px;
+#tooltip-next-btn {
+    right: 8px;
+}
+
+#tooltip-next-btn .material-symbols-rounded {
+    font-size: 18px;
+    margin-left: 2px;
+}
+
+/* Sortable Styles */
+.sortable-ghost {
+    opacity: .4;
+    background: var(--c-core4, #3a4045);
+}
+
+.sortable-drag {
+    opacity: .8 !important;
 }
