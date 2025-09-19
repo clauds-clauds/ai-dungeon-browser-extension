@@ -37,7 +37,7 @@ function injectButton(config) {
         if (onClick) onClick();
     });
 
-    listContainer.appendChild(button);
+    listContainer.insertBefore(button, exitGameButton);
 }
 
 function addCustomButtons() {

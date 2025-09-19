@@ -22,7 +22,6 @@ async function setupMainMenu() {
         for (const [id, action] of Object.entries(buttonMap)) {
             document.getElementById(id).addEventListener('click', () => {
                 closePanel('main-menu-panel');
-                // We need a slight delay for the panel to close before opening the next
                 setTimeout(action, 250);
             });
         }
