@@ -5,12 +5,15 @@
             <div class="search-container">
                 <input type="search" id="char-search-input" placeholder="Search characters..." autocomplete="off">
             </div>
-            <button id="character-list-back-to-menu-btn" class="header-action-btn" title="Return to Menu">
-                <span class="material-symbols-rounded">widgets</span>
-            </button>
-            <button id="show-add-form-btn" class="header-action-btn" title="Add New Character">
-                <span class="material-symbols-rounded">add</span>
-            </button>
+            
+            <div class="header-button-group">
+                <button id="show-add-form-btn" class="header-action-btn" title="Add New Character">
+                    <span class="material-symbols-rounded">library_add</span>
+                </button>
+                <button id="character-list-back-to-menu-btn" class="header-action-btn" title="Return to Menu">
+                    <span class="material-symbols-rounded">widgets</span>
+                </button>
+            </div>
         </div>
         <ul id="character-list"></ul>
     </div>
@@ -19,11 +22,11 @@
         <div class="view-header">
             <h3 id="form-title">Add Character</h3>
             <div class="header-button-group">
+                <button id="back-to-list-btn" class="header-action-btn" title="Back to List">
+                    <span class="material-symbols-rounded">arrow_top_left</span>
+                </button>
                 <button id="character-form-back-to-menu-btn" class="header-action-btn" title="Return to Menu">
                     <span class="material-symbols-rounded">widgets</span>
-                </button>
-                <button id="back-to-list-btn" class="header-action-btn" title="Back to list">
-                    <span class="material-symbols-rounded">arrow_back</span>
                 </button>
             </div>
         </div>
@@ -83,10 +86,10 @@
             </div>
 
             <div class="form-actions">
-                <button type="button" id="delete-char-btn" title="Delete Character">
-                    <span class="material-symbols-rounded">delete</span>
+                <button type="button" id="delete-char-btn" class="generic-action-btn" title="Delete Character">
+                    <span id="evil" class="material-symbols-rounded">delete</span>
                 </button>
-                <button type="submit" id="save-char-btn" title="Save Character">
+                <button type="submit" id="save-char-btn" class="generic-action-btn" title="Save Character">
                     <span class="material-symbols-rounded">save</span>
                 </button>
             </div>

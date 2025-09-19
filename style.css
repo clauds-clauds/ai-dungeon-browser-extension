@@ -1,3 +1,10 @@
+/* Root */
+:root {
+    --animation-duration-normal: .2s;
+    --animation-ease: ease;
+}
+
+/* Material Symbols */
 .material-symbols-rounded {
     font-family: 'Material Symbols Rounded';
     font-weight: normal;
@@ -13,6 +20,99 @@
     font-feature-settings: "liga";
     -webkit-font-feature-settings: 'liga';
     -webkit-font-smoothing: antialiased;
+}
+
+/* Buttons */
+.header-action-btn,
+.generic-action-btn {
+    background: transparent;
+    border: none;
+    color: var(--c-core8, #828a92);
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition-property: background-color, color;
+    transition: all var(--animation-duration-normal) var(--animation-ease);
+}
+
+.header-action-btn span,
+.generic-action-btn span {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.header-action-btn:hover,
+.generic-action-btn:hover {
+    background-color: var(--c-core3, #2f3539);
+    color: var(--c-coreA9, #fff);
+}
+
+#evil {
+    transition: color var(--animation-duration-normal) var(--animation-ease);
+}
+
+.header-action-btn:hover #evil,
+.generic-action-btn:hover #evil {
+    color: var(--c-healthBarRed, #ef4444) !important;
+}
+
+.delete-note-btn {
+    background: transparent;
+    border: none;
+    color: var(--c-core8, #828a92);
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: all var(--animation-duration-normal) var(--animation-ease);
+    transition-property: opacity, transform, color, background-color;
+}
+
+#notes-list li:hover .delete-note-btn {
+    opacity: 1;
+}
+
+.delete-note-btn:hover {
+    color: var(--c-healthBarRed, #ef4444) !important;
+    background-color: var(--c-core3, #2f3539);
+}
+
+.delete-note-btn span {
+    font-size: 22px;
+}
+
+#share-form .form-actions button {
+    color: var(--c-core8, #828a92);
+    background-color: var(--c-core2, #272c30);
+    border: 1px solid var(--c-core4, #3a4045);
+    border-radius: 4px;
+    padding: 8px;
+    width: 40px;
+    height: 40px;
+    font-weight: 500;
+    gap: 0;
+}
+
+#share-form .form-actions button:hover {
+    background-color: var(--c-core3, #2f3539);
+    border-color: var(--c-core5, #495057);
+    color: var(--c-coreA9, #fff);
+}
+
+#share-form .form-actions button .material-symbols-rounded {
+    font-size: 24px;
+    color: inherit;
 }
 
 /* Global Panel & View Styles */
@@ -60,7 +160,8 @@
     gap: 16px;
     opacity: 0;
     transform: scale(0.95);
-    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    transition: all var(--animation-duration-normal) var(--animation-ease);
+    transition-property: opacity, transform;
     font-family: var(--f-family, 'IBMPlexSans', sans-serif);
 }
 
@@ -294,7 +395,7 @@ input[type="color"]::-webkit-color-swatch {
     position: relative;
     overflow: hidden;
     flex-shrink: 0;
-    transition: border-color 0.2s;
+    transition: border-color var(--animation-duration-normal) var(--animation-ease);
 }
 
 .portrait-card-icon:hover,
@@ -382,31 +483,6 @@ input[type="color"]::-webkit-color-swatch {
     display: flex;
 }
 
-.header-action-btn {
-    background: transparent;
-    border: none;
-    color: var(--c-core8, #828a92);
-    cursor: pointer;
-    width: 36px;
-    height: 36px;
-    padding: 0;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color .2s, color .2s;
-}
-
-.header-action-btn span {
-    font-size: 22px;
-    line-height: 1;
-}
-
-.header-action-btn:hover {
-    background-color: var(--c-core3, #2f3539);
-    color: var(--c-coreA9, #fff);
-}
-
 #show-add-form-btn span,
 #back-to-list-btn span,
 .form-actions button span {
@@ -417,16 +493,6 @@ input[type="color"]::-webkit-color-swatch {
 #show-add-form-btn:hover,
 #back-to-list-btn:hover {
     background-color: var(--c-core3, #2f3539);
-    color: var(--c-coreA9, #fff);
-}
-
-#save-char-btn:hover {
-    /* background-color: var(--c-healthBarGreen, #22c55e); */
-    color: var(--c-coreA9, #fff);
-}
-
-#delete-char-btn:hover {
-    background-color: var(--c-healthBarRed, #ef4444);
     color: var(--c-coreA9, #fff);
 }
 
@@ -473,14 +539,6 @@ input[type="color"]::-webkit-color-swatch {
     border-radius: 4px;
     font-size: .9em;
     color: var(--c-coreA85, #eee);
-}
-
-#save-settings-btn {
-    transition: transform .3s ease, color .2s ease;
-}
-
-#save-settings-btn:hover {
-    transform: scale(1.1);
 }
 
 #setting-autosave,
@@ -533,29 +591,12 @@ input[type="color"]::-webkit-color-swatch {
     color: var(--c-healthBarRed, #ef4444);
 }
 
-#share-form .form-actions button {
-    background-color: var(--c-core2, #272c30);
-    border: 1px solid var(--c-core4, #3a4045);
-    border-radius: 4px;
-    padding: 8px;
-    width: 40px;
-    height: 40px;
-    font-weight: 500;
-    gap: 0;
-}
-
-#share-form .form-actions button:hover {
-    background-color: var(--c-core3, #2f3539);
-    border-color: var(--c-core5, #495057);
-    color: var(--c-coreA9, #fff);
-}
-
-#share-form .form-actions button .material-symbols-rounded {
-    font-size: 24px;
-    color: inherit;
-}
-
 /* Notes Stuff */
+#note-meta-inputs input[type="color"],
+#note-meta-inputs .generic-action-btn {
+    flex-shrink: 0;
+}
+
 #add-note-form {
     flex-grow: 0;
 }
@@ -608,32 +649,6 @@ input[type="color"]::-webkit-color-swatch {
     font-size: .75em;
     padding: 2px 8px;
     border-radius: 10px;
-}
-
-.delete-note-btn {
-    background: transparent;
-    border: none;
-    color: var(--c-core8, #828a92);
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    padding: 0;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    opacity: 0;
-    transition: opacity .2s ease, transform .2s ease;
-}
-
-#notes-list li:hover .delete-note-btn {
-    opacity: 1;
-}
-
-.delete-note-btn:hover {
-    background-color: var(--c-healthBarRed, #ef4444) !important;
-    color: var(--c-coreA9, #fff) !important;
 }
 
 #add-note-form {
@@ -707,7 +722,8 @@ input[type="color"]::-webkit-color-swatch {
     justify-content: center;
     cursor: pointer;
     opacity: 0;
-    transition: opacity 0.2s ease, background-color 0.2s ease;
+    transition: all var(--animation-duration-normal) var(--animation-ease);
+    transition-property: opacity, background-color;
     padding: 0;
 }
 

@@ -79,11 +79,14 @@ async function setupSettingsEditor() {
             closePanel('settings-editor-panel', true);
             setTimeout(setupMainMenu, 250);
         });
+
+        document.getElementById('save-settings-btn').addEventListener('click', () => {
+            saveSettings();
+        });
         
         const form = document.getElementById('settings-form');
 
         panel.addEventListener('click', e => { if (e.target === panel) closePanel('settings-editor-panel', true); });
-        form.addEventListener('submit', saveSettings);
 
         form.addEventListener('input', (event) => {
             if (event.target.id === 'setting-autosave') {

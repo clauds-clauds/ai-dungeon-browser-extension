@@ -2,9 +2,11 @@
     <div id="notes-view">
         <div class="view-header">
             <h3>Notes</h3>
-            <button id="notes-back-to-menu-btn" class="header-action-btn" title="Return to Menu">
-                <span class="material-symbols-rounded">widgets</span>
-            </button>
+            <div class="header-button-group">
+                <button id="notes-back-to-menu-btn" class="header-action-btn" title="Return to Menu">
+                    <span class="material-symbols-rounded">widgets</span>
+                </button>
+            </div>
         </div>
 
         <ul id="notes-list">
@@ -16,11 +18,11 @@
                 <div id="note-meta-inputs">
                     <input type="color" id="new-note-color" value="#3a4045" title="Color">
                     <input type="text" id="new-note-tags" placeholder="Tags, comma-separated" autocomplete="off">
+                    <button type="submit" title="Add Note" class="generic-action-btn">
+                        <span class="material-symbols-rounded">add_box</span>
+                    </button>
                 </div>
             </div>
-            <button type="submit" title="Add Note">
-                <span class="material-symbols-rounded">add_circle</span>
-            </button>
         </form>
     </div>
 </div>

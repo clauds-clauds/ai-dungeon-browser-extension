@@ -2,9 +2,14 @@
     <div id="settings-view">
         <div class="view-header">
             <h3>Settings</h3>
-            <button id="settings-back-to-menu-btn" class="header-action-btn" title="Return to Menu">
-                <span class="material-symbols-rounded">widgets</span>
-            </button>
+            <div class="header-button-group">
+                <button id="save-settings-btn" class="header-action-btn" title="Save Settings">
+                    <span class="material-symbols-rounded">save</span>
+                </button>
+                <button id="settings-back-to-menu-btn" class="header-action-btn" title="Return to Menu">
+                    <span class="material-symbols-rounded">widgets</span>
+                </button>
+            </div>
         </div>
         <form id="settings-form">
             <fieldset>
@@ -69,12 +74,6 @@
                     </div>
                 </div>
             </fieldset>
-
-            <div class="form-actions">
-                <button type="submit" id="save-settings-btn" title="Save Settings">
-                    <span class="material-symbols-rounded">save</span>
-                </button>
-            </div>
         </form>
     </div>
 </div>
