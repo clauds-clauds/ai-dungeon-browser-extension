@@ -7,14 +7,27 @@ function applyTooltipStuff() {
     if (!tooltip || tooltip.dataset.interactive) return;
     tooltip.dataset.interactive = 'true';
 
-    const hideTooltip = () => tooltip.classList.remove('visible');
+    const hideAndSaveChanges = () => {
+        if (tooltip.originalChar && typeof tooltip.currentIndex === 'number') {
+            const char = tooltip.originalChar;
+            const finalIndex = tooltip.currentIndex;
+
+            if (finalIndex < char.portraits.length) {
+                const [movedPortrait] = char.portraits.splice(finalIndex, 1);
+                char.portraits.unshift(movedPortrait);
+                saveCharacters();
+            }
+        }
+        tooltip.classList.remove('visible');
+    };
+
     tooltip.addEventListener('mouseenter', () => clearTimeout(hideTooltipTimeout));
     tooltip.addEventListener('mouseleave', () => {
-        hideTooltipTimeout = setTimeout(hideTooltip, 300); // Magic number here, make this customizable later.
+        hideTooltipTimeout = setTimeout(hideAndSaveChanges, 300);
     });
 
     const updateImage = (newIndex) => {
-        if (!tooltip.portraits || !tooltip.sourceSpan) return;
+        if (!tooltip.portraits) return;
         const numPortraits = tooltip.portraits.length;
         const validIndex = (newIndex + numPortraits) % numPortraits;
         tooltip.currentIndex = validIndex;
@@ -24,18 +37,6 @@ function applyTooltipStuff() {
 
         const inlineIcon = tooltip.sourceSpan.querySelector('img.character-portrait');
         if (inlineIcon) inlineIcon.src = sanitizeUrl(newPortrait.iconUrl);
-
-        const charId = tooltip.sourceSpan.dataset.charId;
-        const char = dataStore.characters.find(c => c.id == charId);
-        if (char) {
-            const [movedPortrait] = char.portraits.splice(validIndex, 1);
-            char.portraits.unshift(movedPortrait);
-
-            tooltip.portraits = char.portraits;
-
-            tooltip.currentIndex = 0;
-            saveCharacters();
-        }
     };
 
     document.getElementById('tooltip-prev-btn').addEventListener('click', (e) => {

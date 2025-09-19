@@ -19,37 +19,36 @@
 #character-editor-panel,
 #settings-editor-panel,
 #notes-editor-panel,
-#share-editor-panel {
+#share-editor-panel,
+#main-menu-panel {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: transparent;
-    backdrop-filter: blur(4px);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
-    font-family: var(--f-family, 'IBMPlexSans', sans-serif);
+    z-index: 9998;
     visibility: hidden;
-    transition: background 0.2s ease-out, visibility 0s 0.2s;
 }
 
 #character-editor-panel.visible,
 #settings-editor-panel.visible,
 #notes-editor-panel.visible,
-#share-editor-panel.visible {
-    background: var(--c-blackA7, rgba(18, 21, 25, 0.8));
+#share-editor-panel.visible,
+#main-menu-panel.visible {
     visibility: visible;
-    transition-delay: 0s;
+    z-index: 9999;
 }
 
 #character-list-view,
 #character-form-view,
 #settings-view,
 #notes-view,
-#share-view {
+#share-view,
+#main-menu-view {
     background: var(--c-core1, #1b1f22);
     border: 1px solid var(--c-core2, #272c30);
     border-radius: var(--t-radius-1, 8px);
@@ -62,6 +61,7 @@
     opacity: 0;
     transform: scale(0.95);
     transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    font-family: var(--f-family, 'IBMPlexSans', sans-serif);
 }
 
 #character-editor-panel.visible #character-list-view,
@@ -330,11 +330,6 @@ input[type="color"]::-webkit-color-swatch {
     z-index: 1;
 }
 
-.portrait-card-icon img:not([src]),
-.portrait-card-full img:not([src]) {
-    display: none;
-}
-
 .portrait-card-actions {
     display: flex;
     gap: 8px;
@@ -383,6 +378,10 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 /* Character Editor Buttons */
+.header-button-group {
+    display: flex;
+}
+
 .header-action-btn {
     background: transparent;
     border: none;
@@ -422,7 +421,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 #save-char-btn:hover {
-    background-color: var(--c-healthBarGreen, #22c55e);
+    /* background-color: var(--c-healthBarGreen, #22c55e); */
     color: var(--c-coreA9, #fff);
 }
 
@@ -675,7 +674,7 @@ input[type="color"]::-webkit-color-swatch {
     border-radius: 8px;
     padding: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    pointer-events: auto;
+    pointer-events: none;
     opacity: 0;
     max-width: 272px;
     transition: opacity 0.1s ease-out;
@@ -683,6 +682,7 @@ input[type="color"]::-webkit-color-swatch {
 
 #portrait-hover-tooltip.visible {
     opacity: 1;
+    pointer-events: auto;
 }
 
 #portrait-hover-tooltip img {
@@ -747,29 +747,26 @@ input[type="color"]::-webkit-color-swatch {
     opacity: .8 !important;
 }
 
-/* Main Menu Panel Stuff */
-#main-menu-panel {
+/* Blur */
+#extension-backdrop {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: transparent;
-    backdrop-filter: blur(4px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9998;
-    visibility: hidden;
-    transition: background 0.2s ease-out, visibility 0s 0.2s;
-}
-
-#main-menu-panel.visible {
     background: var(--c-blackA7, rgba(18, 21, 25, 0.8));
-    visibility: visible;
-    transition-delay: 0s;
+    backdrop-filter: blur(4px);
+    z-index: 9997;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-out;
 }
 
+#extension-backdrop.visible {
+    opacity: 1;
+}
+
+/* Main Menu Panel Stuff */
 #main-menu-view {
     background: var(--c-core1, #1b1f22);
     border: 1px solid var(--c-core2, #272c30);

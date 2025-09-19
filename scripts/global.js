@@ -30,6 +30,8 @@ async function resizeImage(dataUrl, width, height, quality = 1.0) {
 }
 
 function makePageInert(excludePanelId) {
+    document.getElementById('extension-backdrop')?.classList.add('visible');
+
     const selectors = 'body > div, body > main, body > header, body > footer';
     document.querySelectorAll(selectors).forEach(element => {
         if (element.id !== excludePanelId && !element.querySelector(`#${excludePanelId}`)) {
@@ -39,6 +41,8 @@ function makePageInert(excludePanelId) {
 }
 
 function makePageInteractive() {
+    document.getElementById('extension-backdrop')?.classList.remove('visible');
+
     document.querySelectorAll('[inert]').forEach(element => {
         element.removeAttribute('inert');
     });
@@ -123,4 +127,11 @@ function injectTooltip() {
     tooltip.appendChild(prevBtn);
     tooltip.appendChild(nextBtn);
     document.body.appendChild(tooltip);
+}
+
+function injectBackdrop() {
+    if (document.getElementById('extension-backdrop')) return;
+    const backdrop = document.createElement('div');
+    backdrop.id = 'extension-backdrop';
+    document.body.appendChild(backdrop);
 }

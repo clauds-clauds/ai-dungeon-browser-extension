@@ -1,5 +1,7 @@
 'use strict';
 
+injectBackdrop();
+
 function setupPermanentObservers() {
     const menuObserver = new MutationObserver(() => {
         addCustomButtons();
@@ -66,6 +68,7 @@ const adventureChangeObserver = new MutationObserver(() => {
     if (storyContainerExists && currentAdventureId && currentAdventureId !== initializedAdventureId) {
         console.log(`Dungeon Extension: Detected new adventure [${currentAdventureId}]. Loading data...`);
         initializedAdventureId = currentAdventureId;
+        document.getElementById('portrait-hover-tooltip')?.classList.remove('visible');
         loadAndApplyAdventureData();
     } else if (!currentAdventureId && initializedAdventureId !== null) {
         console.log("Dungeon Extension: Navigated away from adventure. State reset.");

@@ -6,31 +6,39 @@ function renderPortraitEditor(char) {
     char.portraits.forEach((p, index) => addPortraitEditorItem(p, index === char.activePortraitIndex));
 }
 
-function addPortraitEditorItem(portraitData = {}, isActive = false) {
+function addPortraitEditorItem(portraitData = {}) {
     const template = document.getElementById('portrait-editor-template');
     const clone = template.content.cloneNode(true);
     const item = clone.querySelector('li');
-    const id = portraitData.id || Date.now() + Math.random();
-    item.dataset.id = id;
-
-    if (isActive) item.classList.add('active');
+    item.dataset.id = portraitData.id || Date.now() + Math.random();
 
     const iconCard = item.querySelector('.portrait-card-icon');
     const iconImg = iconCard.querySelector('img');
     const iconInput = iconCard.querySelector('.icon-file-input');
-    if (portraitData.iconUrl) iconImg.src = portraitData.iconUrl;
+
+    if (portraitData.iconUrl) {
+        iconImg.src = portraitData.iconUrl;
+        iconImg.style.display = 'block';
+    } else {
+        iconImg.style.display = 'none';
+    }
 
     const fullCard = item.querySelector('.portrait-card-full');
     const fullImg = fullCard.querySelector('img');
     const fullInput = fullCard.querySelector('.full-file-input');
-    if (portraitData.fullUrl) fullImg.src = portraitData.fullUrl;
+
+    if (portraitData.fullUrl) {
+        fullImg.src = portraitData.fullUrl;
+        fullImg.style.display = 'block';
+    } else {
+        fullImg.style.display = 'none';
+    }
 
     const setupFileInput = (card, img, input, isIcon) => {
         card.addEventListener('click', () => input.click());
         input.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
             reader.onload = async (event) => {
                 let finalUrl = event.target.result;
@@ -38,6 +46,7 @@ function addPortraitEditorItem(portraitData = {}, isActive = false) {
                     finalUrl = await resizeImage(finalUrl, 64, 64, 'image/jpeg');
                 }
                 img.src = finalUrl;
+                img.style.display = 'block';
             };
             reader.readAsDataURL(file);
             input.value = '';

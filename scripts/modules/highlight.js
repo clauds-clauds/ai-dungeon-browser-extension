@@ -51,13 +51,13 @@ function highlightNamesInNode(node) {
                 clearTimeout(hideTooltipTimeout);
                 if (!char.portraits || char.portraits.length === 0) return;
 
-                tooltip.portraits = char.portraits;
+                tooltip.portraits = [...char.portraits];
+                tooltip.originalChar = char;
                 tooltip.sourceSpan = e.target;
 
                 const img = tooltip.querySelector('img');
-                const activeIndex = char.activePortraitIndex || 0;
-                const activePortrait = char.portraits[activeIndex];
-                tooltip.currentIndex = activeIndex;
+                const activePortrait = char.portraits[0];
+                tooltip.currentIndex = 0;
                 img.src = sanitizeUrl(activePortrait?.fullUrl || activePortrait?.iconUrl);
 
                 const navButtons = tooltip.querySelectorAll('.tooltip-nav-btn');
@@ -71,7 +71,7 @@ function highlightNamesInNode(node) {
                 tooltip.style.transform = `translate(-50%, -100%) translateY(-10px)`;
                 tooltip.classList.add('visible');
             });
-
+            
             span.addEventListener('mouseleave', () => {
                 hideTooltipTimeout = setTimeout(() => {
                     const tooltip = document.getElementById('portrait-hover-tooltip');
