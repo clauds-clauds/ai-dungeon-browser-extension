@@ -177,11 +177,18 @@ async function saveCharacterForm() {
     if (!name.trim()) return;
 
     const portraitItems = document.querySelectorAll('#portrait-list-editor .portrait-editor-item');
-    const portraits = Array.from(portraitItems).map(item => ({
-        id: item.dataset.id,
-        iconUrl: item.querySelector('.portrait-card-icon img').src,
-        fullUrl: item.querySelector('.portrait-card-full img').src || item.querySelector('.portrait-card-icon img').src
-    }));
+
+    const portraits = Array.from(portraitItems).map(item => {
+        const iconImg = item.querySelector('.portrait-card-icon img');
+        const fullImg = item.querySelector('.portrait-card-full img');
+        const iconSrc = iconImg.src;
+        const hasValidFullImage = fullImg.naturalWidth > 0;
+        return {
+            id: item.dataset.id,
+            iconUrl: iconSrc,
+            fullUrl: hasValidFullImage ? fullImg.src : iconSrc
+        };
+    });
 
     const activeItem = document.querySelector('#portrait-list-editor .portrait-editor-item.active');
     const activePortraitIndex = activeItem ? Array.from(portraitItems).indexOf(activeItem) : 0;
