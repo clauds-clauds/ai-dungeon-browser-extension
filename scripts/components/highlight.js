@@ -48,6 +48,8 @@ function highlightNamesInNode(node) {
 
             span.addEventListener('mouseenter', (e) => {
                 const tooltip = document.getElementById('portrait-hover-tooltip');
+                if (tooltip.classList.contains('visible')) return; // This is for locking the tooltip. Pretty required.
+
                 clearTimeout(hideTooltipTimeout);
                 if (!char.portraits || char.portraits.length === 0) return;
 
