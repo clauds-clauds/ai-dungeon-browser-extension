@@ -691,7 +691,7 @@ input[type="color"]::-webkit-color-swatch {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     pointer-events: none;
     opacity: 0;
-    max-width: 272px;
+    max-width: 256px;
     transition: opacity 0.1s ease-out;
 }
 

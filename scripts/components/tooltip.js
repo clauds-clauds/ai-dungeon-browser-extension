@@ -23,7 +23,7 @@ function applyTooltipStuff() {
 
     tooltip.addEventListener('mouseenter', () => clearTimeout(hideTooltipTimeout));
     tooltip.addEventListener('mouseleave', () => {
-        hideTooltipTimeout = setTimeout(hideAndSaveChanges, 300);
+        hideTooltipTimeout = setTimeout(hideAndSaveChanges, dataStore.settings.tooltipHideDelay);
     });
 
     const updateImage = (newIndex) => {

@@ -78,7 +78,7 @@ function highlightNamesInNode(node) {
                 hideTooltipTimeout = setTimeout(() => {
                     const tooltip = document.getElementById('portrait-hover-tooltip');
                     if (tooltip) tooltip.classList.remove('visible');
-                }, 300);
+                }, dataStore.settings.tooltipHideDelay);
             });
 
             const colorToApply = char.colorMode === "special" ? char.color : dataStore.settings.sharedColor;

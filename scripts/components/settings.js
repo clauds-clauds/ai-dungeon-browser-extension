@@ -13,12 +13,27 @@ function applySettingsStyles() {
     const radius = parseInt(dataStore.settings.borderRadius, 10) || 0;
     const width = parseInt(dataStore.settings.borderWidth, 10) || 0;
 
+    const tooltipMaxWidth = parseInt(dataStore.settings.tooltipMaxWidth, 10) || 256;
+
     styleElement.textContent = `
         .character-portrait {
             width: ${size}px !important;
             height: ${size}px !important;
             border-radius: ${radius}% !important;
             border: ${width}px solid rgba(255, 255, 255, .3) !important;
+        }
+        #portrait-hover-tooltip {
+            position: fixed;
+            z-index: 10000;
+            background-color: var(--c-core1, #1b1f22);
+            border: 1px solid var(--c-core4, #3a4045);
+            border-radius: 8px;
+            padding: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            opacity: 0;
+            max-width: ${tooltipMaxWidth}px !important;
+            transition: opacity 0.1s ease-out;
         }
     `;
 }
@@ -45,6 +60,9 @@ function populateSettingsForm() {
 
     document.getElementById('setting-default-note-color').value = dataStore.settings.defaultNoteColor;
 
+    document.getElementById('setting-tooltip-max-width').value = dataStore.settings.tooltipMaxWidth;
+    document.getElementById('setting-tooltip-hide-delay').value = dataStore.settings.tooltipHideDelay;
+
     document.getElementById('info-adventure-id').textContent = getAdventureId() || 'N/A';
     document.getElementById('info-plugin-version').textContent = "Alpha " + chrome.runtime.getManifest().version;
 }
@@ -57,6 +75,9 @@ async function saveSettings(event) {
     dataStore.settings.defaultColor = document.getElementById('setting-default-color').value;
     dataStore.settings.sharedColor = document.getElementById('setting-shared-color').value;
     dataStore.settings.portraitSize = document.getElementById('setting-portrait-size').value;
+
+    dataStore.settings.tooltipMaxWidth = document.getElementById('setting-tooltip-max-width').value;
+    dataStore.settings.tooltipHideDelay = document.getElementById('setting-tooltip-hide-delay').value;
 
     dataStore.settings.borderRadius = document.getElementById('setting-border-radius').value;
     dataStore.settings.borderWidth = document.getElementById('setting-border-width').value;
