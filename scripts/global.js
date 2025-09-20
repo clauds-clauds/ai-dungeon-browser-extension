@@ -50,10 +50,20 @@ function makePageInteractive() {
 
 function sanitizeUrl(url) {
     if (!url) return '';
-    const validStarts = ['https://', 'http://', 'data:image/'];
+    
+    const validStarts = [
+        'https://',
+        'http://',
+        'data:image/png;base64,',
+        'data:image/jpeg;base64,',
+        'data:image/gif;base64,',
+        'data:image/webp;base64,'
+    ];
+
     if (validStarts.some(start => url.startsWith(start))) {
         return url;
     }
+
     return '';
 }
 
