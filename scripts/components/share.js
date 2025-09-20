@@ -95,11 +95,11 @@ async function handleMergeImport(importObject, adventureId) {
 
     const newChars = importObject.data.characters.map((char, index) => ({
         ...char,
-        id: Date.now() + index
+        id: crypto.randomUUID()
     }));
     const newNotes = importObject.data.notes.map((note, index) => ({
         ...note,
-        id: Date.now() + index
+        id: crypto.randomUUID()
     }));
 
     const mergedChars = [...existingChars, ...newChars];
