@@ -178,17 +178,25 @@ async function saveCharacterForm() {
 
     const portraitItems = document.querySelectorAll('#portrait-list-editor .portrait-editor-item');
 
-    const portraits = Array.from(portraitItems).map(item => {
-        const iconImg = item.querySelector('.portrait-card-icon img');
-        const fullImg = item.querySelector('.portrait-card-full img');
-        const iconSrc = iconImg.src;
-        const hasValidFullImage = fullImg.naturalWidth > 0;
-        return {
+    if (dataStore.settings.portraitFallback) {
+        var portraits = Array.from(portraitItems).map(item => {
+            const iconImg = item.querySelector('.portrait-card-icon img');
+            const fullImg = item.querySelector('.portrait-card-full img');
+            const iconSrc = iconImg.src;
+            const hasValidFullImage = fullImg.naturalWidth > 0;
+            return {
+                id: item.dataset.id,
+                iconUrl: iconSrc,
+                fullUrl: hasValidFullImage ? fullImg.src : iconSrc
+            };
+        });
+    } else {
+        var portraits = portraits = Array.from(portraitItems).map(item => ({
             id: item.dataset.id,
-            iconUrl: iconSrc,
-            fullUrl: hasValidFullImage ? fullImg.src : iconSrc
-        };
-    });
+            iconUrl: item.querySelector('.portrait-card-icon img').src,
+            fullUrl: item.querySelector('.portrait-card-full img').src
+        }));
+    }
 
     const activeItem = document.querySelector('#portrait-list-editor .portrait-editor-item.active');
     const activePortraitIndex = activeItem ? Array.from(portraitItems).indexOf(activeItem) : 0;

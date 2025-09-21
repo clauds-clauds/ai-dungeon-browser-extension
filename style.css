@@ -542,7 +542,8 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 #setting-autosave,
-#setting-autosize {
+#setting-autosize,
+#setting-autofallback {
     -webkit-appearance: none;
     appearance: none;
     background-color: var(--c-core0, #000);
@@ -561,7 +562,8 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 #setting-autosave::before,
-#setting-autosize::before {
+#setting-autosize::before,
+#setting-autofallback::before {
     content: "";
     width: 0.65em;
     height: 0.65em;
@@ -573,7 +575,8 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 #setting-autosave:checked::before,
-#setting-autosize:checked::before {
+#setting-autosize:checked::before,
+#setting-autofallback:checked::before {
     transform: scale(1);
 }
 

@@ -57,6 +57,7 @@ function populateSettingsForm() {
 
     document.getElementById('setting-autosave').checked = dataStore.settings.autoSaveEnabled;
     document.getElementById('setting-autosize').checked = dataStore.settings.autoResizeEnabled;
+    document.getElementById('setting-autofallback').checked = dataStore.settings.portraitFallback;
 
     document.getElementById('setting-default-note-color').value = dataStore.settings.defaultNoteColor;
 
@@ -84,6 +85,8 @@ async function saveSettings(event) {
 
     dataStore.settings.autoSaveEnabled = document.getElementById('setting-autosave').checked;
     dataStore.settings.autoResizeEnabled = document.getElementById('setting-autosize').checked;
+    dataStore.settings.portraitFallback = document.getElementById('setting-autofallback').checked;
+
     dataStore.settings.defaultNoteColor = document.getElementById('setting-default-note-color').value;
 
     await chrome.storage.local.set({ extensionSettings: dataStore.settings });

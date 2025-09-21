@@ -15,7 +15,8 @@ const dataStore = {
         notesPerPage: 16,
         defaultNoteColor: '#3a4045',
         autoSaveEnabled: true,
-        autoResizeEnabled: true
+        autoResizeEnabled: true,
+        portraitFallback: false
     },
     ui: {
         editingCharacterId: null,
