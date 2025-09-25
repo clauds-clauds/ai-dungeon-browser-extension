@@ -48,7 +48,7 @@ class Store {
             if (!char.portraits || typeof char.portraits[0] === 'string' || !char.portraits[0]?.iconUrl) {
                 const oldPortraits = char.portraits || char.portraitUrls || (char.portraitUrl ? [char.portraitUrl] : []);
                 char.portraits = oldPortraits.map(p => {
-                    const url = typeof p === 'string' ? p : (p.thumbnail || p.full);
+                    const url = Utils.sanitizeUrl(typeof p === 'string' ? p : (p.thumbnail || p.full));
                     return {
                         id: Date.now() + Math.random(),
                         iconUrl: url,
