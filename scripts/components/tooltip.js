@@ -15,7 +15,7 @@ function applyTooltipStuff() {
             if (finalIndex < char.portraits.length) {
                 const [movedPortrait] = char.portraits.splice(finalIndex, 1);
                 char.portraits.unshift(movedPortrait);
-                saveCharacters();
+                Character.saveCharacters();
             }
         }
         tooltip.classList.remove('visible');
@@ -23,7 +23,7 @@ function applyTooltipStuff() {
 
     tooltip.addEventListener('mouseenter', () => clearTimeout(hideTooltipTimeout));
     tooltip.addEventListener('mouseleave', () => {
-        hideTooltipTimeout = setTimeout(hideAndSaveChanges, dataStore.settings.tooltipHideDelay);
+        hideTooltipTimeout = setTimeout(hideAndSaveChanges, Store.data.settings.tooltipHideDelay);
     });
 
     const updateImage = (newIndex) => {
@@ -33,10 +33,10 @@ function applyTooltipStuff() {
         tooltip.currentIndex = validIndex;
 
         const newPortrait = tooltip.portraits[validIndex];
-        tooltip.querySelector('img').src = sanitizeUrl(newPortrait.fullUrl || newPortrait.iconUrl);
+        tooltip.querySelector('img').src = Utils.sanitizeUrl(newPortrait.fullUrl || newPortrait.iconUrl);
 
         const inlineIcon = tooltip.sourceSpan.querySelector('img.character-portrait');
-        if (inlineIcon) inlineIcon.src = sanitizeUrl(newPortrait.iconUrl);
+        if (inlineIcon) inlineIcon.src = Utils.sanitizeUrl(newPortrait.iconUrl);
     };
 
     document.getElementById('tooltip-prev-btn').addEventListener('click', (e) => {

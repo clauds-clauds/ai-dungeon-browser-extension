@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Dungeon Extension",
-    "version": "2.1.1",
+    "version": "2.2.0",
     "description": "An extension which adds some quality of life features to your AI Dungeon adventures.",
     "author": "clauds-clauds",
     "permissions": [
@@ -24,35 +24,36 @@
                 "https://beta.aidungeon.com/*"
             ],
             "js": [
-                "scripts/libraries/Sortable.min.js",
+                "scripts/external/sortable.min.js",
+                "scripts/components/panel.js",
                 "scripts/config.js",
                 "scripts/components/tooltip.js",
-                "scripts/global.js",
+                "scripts/utils.js",
                 "scripts/store.js",
-                "scripts/components/character.js",
-                "scripts/components/highlight.js",
-                "scripts/components/settings.js",
-                "scripts/components/notes.js",
-                "scripts/components/share.js",
-                "scripts/components/buttons.js",
-                "scripts/components/menu.js",
-                "scripts/components/interface.js",
+                "scripts/components/panels/character.js",
+                "scripts/components/text_effects.js",
+                "scripts/components/panels/settings.js",
+                "scripts/components/panels/notes.js",
+                "scripts/components/panels/share.js",
+                "scripts/events.js",
+                "scripts/components/panels/menu.js",
+                "scripts/inject.js",
                 "scripts/run.js"
             ],
             "css": [
-                "style.css"
+                "styles/style.css"
             ]
         }
     ],
     "web_accessible_resources": [
         {
             "resources": [
-                "resources/editor_character.html",
-                "resources/editor_notes.html",
-                "resources/editor_settings.html",
-                "resources/editor_share.html",
-                "resources/editor_menu.html",
-                "resources/fonts/material_symbols_rounded.ttf"
+                "resources/panels/character_panel.html",
+                "resources/panels/notes_panel.html",
+                "resources/panels/settings_panel.html",
+                "resources/panels/share_panel.html",
+                "resources/panels/menu_panel.html",
+                "fonts/material_symbols_rounded.ttf"
             ],
             "matches": [
                 "https://play.aidungeon.com/*",
