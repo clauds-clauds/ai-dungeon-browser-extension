@@ -57,7 +57,7 @@ class Utils {
                 const sx = (img.width - sourceSize) / 2;
                 const sy = (img.height - sourceSize) / 2;
                 ctx.drawImage(img, sx, sy, sourceSize, sourceSize, 0, 0, width, height);
-                resolve(canvas.toDataURL('image/jpeg', quality));
+                resolve(canvas.toDataURL(Config.IMAGE_TYPE_RESIZE, quality));
             };
             img.onerror = reject;
             img.src = dataUrl;

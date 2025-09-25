@@ -6,4 +6,5 @@ class Config {
     static ID_FONT_SYMBOLS_CLASS = 'material-symbols-rounded'; // Class for the material symbols font.
     static ID_FONT_SYMBOLS_INJECT = 'material-symbols-font-injection'; // ID for the injected font link element.
     static TIME_DELAY_SWITCH = 250; // Delay for panel switches.
+    static IMAGE_TYPE_RESIZE = 'image/jpeg';
 }
