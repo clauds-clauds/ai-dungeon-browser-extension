@@ -23,7 +23,9 @@ class Store {
             autoResizeEnabled: true,
             portraitFallback: false,
             textColor: true,
-            textBold: true
+            textBold: true,
+            textFormatStory: true,
+            textFormatDialogue: true,
         },
         ui: {
             editingCharacterId: null,

@@ -24,8 +24,6 @@ class TextEffects {
             const originalText = textNode.textContent;
             if(!originalText || originalText.trim() === '') continue; // Skip empty or whitespace-only text nodes.
 
-            Utils.printNeat(`Node contents: "${originalText}"`);
-
             if (!regex.test(originalText)) continue;
 
             const fragment = document.createDocumentFragment();
@@ -96,24 +94,20 @@ class TextEffects {
                     }, Store.data.settings.tooltipHideDelay);
                 });
 
-                if (Store.data.settings.textColor) {
-                    const colorToApply = char.colorMode === "special" ? char.color : Store.data.settings.sharedColor;
-                    span.style.color = Utils.sanitizeColor(colorToApply) || 'inherit';
-                }
-
-                if (Store.data.settings.textBold) {
-                    span.style.fontWeight = 'bold';
-                }
+                let formatText = true;
 
                 if (Store.data.settings.visibleIcons && char.portraits && char.portraits.length > 0) {
                     const parentText = textNode.parentElement.textContent;
                     const isDialogue = parentText.includes('"');
 
                     let showIcon = true;
+
                     if (isDialogue && !Store.data.settings.visibleIconsDialogue) {
                         showIcon = false;
+                        if (!Store.data.settings.textFormatDialogue) formatText = false;
                     } else if (!isDialogue && !Store.data.settings.visibleIconsStory) {
                         showIcon = false;
+                        if (!Store.data.settings.textFormatStory) formatText = false;
                     }
 
                     if (showIcon) {
@@ -125,6 +119,15 @@ class TextEffects {
                         img.alt = char.name;
                         span.appendChild(img);
                     }
+                }
+
+                if (Store.data.settings.textColor && formatText) {
+                    const colorToApply = char.colorMode === "special" ? char.color : Store.data.settings.sharedColor;
+                    span.style.color = Utils.sanitizeColor(colorToApply) || 'inherit';
+                }
+
+                if (Store.data.settings.textBold && formatText) {
+                    span.style.fontWeight = 'bold';
                 }
 
                 span.appendChild(document.createTextNode(fullMatch));

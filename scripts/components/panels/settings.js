@@ -75,6 +75,9 @@ class Settings extends Panel {
         document.getElementById('setting-text-color').checked = Store.data.settings.textColor;
         document.getElementById('setting-text-bold').checked = Store.data.settings.textBold;
 
+        document.getElementById('setting-text-format-story').checked = Store.data.settings.textFormatStory;
+        document.getElementById('setting-text-format-dialogue').checked = Store.data.settings.textFormatDialogue;
+
         document.getElementById('setting-default-note-color').value = Store.data.settings.defaultNoteColor;
 
         document.getElementById('info-adventure-id').textContent = Utils.getAdventureId() || 'N/A';
@@ -109,6 +112,9 @@ class Settings extends Panel {
 
         Store.data.settings.textColor = document.getElementById('setting-text-color').checked;
         Store.data.settings.textBold = document.getElementById('setting-text-bold').checked;
+
+        Store.data.settings.textFormatStory = document.getElementById('setting-text-format-story').checked;
+        Store.data.settings.textFormatDialogue = document.getElementById('setting-text-format-dialogue').checked;
 
         Store.data.settings.defaultNoteColor = document.getElementById('setting-default-note-color').value;
 
