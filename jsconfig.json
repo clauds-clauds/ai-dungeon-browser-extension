@@ -1,8 +1,13 @@
 {
-    "compilerOptions": {
-        "baseUrl": "scripts"
-    },
-    "include": [
-        "scripts/**/*"
+  "compilerOptions": {
+    "baseUrl": "scripts",
+    "target": "es2022",
+    "lib": [
+      "es2022",
+      "dom"
     ]
+  },
+  "include": [
+    "scripts/**/*.js"
+  ]
 }
