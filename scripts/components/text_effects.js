@@ -22,6 +22,10 @@ class TextEffects {
 
         for (const textNode of textNodesToProcess) {
             const originalText = textNode.textContent;
+            if(!originalText || originalText.trim() === '') continue; // Skip empty or whitespace-only text nodes.
+
+            Utils.printNeat(`Node contents: "${originalText}"`);
+
             if (!regex.test(originalText)) continue;
 
             const fragment = document.createDocumentFragment();
@@ -50,7 +54,7 @@ class TextEffects {
                 if (match.index > lastIndex) {
                     fragment.appendChild(document.createTextNode(originalText.substring(lastIndex, match.index)));
                 }
-                
+
                 const span = document.createElement('span');
                 span.className = 'character-highlight';
                 span.dataset.charId = char.id;
@@ -84,7 +88,7 @@ class TextEffects {
                     tooltip.style.transform = `translate(-50%, -100%) translateY(-10px)`;
                     tooltip.classList.add('visible');
                 });
-                
+
                 span.addEventListener('mouseleave', () => {
                     hideTooltipTimeout = setTimeout(() => {
                         const tooltip = document.getElementById('portrait-hover-tooltip');
@@ -102,13 +106,25 @@ class TextEffects {
                 }
 
                 if (Store.data.settings.visibleIcons && char.portraits && char.portraits.length > 0) {
-                    const img = document.createElement('img');
-                    const activePortrait = char.portraits[char.activePortraitIndex] || char.portraits[0];
+                    const parentText = textNode.parentElement.textContent;
+                    const isDialogue = parentText.includes('"');
 
-                    img.src = Utils.sanitizeUrl(activePortrait?.iconUrl || '');
-                    img.className = 'character-portrait';
-                    img.alt = char.name;
-                    span.appendChild(img);
+                    let showIcon = true;
+                    if (isDialogue && !Store.data.settings.visibleIconsDialogue) {
+                        showIcon = false;
+                    } else if (!isDialogue && !Store.data.settings.visibleIconsStory) {
+                        showIcon = false;
+                    }
+
+                    if (showIcon) {
+                        const img = document.createElement('img');
+                        const activePortrait = char.portraits[char.activePortraitIndex] || char.portraits[0];
+
+                        img.src = Utils.sanitizeUrl(activePortrait?.iconUrl || '');
+                        img.className = 'character-portrait';
+                        img.alt = char.name;
+                        span.appendChild(img);
+                    }
                 }
 
                 span.appendChild(document.createTextNode(fullMatch));

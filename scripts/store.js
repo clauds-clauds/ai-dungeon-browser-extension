@@ -14,6 +14,8 @@ class Store {
             borderRadius: 0,
             borderWidth: 1,
             visibleIcons: true,
+            visibleIconsStory: true,
+            visibleIconsDialogue: true,
             visiblePortraits: true,
             notesPerPage: 16,
             defaultNoteColor: '#3a4045',

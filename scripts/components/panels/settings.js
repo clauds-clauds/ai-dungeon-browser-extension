@@ -67,6 +67,9 @@ class Settings extends Panel {
         document.getElementById('setting-autosize').checked = Store.data.settings.autoResizeEnabled;
 
         document.getElementById('setting-visible-icons').checked = Store.data.settings.visibleIcons;
+        document.getElementById('setting-visible-icons-text').checked = Store.data.settings.visibleIconsStory;
+        document.getElementById('setting-visible-icons-dialogue').checked = Store.data.settings.visibleIconsDialogue;
+
         document.getElementById('setting-visible-portraits').checked = Store.data.settings.visiblePortraits;
 
         document.getElementById('setting-text-color').checked = Store.data.settings.textColor;
@@ -100,6 +103,8 @@ class Settings extends Panel {
         Store.data.settings.autoResizeEnabled = document.getElementById('setting-autosize').checked;
 
         Store.data.settings.visibleIcons = document.getElementById('setting-visible-icons').checked;
+        Store.data.settings.visibleIconsStory = document.getElementById('setting-visible-icons-text').checked;
+        Store.data.settings.visibleIconsDialogue = document.getElementById('setting-visible-icons-dialogue').checked;
         Store.data.settings.visiblePortraits = document.getElementById('setting-visible-portraits').checked;
 
         Store.data.settings.textColor = document.getElementById('setting-text-color').checked;
