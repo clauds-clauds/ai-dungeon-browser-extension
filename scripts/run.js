@@ -63,12 +63,12 @@ const adventureChangeObserver = new MutationObserver(() => {
     const currentAdventureId = Utils.getAdventureId();
 
     if (storyContainerExists && currentAdventureId && currentAdventureId !== initializedAdventureId) {
-        Utils.printNeat(`Loading adventure with Adventure ID: ${currentAdventureId}`);
+        Utils.printNeat(`Loading adventure with ID: ${currentAdventureId}`);
         initializedAdventureId = currentAdventureId;
         document.getElementById('portrait-hover-tooltip')?.classList.remove('visible');
         loadAndApplyAdventureData();
     } else if (!currentAdventureId && initializedAdventureId !== null) {
-        Utils.printNeat(`Left adventure with Adventure ID: ${initializedAdventureId}.`);
+        Utils.printNeat(`Left adventure with ID: ${initializedAdventureId}.`);
         initializedAdventureId = null;
     }
 });
