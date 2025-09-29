@@ -1,0 +1,281 @@
+.editor-container {
+    background: var(--c-core1);
+    border: 1px solid var(--c-core4);
+    border-radius: var(--r-lg);
+    width: 90%;
+    max-width: 900px;
+    z-index: 10001;
+    font-family: var(--f-family);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 90vh;
+}
+
+#editor-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--s-padding-lg);
+    border-bottom: 1px solid var(--c-core2);
+    background: var(--c-core1);
+    flex-shrink: 0;
+}
+
+.editor-header h2 {
+    margin: 0;
+    color: var(--c-coreA9);
+    font-family: var(--f-family-heading);
+    font-size: var(--f-size-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--s-gap-sm);
+}
+
+.editor-actions {
+    display: flex;
+    gap: var(--s-gap-md);
+}
+
+.editor-btn {
+    background-color: var(--c-core3);
+    border: 1px solid var(--c-core4);
+    border-radius: var(--r-sm);
+    padding: var(--s-padding-sm) var(--s-padding-md);
+    color: var(--c-coreA9);
+    font-family: var(--f-family);
+    font-size: var(--f-size-sm);
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--s-gap-sm);
+    transition: all var(--animation-duration-normal) var(--animation-ease);
+}
+
+.editor-btn:hover {
+    background-color: var(--c-core4);
+    border-color: var(--c-core5);
+}
+
+.editor-btn.editor-btn-primary {
+    background-color: var(--c-primary);
+    border-color: var(--c-primary);
+    color: var(--c-core0);
+}
+
+.editor-btn.editor-btn-primary:hover {
+    background-color: var(--c-coreA9);
+    border-color: var(--c-coreA9);
+}
+
+/* Editor Content */
+.editor-content {
+    padding: var(--s-padding-lg);
+    overflow-y: auto;
+    flex: 1;
+}
+
+.editor-section {
+    margin-bottom: var(--s-gap-lg);
+    padding-bottom: var(--s-gap-lg);
+    border-bottom: 1px solid var(--c-core2);
+}
+
+.editor-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.editor-section-title {
+    font-size: var(--f-size-md);
+    color: var(--c-coreA9);
+    font-family: var(--f-family-heading);
+    margin: 0 0 var(--s-gap-md) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--s-gap-sm);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--s-gap-md);
+    margin-bottom: var(--s-gap-md);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-gap-sm);
+}
+
+.form-group label {
+    color: var(--c-core8);
+    font-size: var(--f-size-sm);
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    background: var(--c-core0);
+    border: 1px solid var(--c-core4);
+    border-radius: var(--r-sm);
+    padding: var(--s-padding-md);
+    color: var(--c-coreA85);
+    font-size: var(--f-size-sm);
+    font-family: var(--f-family);
+    transition: border-color var(--animation-duration-normal) var(--animation-ease);
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--c-primary);
+}
+
+.form-group textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.form-group .description {
+    font-size: 0.8em;
+    color: var(--c-core8);
+    margin: 0;
+}
+
+.category-text {
+    color: var(--c-coreA85);
+    font-size: var(--f-size-sm);
+    padding: var(--s-padding-md) 0;
+}
+
+.asset-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-gap-lg);
+}
+
+.asset-column h4 {
+    color: var(--c-coreA9);
+    margin: 0 0 var(--s-gap-md) 0;
+    font-size: 1.1em;
+}
+
+.sortable-asset-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+    gap: var(--s-gap-sm);
+    background-color: var(--c-core0);
+    border: 1px solid var(--c-core3);
+    border-radius: var(--r-md);
+    padding: var(--s-padding-sm);
+    min-height: 82px;
+    /* height of one item + padding */
+    margin-bottom: var(--s-gap-md);
+}
+
+.asset-item {
+    display: flex;
+    flex-direction: column;
+    width: 64px;
+    background-color: var(--c-core2);
+    border-radius: var(--r-sm);
+    overflow: hidden;
+    border: 1px solid var(--c-core3);
+}
+
+.asset-image-container {
+    width: 100%;
+    height: 64px;
+    cursor: grab;
+}
+
+.asset-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.asset-item .asset-actions {
+    display: flex;
+    width: 100%;
+}
+
+.asset-action-btn {
+    flex: 1;
+    background: var(--c-core2);
+    border: none;
+    border-top: 1px solid var(--c-core3);
+    color: var(--c-coreA9);
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color var(--animation-duration-normal) var(--animation-ease);
+}
+
+.asset-action-btn:first-child {
+    border-right: 1px solid var(--c-core3);
+}
+
+.asset-action-btn:hover {
+    background: var(--c-core3);
+}
+
+.asset-action-btn.delete-btn:hover {
+    background-color: var(--c-healthBarRed);
+    color: var(--c-core0);
+}
+
+.asset-action-btn .material-symbols-rounded {
+    font-size: 16px;
+}
+
+.asset-action-btn.pin-btn.active {
+    background-color: var(--c-primary);
+    color: var(--c-core0);
+}
+
+.add-asset-btn {
+    width: 100%;
+    background-color: var(--c-core2);
+    border: 1px dashed var(--c-core4);
+    color: var(--c-core8);
+    padding: var(--s-padding-md);
+    border-radius: var(--r-sm);
+    cursor: pointer;
+    transition: all var(--animation-duration-normal) var(--animation-ease);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s-gap-sm);
+}
+
+.add-asset-btn:hover {
+    background-color: var(--c-core3);
+    border-color: var(--c-primary);
+    color: var(--c-primary);
+}
+
+/* Style for sortable.js ghost element */
+.sortable-ghost {
+    opacity: 0.4;
+    background: var(--c-primary);
+}

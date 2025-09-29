@@ -1,0 +1,353 @@
+<div id="extension-main-menu" class="extension-menu-container">
+    <div class="menu-header">
+        <h2>Extension Menu</h2>
+        <button id="menu-close-btn" class="menu-close-btn">
+            <span class="material-symbols-rounded">close</span>
+        </button>
+    </div>
+
+    <div class="menu-content">
+
+        <!-- Primary Buttons! -->
+        <div class="menu-tabs">
+            <button class="menu-tab active" data-tab="entities">
+                <span class="material-symbols-rounded">api</span>
+                Entities
+            </button>
+            <button class="menu-tab" data-tab="editor">
+                <span class="material-symbols-rounded">handyman</span>
+                Editor
+            </button>
+            <button class="menu-tab" data-tab="settings">
+                <span class="material-symbols-rounded">settings</span>
+                Settings
+            </button>
+            <button class="menu-tab" data-tab="sharing">
+                <span class="material-symbols-rounded">folder_copy</span>
+                Sharing
+            </button>
+        </div>
+
+        <div class="menu-tab-content">
+            <!-- Entity Tab Content! -->
+            <div id="entities-tab" class="tab-panel active">
+                <div class="sub-menu-tabs">
+                    <button class="sub-menu-tab active" data-subtab="all">
+                        <span class="material-symbols-rounded">view_list</span>
+                        All
+                    </button>
+                    <button class="sub-menu-tab" data-subtab="characters">
+                        <span class="material-symbols-rounded">groups_2</span>
+                        Characters
+                    </button>
+                    <button class="sub-menu-tab" data-subtab="races">
+                        <span class="material-symbols-rounded">sword_rose</span>
+                        Races
+                    </button>
+                    <button class="sub-menu-tab" data-subtab="locations">
+                        <span class="material-symbols-rounded">explore</span>
+                        Locations
+                    </button>
+                    <button class="sub-menu-tab" data-subtab="factions">
+                        <span class="material-symbols-rounded">castle</span>
+                        Factions
+                    </button>
+                    <button class="sub-menu-tab" data-subtab="custom">
+                        <span class="material-symbols-rounded">category</span>
+                        Custom
+                    </button>
+                </div>
+
+                <!-- Search Bar! -->
+                <div class="entities-search-container">
+                    <div class="search-input-wrapper">
+                        <span class="material-symbols-rounded search-icon">search</span>
+                        <input type="text" id="entities-search-input" placeholder="Search entities..." />
+                        <button id="clear-search-btn" class="clear-search-btn" style="display: none;">
+                            <span class="material-symbols-rounded">close</span>
+                        </button>
+                    </div>
+                    
+                    <div class="add-entity-wrapper">
+                        <!-- 
+                        <select id="entity-type-select" class="entity-type-select">
+                            <option value="character">Character</option>
+                            <option value="race">Race</option>
+                            <option value="location">Location</option>
+                            <option value="faction">Faction</option>
+                            <option value="custom">Custom</option>
+                        </select>-->
+                        <button id="add-entity-btn" class="add-entity-btn">
+                            <span class="material-symbols-rounded">note_stack_add</span>
+                            Add Entity
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tab-content-area">
+                    <div id="all-subtab" class="subtab-panel active">
+                        <!-- Inject Entity Render for `All` -->
+                    </div>
+                    <div id="characters-subtab" class="subtab-panel">
+                        <!-- Inject Entity Render for `Characters` -->
+                    </div>
+                    <div id="races-subtab" class="subtab-panel">
+                        <!-- Inject Entity Render for `Races` -->
+                    </div>
+                    <div id="locations-subtab" class="subtab-panel">
+                        <!-- Inject Entity Render for `Locations` -->
+                    </div>
+                    <div id="factions-subtab" class="subtab-panel">
+                        <!-- Inject Entity Render for `Factions` -->
+                    </div>
+                    <div id="custom-subtab" class="subtab-panel">
+                        <!-- Inject Entity Render for `Custom` -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="editor-tab" class="tab-panel">
+                <div class="sub-menu-tabs">
+                    <button class="sub-menu-tab active" data-subtab="entity">
+                        <span class="material-symbols-rounded">api</span>
+                        Entity
+                    </button>
+                </div>
+                <div class="tab-content-area">
+                    <div id="entity-subtab" class="subtab-panel active">
+                        <!-- Inject Editor Here! -->
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Settings Tab! -->
+            <div id="settings-tab" class="tab-panel">
+                <div class="sub-menu-tabs">
+                    <button class="sub-menu-tab active" data-subtab="general-settings">
+                        <span class="material-symbols-rounded">tune</span>
+                        General
+                    </button>
+                    <button class="sub-menu-tab" data-subtab="highlight-settings">
+                        <span class="material-symbols-rounded">text_fields</span>
+                        Text Effects
+                    </button>
+                    <button class="sub-menu-tab" data-subtab="tooltip-settings">
+                        <span class="material-symbols-rounded">tooltip</span>
+                        Tooltip
+                    </button>
+                    <button class="sub-menu-tab" data-subtab="storage-settings">
+                        <span class="material-symbols-rounded">folder_data</span>
+                        Storage
+                    </button>
+                    <button id="danger-zone" class="sub-menu-tab" data-subtab="danger-settings">
+                        <span class="material-symbols-rounded">skull</span>
+                        Danger Zone
+                    </button>
+                </div>
+                <div class="tab-content-area">
+                    <!-- General Settings! -->
+                    <div id="general-settings-subtab" class="subtab-panel active">
+                        <div class="settings-section">
+                            <div class="info-row">
+                                <span>Adventure ID</span>
+                                <code id="info-adventure-id">You should not be able to see this.</code>
+                            </div>
+                            <div class="info-row">
+                                <span>Version</span>
+                                <code id="info-plugin-version">You should not be able to see this.</code>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <div class="info-row">
+                                <code
+                                    style="font-size:1.1em; width:100%; background:var(--c-core0); display:block; white-space:pre-line;">
+                                    Hey! Hey you! Thanks for installing <strong id="orange">Dungeon Extension!</strong>
+                                    I hope you enjoy using it!
+                            
+                                    If anything is wrong, feel free to DM me on the AI Dungeon Discord server.
+                            
+                                    <strong id="orange">&lt;3 - Claudia</strong>
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Highlight Settings! -->
+                    <div id="highlight-settings-subtab" class="subtab-panel">
+                        <div class="settings-section">
+                            <div class="info-row">
+                                <label for="setting-textEffectsEnabled">Enabled</label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="setting-textEffectsEnabled" variable="textEffectsEnabled">
+                                    <label for="setting-textEffectsEnabled"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-section">
+                            <div class="info-row">
+                                <label for="setting-textEffectsColor">Colored Text</label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="setting-textEffectsColor" variable="textEffectsColor">
+                                    <label for="setting-textEffectsColor"></label>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <label for="setting-textEffectsBold">Bold Text</label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="setting-textEffectsBold" variable="textEffectsBold">
+                                    <label for="setting-textEffectsBold"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <!--
+                        <div class="settings-section">
+                            <div class="info-row">
+                                <label for="setting-textEffectsStory">Text (Story)</label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="setting-textEffectsStory" variable="textEffectsStory">
+                                    <label for="setting-textEffectsStory"></label>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <label for="setting-textEffectsDialogue">Text (Dialogue)</label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="setting-textEffectsDialogue"
+                                        variable="textEffectsDialogue">
+                                    <label for="setting-textEffectsDialogue"></label>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="settings-section">
+                            <!-- Icon Size Slider! -->
+                            <div class="slider-group">
+                                <div class="slider-label">
+                                    <label for="setting-textEffectsIconSize">Icon Size</label>
+                                    <button type="button" class="reset-btn"
+                                        data-target="setting-textEffectsIconSize">RESET</button>
+                                </div>
+                                <div class="input-with-slider">
+                                    <input type="number" id="setting-textEffectsIconSize" min="8" max="64" value="28"
+                                        variable="textEffectsIconSize">
+                                    <input type="range" id="setting-textEffectsIconSize-slider" min="8" max="64"
+                                        value="28" variable="textEffectsIconSize">
+                                </div>
+                            </div>
+                            <!-- Icon Border Width -->
+                            <div class="slider-group">
+                                <div class="slider-label">
+                                    <label for="setting-textEffectsIconBorderWidth">Icon Border Width</label>
+                                    <button type="button" class="reset-btn"
+                                        data-target="setting-textEffectsIconBorderWidth">RESET</button>
+                                </div>
+                                <div class="input-with-slider">
+                                    <input type="number" id="setting-textEffectsIconBorderWidth" min="0" max="16"
+                                        value="1" variable="textEffectsIconBorderWidth">
+                                    <input type="range" id="setting-textEffectsIconBorderWidth-slider" min="0" max="16"
+                                        value="1" variable="textEffectsIconBorderWidth">
+                                </div>
+                            </div>
+                            <!-- Icon Border Radius -->
+                            <div class="slider-group">
+                                <div class="slider-label">
+                                    <label for="setting-textEffectsIconBorderRadius">Icon Border Radius</label>
+                                    <button type="button" class="reset-btn"
+                                        data-target="setting-textEffectsIconBorderRadius">RESET</button>
+                                </div>
+                                <div class="input-with-slider">
+                                    <input type="number" id="setting-textEffectsIconBorderRadius" min="0" max="50"
+                                        value="0" variable="textEffectsIconBorderRadius">
+                                    <input type="range" id="setting-textEffectsIconBorderRadius-slider" min="0" max="50"
+                                        value="0" variable="textEffectsIconBorderRadius">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-section">
+                            <div class="info-row">
+                                <label for="setting-textEffectsColorDefault">Color (Default)</label>
+                                <input type="color" id="setting-textEffectsColorDefault" value="#f8ae2c"
+                                    variable="textEffectsColorDefault">
+                            </div>
+                            <div class="info-row">
+                                <label for="setting-textEffectsColorGlobal">Color (Global)</label>
+                                <input type="color" id="setting-textEffectsColorGlobal" value="#f8ae2c"
+                                    variable="textEffectsColorGlobal">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tooltip-settings-subtab" class="subtab-panel">
+                        <div class="settings-section">
+                            <div class="info-row">
+                                <label for="setting-tooltipEnabled">Enabled</label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="setting-tooltipEnabled" variable="tooltipEnabled">
+                                    <label for="setting-tooltipEnabled"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-section">
+                            <!-- Scale -->
+                            <div class="slider-group">
+                                <div class="slider-label">
+                                    <label for="setting-tooltipScale">Scale (%)</label>
+                                    <button type="button" class="reset-btn"
+                                        data-target="setting-tooltipScale">RESET</button>
+                                </div>
+                                <div class="input-with-slider">
+                                    <input type="number" id="setting-tooltipScale" min="0" max="100" value="25"
+                                        variable="tooltipScale">
+                                    <input type="range" id="setting-tooltipScale-slider" min="0" max="100" value="25"
+                                        variable="tooltipScale">
+                                </div>
+                            </div>
+
+                            <!-- Hide Delay -->
+                            <div class="slider-group">
+                                <div class="slider-label">
+                                    <label for="setting-tooltipHideDelay">Hide Delay (ms)</label>
+                                    <button type="button" class="reset-btn"
+                                        data-target="setting-tooltipHideDelay">RESET</button>
+                                </div>
+                                <div class="input-with-slider">
+                                    <input type="number" id="setting-tooltipHideDelay" min="0" max="1000" value="400"
+                                        variable="tooltipHideDelay">
+                                    <input type="range" id="setting-tooltipHideDelay-slider" min="0" max="1000"
+                                        value="400" variable="tooltipHideDelay">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="storage-settings-subtab" class="subtab-panel">
+                    </div>
+
+                    <div id="danger-settings-subtab" class="subtab-panel">
+                    </div>
+                </div>
+            </div>
+
+            <div id="sharing-tab" class="tab-panel">
+                <div class="sub-menu-tabs">
+                    <button class="sub-menu-tab active" data-subtab="export">
+                        <span class="material-symbols-rounded">file_upload</span>
+                        Export
+                    </button>
+                    <button class="sub-menu-tab" data-subtab="import">
+                        <span class="material-symbols-rounded">file_download</span>
+                        Import
+                    </button>
+                </div>
+                <div class="tab-content-area">
+                    <div id="export-subtab" class="subtab-panel active">
+                        <p>Export functionality coming soon...</p>
+                    </div>
+                    <div id="import-subtab" class="subtab-panel">
+                        <p>Import functionality coming soon...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

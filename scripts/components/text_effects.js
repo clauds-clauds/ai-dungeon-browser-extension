@@ -1,163 +1,100 @@
-'use strict';
+"use strict";
 
 class TextEffects {
-    static highlightNames(node) {
-        if (!Store.data.characters || Store.data.characters.length === 0) return;
+    /**
+     * Applies all text effects to a given node.
+     * @param {HTMLElement} node The node to apply effects to.
+     */
+    static applyToTextContainer(node) {
+        if (!node || !(node instanceof Node)) return;
+        if (!Storage.getVariable('textEffectsEnabled', true)) return;
 
-        const allNames = Store.data.characters.flatMap(char => [char.name, ...(char.nicknames || [])]).filter(Boolean);
-        if (allNames.length === 0) return;
+        const entities = Storage.cache.entities;
+        if (!entities || entities.length === 0) return;
 
-        const pattern = allNames.map(name => Utils.escapeRegExp(name)).join('|');
+        // Gather all unique, non-empty keywords and names from entities.
+        const allTriggers = [...new Set(entities.flatMap(entity => [entity.name, ...(entity.keywords || [])]).filter(Boolean))];
+        if (allTriggers.length === 0) return;
+
+        // Create a regex pattern to match all triggers.
+        const pattern = allTriggers.map(Utils.escapeRegExp).join('|');
         const regex = new RegExp(`\\b(${pattern})('s)?\\b`, 'gi');
 
+        // Use TreeWalker to find all text nodes.
         const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
-        const textNodesToProcess = [];
+        const textNodes = [];
         let currentNode;
-
         while (currentNode = walker.nextNode()) {
-            if (currentNode.parentElement && !currentNode.parentElement.closest('.character-highlight')) {
-                textNodesToProcess.push(currentNode);
+            if (currentNode.parentElement && !currentNode.parentElement.closest('.entity-highlight')) {
+                textNodes.push(currentNode);
             }
         }
 
-        for (const textNode of textNodesToProcess) {
+        // Process each text node.
+        for (const textNode of textNodes) {
             const originalText = textNode.textContent;
-            if(!originalText || originalText.trim() === '') continue; // Skip empty or whitespace-only text nodes.
-
-            if (!regex.test(originalText)) continue;
+            if (!originalText || !regex.test(originalText)) continue;
 
             const fragment = document.createDocumentFragment();
             let lastIndex = 0;
             let match;
-            regex.lastIndex = 0;
+            regex.lastIndex = 0; // Reset regex state for each text node.
 
             while ((match = regex.exec(originalText)) !== null) {
+                const matchedName = match[1];
                 const fullMatch = match[0];
-                const baseName = match[1];
 
-                const char = Store.data.characters.find(c =>
-                    baseName.toLowerCase() === c.name.toLowerCase() ||
-                    (c.nicknames || []).some(nick => nick.toLowerCase() === baseName.toLowerCase())
+                // Find the entity by name or keyword (case-insensitive).
+                const entity = entities.find(e =>
+                    e.name?.toLowerCase() === matchedName.toLowerCase() ||
+                    e.keywords?.some(k => k.toLowerCase() === matchedName.toLowerCase())
                 );
 
-                if (!char) continue;
+                if (!entity) continue; // No matching entity found.
 
-                // This is to prevent the excessive `You` spam.
-                if (char.pickMode === 'action') {
-                    if (!textNode.parentElement.closest('#action-text')) { // Only highlight in action text area.
-                        continue;
-                    }
+                if (entity.highlightRestriction === 'action-only') {
+                    if (!textNode.parentElement.closest('#action-text')) continue;
+                } else if (entity.highlightRestriction === 'story-only') {
+                    if (textNode.parentElement.closest('#action-text')) continue;
                 }
 
+                // Add preceding text.
                 if (match.index > lastIndex) {
                     fragment.appendChild(document.createTextNode(originalText.substring(lastIndex, match.index)));
                 }
 
-                const span = document.createElement('span');
-                span.className = 'character-highlight';
-                span.dataset.charId = char.id;
-
-                span.addEventListener('mouseenter', (e) => {
-                    if (!Store.data.settings.visiblePortraits) return;
-
-                    const tooltip = document.getElementById('portrait-hover-tooltip');
-                    if (tooltip.classList.contains('visible')) return; // This is for locking the tooltip. Pretty required.
-
-                    clearTimeout(hideTooltipTimeout);
-                    if (!char.portraits || char.portraits.length === 0) return;
-
-                    tooltip.portraits = [...char.portraits];
-                    tooltip.originalChar = char;
-                    tooltip.sourceSpan = e.target;
-
-                    const img = tooltip.querySelector('img');
-                    const activePortrait = char.portraits[0];
-                    tooltip.currentIndex = 0;
-                    img.src = Utils.sanitizeUrl(activePortrait?.fullUrl || activePortrait?.iconUrl);
-
-                    const navButtons = tooltip.querySelectorAll('.tooltip-nav-btn');
-                    navButtons.forEach(btn => {
-                        btn.style.display = char.portraits.length > 1 ? 'flex' : 'none';
-                    });
-
-                    const rect = e.target.getBoundingClientRect();
-                    tooltip.style.left = `${rect.left + rect.width / 2}px`;
-                    tooltip.style.top = `${rect.top}px`;
-                    tooltip.style.transform = `translate(-50%, -100%) translateY(-10px)`;
-                    tooltip.classList.add('visible');
-                });
-
-                span.addEventListener('mouseleave', () => {
-                    hideTooltipTimeout = setTimeout(() => {
-                        const tooltip = document.getElementById('portrait-hover-tooltip');
-                        if (tooltip) tooltip.classList.remove('visible');
-                    }, Store.data.settings.tooltipHideDelay);
-                });
-
-                let formatText = true;
-
-                if (Store.data.settings.visibleIcons && char.portraits && char.portraits.length > 0) {
-                    const parentText = textNode.parentElement.textContent;
-                    const isDialogue = parentText.includes('"');
-
-                    let showIcon = true;
-
-                    if (isDialogue && !Store.data.settings.visibleIconsDialogue) {
-                        showIcon = false;
-                        if (!Store.data.settings.textFormatDialogue) formatText = false;
-                    } else if (!isDialogue && !Store.data.settings.visibleIconsStory) {
-                        showIcon = false;
-                        if (!Store.data.settings.textFormatStory) formatText = false;
-                    }
-
-                    if (showIcon) {
-                        const img = document.createElement('img');
-                        const activePortrait = char.portraits[char.activePortraitIndex] || char.portraits[0];
-
-                        img.src = Utils.sanitizeUrl(activePortrait?.iconUrl || '');
-                        img.className = 'character-portrait';
-                        img.alt = char.name;
-                        span.appendChild(img);
-                    }
-                }
-
-                if (Store.data.settings.textColor && formatText) {
-                    const colorToApply = char.colorMode === "special" ? char.color : Store.data.settings.sharedColor;
-                    span.style.color = Utils.sanitizeColor(colorToApply) || 'inherit';
-                }
-
-                if (Store.data.settings.textBold && formatText) {
-                    span.style.fontWeight = 'bold';
-                }
-
-                span.appendChild(document.createTextNode(fullMatch));
+                // Create the highlight span.
+                const span = this.#createHighlightSpan(entity, fullMatch);
                 fragment.appendChild(span);
+
                 lastIndex = regex.lastIndex;
             }
 
+            // Add any remaining text after the last match.
             if (lastIndex < originalText.length) {
                 fragment.appendChild(document.createTextNode(originalText.substring(lastIndex)));
             }
 
+            // Replace the original text node with the new fragment.
             if (fragment.childNodes.length > 0) {
                 textNode.parentElement.replaceChild(fragment, textNode);
             }
         }
     }
 
-    static applyHighlights() {
-        const storyContainers = document.querySelectorAll(`${Config.ID_STORY_CONTAINER}:not([data-chars-highlighted])`);
+    static applyToAdventure(expensiveRefresh = false) {
+        const nodes = expensiveRefresh
+            ? document.querySelectorAll(Config.IDENTIFIER_CONTAINER_ADVENTURE_TEXT)
+            : document.querySelectorAll(`${Config.IDENTIFIER_CONTAINER_ADVENTURE_TEXT}:not([text-effect-entity])`);
 
-        for (const container of storyContainers) {
-            container.setAttribute('data-chars-highlighted', 'true');
-            TextEffects.highlightNames(container);
+        for (const node of nodes) {
+            node.setAttribute('text-effect-entity', 'true');
+            TextEffects.applyToTextContainer(node);
         }
     }
 
-    static async reloadAndApply() {
-        await Store.loadCharacters();
-
-        document.querySelectorAll('.character-highlight').forEach(span => {
+    static async reloadAndApplyToAdventure() {
+        document.querySelectorAll('.entity-highlight').forEach(span => {
             const parent = span.parentElement;
             if (parent) {
                 const text = span.textContent || '';
@@ -166,7 +103,48 @@ class TextEffects {
             }
         });
 
-        document.querySelectorAll('[data-chars-highlighted]').forEach(el => el.removeAttribute('data-chars-highlighted'));
-        TextEffects.applyHighlights();
+        document.querySelectorAll('[text-effect-entity]').forEach(el => el.removeAttribute('text-effect-entity'));
+        this.applyToAdventure();
+    }
+
+    /**
+     * Creates a styled span element for a highlighted entity.
+     * @param {object} entity The entity object.
+     * @param {string} text The text content for the span.
+     * @returns {HTMLElement} The created span element.
+     */
+    static #createHighlightSpan(entity, text) {
+        const span = document.createElement('span');
+        span.className = 'entity-highlight';
+        span.dataset.entityId = entity.id;
+        span.textContent = text;
+
+        // Apply icon if enabled and available.
+        if (Storage.getVariable('textEffectsIcon', true) && entity.icons?.length > 0) {
+            const iconIndex = entity.currentIcon || 0;
+            const iconUrl = entity.icons[iconIndex];
+            if (iconUrl) {
+                const img = document.createElement('img');
+                img.src = iconUrl;
+                img.className = 'entity-text-icon';
+                img.alt = entity.name;
+                span.insertBefore(img, span.firstChild);
+            }
+        }
+
+        // Apply text styling from settings.
+        if (Storage.getVariable('textEffectsBold', true)) {
+            span.style.fontWeight = 'bold';
+        }
+
+        if (Storage.getVariable('textEffectsColor', true)) {
+            // Use special color or default color based on entity settings.
+            const color = entity.highlightMode === 'special' && entity.highlightColor
+                ? entity.highlightColor
+                : Storage.getVariable('textEffectsColorGlobal', 'rgba(200, 170, 100, 1)');
+            span.style.color = color;
+        }
+
+        return span;
     }
 }

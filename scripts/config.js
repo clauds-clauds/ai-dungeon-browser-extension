@@ -1,10 +1,24 @@
-'use strict';
+"use strict";
 
 class Config {
-    static ID_STORY_CONTAINER = '#transition-opacity'; // Selector for the main story container.
-    static ID_EXIT_GAME_BUTTON = 'div[role="button"][aria-label="Exit game"]' // Selector for the "Exit game" button.
-    static ID_FONT_SYMBOLS_CLASS = 'material-symbols-rounded'; // Class for the material symbols font.
-    static ID_FONT_SYMBOLS_INJECT = 'material-symbols-font-injection'; // ID for the injected font link element.
-    static TIME_DELAY_SWITCH = 250; // Delay for panel switches.
-    static IMAGE_TYPE_RESIZE = 'image/jpeg';
+    static LOG_ENABLE = true;
+    static LOG_ENABLE_VERBOSE = true;
+
+    static COLOR_WARNING = '#f8ae2c';
+    static COLOR_ERROR = '#ef4444';
+
+    static IDENTIFIER_FONT_MATERIAL_SYMBOLS = 'material-symbols-rounded';
+
+    static IDENTIFIER_BUTTON_EXTENSION_MENU = 'dungeon-extension-menu-button';
+
+    static IDENTIFIER_BUTTON_GAME_SETTINGS = '[aria-label="Game settings"]';
+    static IDENTIFIER_BUTTON_EXIT_GAME = 'div[role="button"][aria-label="Exit game"]';
+
+    static IDENTIFIER_CONTAINER_ADVENTURE_TEXT = '#transition-opacity';
+    static IDENTIFIER_CONTAINER_NAVIGATION_BAR = '[aria-label="Navigation bar"][role="toolbar"]';
+
+    static IDENTIFIER_STYLE_SETTINGS = 'important-override-style';
+
+    static DATABASE_NAME = 'DungeonExtensionDB';
+    static DATABASE_KEY = 'DungeonExtensionSettings';
 }

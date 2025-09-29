@@ -1,0 +1,18 @@
+#orange {
+    color: var(--c-primary);
+}
+
+.entity-highlight {
+    display: inline-flex;
+    align-items: baseline;
+    white-space: nowrap;
+}
+
+.entity-text-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 5px;
+    object-fit: cover;
+    border: 1px solid var(--c-whiteA3);
+    align-self: center;
+}

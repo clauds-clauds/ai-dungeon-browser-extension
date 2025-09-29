@@ -1,39 +1,49 @@
 "use strict";
 
-class Events {
-    static onCharactersClick() {
-        Character.show();
+function onNavigationChanged(newNavigation) {
+    Log.say(`Navigated from ${previousNavigation} to ${newNavigation}.`, true);
+    previousNavigation = newNavigation;
+}
+
+function onAdventureLoad(adventureTag) {
+    Log.say("Loaded adventure with tag: " + Utils.getAdventureTag()); // Log the adventure tag.
+    Storage.init(adventureTag); // Load the storage for the current adventure.
+    loadedAdventureTag = adventureTag; // Set the loaded adventure tag.
+}
+
+function onAdventureExit(adventureTag) {
+    Log.scream("Left adventure with tag: " + adventureTag + "!"); // Log the adventure tag.
+    loadedAdventureTag = null; // Reset the loaded adventure tag.
+}
+
+async function onMenuButtonClicked() {
+    Log.say("Menu button clicked.");
+
+    // Initialize menu if not already done
+    if (!Menu.isVisible) {
+        // Ensure menu is initialized
+        await Menu.init();
     }
 
-    static onNotesClick() {
-        Notes.show();
-    }
+    // Toggle the menu
+    Menu.toggle();
+}
 
-    static onSettingsClick() {
-        Settings.show();
-    }
+async function onSubTabSwitched(subTabName, panel) {
+    if (subTabName === 'entity' && panel) await EntityEditor.tryInit(panel)
 
-    static onShareClick() {
-        Share.show();
-    }
+    // Remove the 's' from the sub tab name, since there are some subtabs like 'characters', 'factions', and such.
+    const sLessName = Utils.removeLastCharIfEquals(subTabName, 's');
+    const validRenderCategories = ['all', 'character', 'race', 'location', 'faction', 'custom']; // Set the whitelisted categories, hardcoded for now.
 
-    static onScriptsClick() {
-        window.open('https://help.aidungeon.com/what-are-scripts-and-how-do-you-install-them', '_blank');
-    }
+    // If it is one of the valid categories, then call the renderer.
+    if (validRenderCategories.includes(sLessName)) setTimeout(async () => await EntityRenderer.tryInit(panel, sLessName), 10);
+}
 
-    static onHelpClick() {
-        window.open('https://help.aidungeon.com/faq', '_blank');
-    }
+function onStorageMutated() {
+    setTimeout(() => {
+        TextEffects.reloadAndApplyToAdventure();
+    }, 100);
 
-    static onLanguageClick() {
-        window.open('https://github.com/LewdLeah/Localized-Languages', '_blank');
-    }
-
-    static onBugsClick() {
-        window.open('https://github.com/clauds-clauds/ai-dungeon-browser-extension-public/issues', '_blank');
-    }
-
-    static async onRefreshClick() {
-        await Utils.hardRefresh();
-    }
+    Inject.settingsStyle();
 }

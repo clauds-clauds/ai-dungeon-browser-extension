@@ -1,51 +1,105 @@
-'use strict';
+"use strict";
 
-let hideTooltipTimeout;
+class Tooltip {
+    static #tooltipElement = null;
+    static #imageElement = null;
+    static #counterElement = null;
+    static #prevButton = null;
+    static #nextButton = null;
 
-function applyTooltipStuff() {
-    const tooltip = document.getElementById('portrait-hover-tooltip');
-    if (!tooltip || tooltip.dataset.interactive) return;
-    tooltip.dataset.interactive = 'true';
+    static #currentEntity = null;
+    static #currentGraphicIndex = 0;
+    static #hideTimeout = null;
 
-    const hideAndSaveChanges = () => {
-        if (tooltip.originalChar && typeof tooltip.currentIndex === 'number') {
-            const char = tooltip.originalChar;
-            const finalIndex = tooltip.currentIndex;
+    static async init() {
+        if (document.getElementById('extension-tooltip')) return;
 
-            if (finalIndex < char.portraits.length) {
-                const [movedPortrait] = char.portraits.splice(finalIndex, 1);
-                char.portraits.unshift(movedPortrait);
-                Character.saveCharacters();
-            }
+        const tooltipContainer = await Inject.injectable('injectables/tooltip.html', document.body);
+        if (!tooltipContainer) return;
+
+        this.#tooltipElement = tooltipContainer;
+        this.#imageElement = document.getElementById('tooltip-image');
+        this.#counterElement = document.getElementById('tooltip-counter');
+        this.#prevButton = document.getElementById('tooltip-prev-btn');
+        this.#nextButton = document.getElementById('tooltip-next-btn');
+
+        this.#addEventListeners();
+        Log.say("Tooltip initialized.");
+    }
+
+    static show(target, entity) {
+        if (!this.#tooltipElement || !entity || !entity.graphics || entity.graphics.length === 0) {
+            return;
         }
-        tooltip.classList.remove('visible');
-    };
 
-    tooltip.addEventListener('mouseenter', () => clearTimeout(hideTooltipTimeout));
-    tooltip.addEventListener('mouseleave', () => {
-        hideTooltipTimeout = setTimeout(hideAndSaveChanges, Store.data.settings.tooltipHideDelay);
-    });
+        clearTimeout(this.#hideTimeout);
 
-    const updateImage = (newIndex) => {
-        if (!tooltip.portraits) return;
-        const numPortraits = tooltip.portraits.length;
-        const validIndex = (newIndex + numPortraits) % numPortraits;
-        tooltip.currentIndex = validIndex;
+        this.#currentEntity = entity;
+        this.#currentGraphicIndex = entity.currentGraphic || 0;
+        this.#updateGraphic();
 
-        const newPortrait = tooltip.portraits[validIndex];
-        tooltip.querySelector('img').src = Utils.sanitizeUrl(newPortrait.fullUrl || newPortrait.iconUrl);
+        const targetRect = target.getBoundingClientRect();
+        this.#tooltipElement.classList.add('visible');
 
-        const inlineIcon = tooltip.sourceSpan.querySelector('img.character-portrait');
-        if (inlineIcon) inlineIcon.src = Utils.sanitizeUrl(newPortrait.iconUrl);
-    };
+        const tooltipRect = this.#tooltipElement.getBoundingClientRect();
+        const top = targetRect.bottom + 8;
+        let left = targetRect.left + (targetRect.width / 2) - (tooltipRect.width / 2);
 
-    document.getElementById('tooltip-prev-btn').addEventListener('click', (e) => {
-        e.stopPropagation();
-        updateImage(tooltip.currentIndex - 1);
-    });
+        // Prevent overflow
+        if (left < 0) left = 8;
+        if (left + tooltipRect.width > window.innerWidth) left = window.innerWidth - tooltipRect.width - 8;
 
-    document.getElementById('tooltip-next-btn').addEventListener('click', (e) => {
-        e.stopPropagation();
-        updateImage(tooltip.currentIndex + 1);
-    });
+        this.#tooltipElement.style.top = `${top}px`;
+        this.#tooltipElement.style.left = `${left}px`;
+    }
+
+    static hide(immediate = false) {
+        if (!this.#tooltipElement) return;
+
+        clearTimeout(this.#hideTimeout);
+        if (immediate) {
+            this.#tooltipElement.classList.remove('visible');
+        } else {
+            const delay = parseInt(Storage.getVariable('tooltipHideDelay', 400));
+            this.#hideTimeout = setTimeout(() => {
+                this.#tooltipElement.classList.remove('visible');
+            }, delay);
+        }
+    }
+
+    static #addEventListeners() {
+        this.#prevButton.addEventListener('click', () => this.#cycleGraphic(-1));
+        this.#nextButton.addEventListener('click', () => this.#cycleGraphic(1));
+
+        this.#tooltipElement.addEventListener('mouseenter', () => {
+            clearTimeout(this.#hideTimeout);
+        });
+
+        this.#tooltipElement.addEventListener('mouseleave', () => {
+            this.hide();
+        });
+    }
+
+    static #cycleGraphic(direction) {
+        const graphicsCount = this.#currentEntity.graphics.length;
+        if (graphicsCount <= 1) return;
+
+        this.#currentGraphicIndex = (this.#currentGraphicIndex + direction + graphicsCount) % graphicsCount;
+        this.#currentEntity.currentGraphic = this.#currentGraphicIndex;
+        Storage.saveEntity(this.#currentEntity);
+        this.#updateGraphic();
+    }
+
+    static #updateGraphic() {
+        const graphics = this.#currentEntity.graphics;
+        const graphicsCount = graphics.length;
+
+        this.#imageElement.src = graphics[this.#currentGraphicIndex];
+        this.#counterElement.textContent = `${this.#currentGraphicIndex + 1} / ${graphicsCount}`;
+
+        const controls = this.#tooltipElement.querySelector('.tooltip-controls');
+        if (controls) {
+            controls.style.display = graphicsCount > 1 ? 'flex' : 'none';
+        }
+    }
 }

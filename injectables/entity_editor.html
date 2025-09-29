@@ -1,0 +1,101 @@
+<div id="editor-panel">
+    <div class="editor-header">
+        <h2 id="editor-title"><span class="material-symbols-rounded">design_services</span> Entity Editor</h2>
+        <div class="editor-actions">
+            <button id="editor-save-btn" class="editor-btn editor-btn-primary">
+                <span class="material-symbols-rounded">save</span> Save
+            </button>
+        </div>
+    </div>
+
+    <div class="editor-content">
+        <!-- Basic Info! -->
+        <div class="editor-section">
+            <h3 class="editor-section-title">
+                <span class="material-symbols-rounded">ink_pen</span>
+                Basic Information
+            </h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="editor-name">Name</label>
+                    <input type="text" id="editor-name" placeholder="Enter entity name..." autocomplete="off" entityVariable="name">
+                </div>
+                <div class="form-group">
+                    <label for="editor-category-select">Category</label>
+                    <select id="editor-category-select" class="entity-type-select" entityVariable="category">
+                        <option value="character">Character</option>
+                        <option value="race">Race</option>
+                        <option value="location">Location</option>
+                        <option value="faction">Faction</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="editor-keywords">Keywords</label>
+                <textarea id="editor-keywords"
+                    placeholder="Comma-separated keywords for highlighting (e.g., John, Johnny, Mr. Smith)" entityVariable="keywords"></textarea>
+                <p class="description">These keywords will trigger highlighting when they appear in text.</p>
+            </div>
+        </div>
+
+        <!-- Visual Assets! -->
+        <div class="editor-section">
+            <h3 class="editor-section-title">
+                <span class="material-symbols-rounded">draw</span>
+                Visual Assets
+            </h3>
+            <div class="asset-columns">
+                <!-- Icons -->
+                <div class="asset-column">
+                    <h4>Icons</h4>
+                    <div id="editor-icons-list" class="sortable-asset-list" entityVariable="icons">
+                    </div>
+                    <button id="editor-add-icon-btn" class="add-asset-btn">
+                        <span class="material-symbols-rounded">add</span> Add Icon
+                    </button>
+                </div>
+                <!-- Graphics! -->
+                <div class="asset-column">
+                    <h4>Graphics</h4>
+                    <div id="editor-graphics-list" class="sortable-asset-list" entityVariable="graphics">
+                    </div>
+                    <button id="editor-add-graphic-btn" class="add-asset-btn">
+                        <span class="material-symbols-rounded">add</span> Add Graphic
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Highlight Settings! -->
+        <div class="editor-section">
+            <h3 class="editor-section-title">
+                <span class="material-symbols-rounded">format_ink_highlighter</span>
+                Highlight Settings
+            </h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="editor-highlight-mode">Highlight Mode</label>
+                    <select id="editor-highlight-mode" class="entity-type-select" entityVariable="highlightMode">
+                        <option value="shared">Shared (Use Global Colors)</option>
+                        <option value="special">Special</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editor-highlight-restriction">Highlight Restriction</label>
+                    <select id="editor-highlight-restriction" class="entity-type-select" entityVariable="highlightRestriction">
+                        <option value="unrestricted">Unrestricted</option>
+                        <option value="action-only">Action Only</option>
+                        <option value="story-only">Story Only</option>
+                    </select>
+                </div>
+            </div>
+            <div class="settings-section">
+                <div class="info-row">
+                    <label for="editor-highlight-color">Highlight Color</label>
+                    <input type="color" id="editor-highlight-color" value="#f8ae2c" entityVariable="highlightColor">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
