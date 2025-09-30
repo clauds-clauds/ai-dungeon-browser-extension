@@ -23,13 +23,18 @@
                 "https://play.aidungeon.com/*",
                 "https://beta.aidungeon.com/*"
             ],
-            "js": [],
+            "js": [
+                "scripts/libraries/dexie/dexie.js",
+                "scripts/libraries/sortable/sortable.js"
+            ],
             "css": []
         }
     ],
     "web_accessible_resources": [
         {
-            "resources": [],
+            "resources": [
+                "fonts/material_symbols_rounded.ttf"
+            ],
             "matches": [
                 "https://play.aidungeon.com/*",
                 "https://beta.aidungeon.com/*"
