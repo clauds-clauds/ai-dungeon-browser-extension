@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Dungeon Extension",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "description": "Here be dragons...",
     "author": "clauds-clauds",
     "permissions": [
@@ -23,38 +23,13 @@
                 "https://play.aidungeon.com/*",
                 "https://beta.aidungeon.com/*"
             ],
-            "js": [
-                "scripts/lib/sortable.js",
-                "scripts/lib/dexie.js",
-                "scripts/config.js",
-                "scripts/storage.js",
-                "scripts/events.js",
-                "scripts/helpers/interface.js",
-                "scripts/helpers/utils.js",
-                "scripts/helpers/find.js",
-                "scripts/helpers/log.js",
-                "scripts/helpers/inject.js",
-                "scripts/components/tooltip.js",
-                "scripts/components/text_effects.js",
-                "scripts/components/entity_editor.js",
-                "scripts/components/entity_renderer.js",
-                "scripts/components/menu.js",
-                "scripts/run.js"
-            ],
-            "css": [
-                "themes/theme.css"
-            ]
+            "js": [],
+            "css": []
         }
     ],
     "web_accessible_resources": [
         {
-            "resources": [
-                "injectables/entity_editor.html",
-                "injectables/entity_renderer.html",
-                "injectables/menu.html",
-                "injectables/tooltip.html",
-                "fonts/material_symbols_rounded.ttf"
-            ],
+            "resources": [],
             "matches": [
                 "https://play.aidungeon.com/*",
                 "https://beta.aidungeon.com/*"
