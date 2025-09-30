@@ -9,12 +9,24 @@ function ping() {
     Log.say(`Using version ${Utils.getVersion()} at the moment.`);
 }
 
+async function logStorageQuota() {
+    if ('storage' in navigator && 'estimate' in navigator.storage) {
+        const { usage, quota } = await navigator.storage.estimate();
+        const usageMB = (usage / 1024 / 1024).toFixed(2);
+        const quotaMB = (quota / 1024 / 1024).toFixed(2);
+        Log.say(`Storage: Using ${usageMB}MB of ~${quotaMB}MB.`);
+    } else {
+        Log.say('Storage Manager API not supported.');
+    }
+}
+
 /**
  * Handles the loading the extension.
  */
 async function run() {
     // Ping some info to the console.
     ping();
+    logStorageQuota();
 
     // Inject some stuff.
     Inject.materialSymbolsFontFace();
