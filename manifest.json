@@ -42,13 +42,7 @@
                 "scripts/run.js"
             ],
             "css": [
-                "themes/external.css",
-                "themes/random.css",
-                "themes/tooltip.css",
-                "themes/entity_editor.css",
-                "themes/entity_renderer.css",
-                "themes/menu.css",
-                "themes/root.css"
+                "themes/theme.css"
             ]
         }
     ],

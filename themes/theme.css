@@ -120,20 +120,22 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.95);
+    transform: translate(-50%, -50%);
     background: var(--c-core1);
     border: 1px solid var(--c-core4);
     border-radius: var(--r-lg);
-    width: min(960px, calc(100vw - 32px));
-    max-height: calc(100vh - 48px);
+    width: 90%;
+    max-width: 1200px;
+    height: 85vh;
+    max-height: 900px;
     z-index: 10000;
     font-family: var(--f-family);
-    box-shadow: 0 28px 48px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     opacity: 0;
+    transition: all var(--animation-duration-normal) var(--animation-ease);
     pointer-events: none;
-    transition: transform var(--animation-duration-normal) var(--animation-ease), opacity var(--animation-duration-normal) var(--animation-ease);
     overflow: hidden;
 }
 
