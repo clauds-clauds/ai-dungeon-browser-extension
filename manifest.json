@@ -47,6 +47,7 @@
                 "themes/tooltip.css",
                 "themes/entity_editor.css",
                 "themes/entity_renderer.css",
+                "themes/menu.css",
                 "themes/root.css"
             ]
         }

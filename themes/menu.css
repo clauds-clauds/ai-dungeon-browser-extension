@@ -1,0 +1,190 @@
+.menu-action-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-gap-lg);
+}
+
+.menu-action-card {
+    background: var(--c-core1);
+    border: 1px solid var(--c-core3);
+    border-radius: var(--r-md);
+    padding: var(--s-padding-xl);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-gap-md);
+    transition: border-color var(--animation-duration-normal) var(--animation-ease), box-shadow var(--animation-duration-normal) var(--animation-ease), transform var(--animation-duration-normal) var(--animation-ease);
+}
+
+.menu-action-card:hover {
+    border-color: var(--c-core4);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+    transform: translateY(-2px);
+}
+
+.menu-action-header {
+    display: flex;
+    align-items: center;
+    gap: var(--s-gap-md);
+}
+
+.menu-action-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--r-round);
+    background: rgba(248, 174, 44, 0.12);
+    color: var(--c-primary);
+    font-size: var(--f-size-icon-xl);
+}
+
+.menu-action-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.menu-action-title {
+    margin: 0;
+    color: var(--c-coreA9);
+    font-family: var(--f-family-heading);
+    font-size: 1.05em;
+}
+
+.menu-action-description {
+    margin: 0;
+    color: var(--c-core8);
+    font-size: var(--f-size-sm);
+}
+
+.menu-action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-gap-md);
+}
+
+.menu-action-button {
+    background: var(--c-core2);
+    border: 1px solid var(--c-core4);
+    border-radius: var(--r-sm);
+    padding: var(--s-padding-sm) var(--s-padding-lg);
+    color: var(--c-coreA85);
+    font-size: var(--f-size-sm);
+    font-family: var(--f-family);
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-gap-sm);
+    transition: all var(--animation-duration-normal) var(--animation-ease);
+}
+
+.menu-action-button .material-symbols-rounded {
+    font-size: var(--f-size-icon-sm);
+}
+
+.menu-action-button:hover {
+    background: var(--c-core3);
+    border-color: var(--c-core5);
+    color: var(--c-coreA9);
+}
+
+.menu-action-button.primary {
+    background: var(--c-primary);
+    border-color: var(--c-primary);
+    color: var(--c-core0);
+}
+
+.menu-action-button.primary:hover {
+    background: var(--c-coreA9);
+    border-color: var(--c-coreA9);
+}
+
+.menu-action-button.outline {
+    background: transparent;
+    border-color: var(--c-core4);
+    color: var(--c-coreA85);
+}
+
+.menu-action-button.outline:hover {
+    border-color: var(--c-primary);
+    color: var(--c-primary);
+}
+
+.menu-action-note {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--s-gap-sm);
+    background: var(--c-core2);
+    border: 1px solid var(--c-core3);
+    border-radius: var(--r-sm);
+    padding: var(--s-padding-sm) var(--s-padding-md);
+    color: var(--c-core8);
+    font-size: 0.85em;
+}
+
+.menu-action-note .material-symbols-rounded {
+    font-size: var(--f-size-icon-sm);
+    color: var(--c-core8);
+    flex-shrink: 0;
+}
+
+.menu-action-footnote {
+    margin: 0;
+    color: var(--c-core8);
+    font-size: 0.8em;
+    opacity: 0.75;
+}
+
+.menu-action-card.danger {
+    border-color: var(--c-healthBarRed);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.14) 0%, rgba(27, 31, 34, 0.92) 70%);
+    box-shadow: 0 14px 36px rgba(239, 68, 68, 0.2);
+}
+
+.menu-action-card.danger .menu-action-icon {
+    background: rgba(239, 68, 68, 0.18);
+    color: var(--c-healthBarRed);
+}
+
+.menu-action-card.danger .menu-action-title {
+    color: var(--c-healthBarRed);
+}
+
+.menu-action-card.danger .menu-action-description {
+    color: var(--c-coreA85);
+}
+
+.menu-action-card.danger .menu-action-note {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: var(--c-coreA85);
+}
+
+.menu-action-button.danger {
+    background: var(--c-healthBarRed);
+    border-color: var(--c-healthBarRed);
+    color: var(--c-core0);
+}
+
+.menu-action-button.danger:hover {
+    background: #f87171;
+    border-color: #f87171;
+}
+
+@media (max-width: 720px) {
+    .menu-action-card {
+        padding: var(--s-padding-lg);
+    }
+
+    .menu-action-buttons {
+        flex-direction: column;
+    }
+
+    .menu-action-button {
+        width: 100%;
+        justify-content: center;
+    }
+}

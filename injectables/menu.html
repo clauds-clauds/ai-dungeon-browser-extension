@@ -67,7 +67,7 @@
                             <span class="material-symbols-rounded">close</span>
                         </button>
                     </div>
-                    
+
                     <div class="add-entity-wrapper">
                         <!-- 
                         <select id="entity-type-select" class="entity-type-select">
@@ -180,7 +180,8 @@
                             <div class="info-row">
                                 <label for="setting-textEffectsEnabled">Enabled</label>
                                 <div class="toggle-switch">
-                                    <input type="checkbox" id="setting-textEffectsEnabled" variable="textEffectsEnabled">
+                                    <input type="checkbox" id="setting-textEffectsEnabled"
+                                        variable="textEffectsEnabled">
                                     <label for="setting-textEffectsEnabled"></label>
                                 </div>
                             </div>
@@ -324,27 +325,100 @@
                     </div>
 
                     <div id="danger-settings-subtab" class="subtab-panel">
+                        <div class="menu-action-grid">
+                            <div class="menu-action-card danger">
+                                <div class="menu-action-header">
+                                    <span class="material-symbols-rounded menu-action-icon">warning</span>
+                                    <div class="menu-action-text">
+                                        <h3 class="menu-action-title">Delete Database</h3>
+                                        <p class="menu-action-description">Remove all stored settings and entities for this adventure. This
+                                            cannot be undone.</p>
+                                    </div>
+                                </div>
+                                <div class="menu-action-note">
+                                    <span class="material-symbols-rounded">info</span>
+                                    <span>Make sure you export anything important before you continue. There is no recovery once
+                                        deleted.</span>
+                                </div>
+                                <div class="menu-action-buttons">
+                                    <button type="button" id="danger-delete-database-btn" class="menu-action-button danger">
+                                        <span class="material-symbols-rounded">delete_forever</span>
+                                        Delete Database
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div id="sharing-tab" class="tab-panel">
                 <div class="sub-menu-tabs">
-                    <button class="sub-menu-tab active" data-subtab="export">
-                        <span class="material-symbols-rounded">file_upload</span>
-                        Export
-                    </button>
-                    <button class="sub-menu-tab" data-subtab="import">
+                    <button class="sub-menu-tab active" data-subtab="import">
                         <span class="material-symbols-rounded">file_download</span>
                         Import
                     </button>
+                    <button class="sub-menu-tab" data-subtab="export">
+                        <span class="material-symbols-rounded">file_upload</span>
+                        Export
+                    </button>
                 </div>
                 <div class="tab-content-area">
-                    <div id="export-subtab" class="subtab-panel active">
-                        <p>Export functionality coming soon...</p>
+                    <div id="import-subtab" class="subtab-panel active">
+                        <div class="menu-action-grid">
+                            <div class="menu-action-card">
+                                <div class="menu-action-header">
+                                    <span class="material-symbols-rounded menu-action-icon">file_download</span>
+                                    <div class="menu-action-text">
+                                        <h3 class="menu-action-title">Import Entities</h3>
+                                        <p class="menu-action-description">Restore entities from a previous export or a
+                                            shared configuration
+                                            file.</p>
+                                    </div>
+                                </div>
+                                <div class="menu-action-buttons">
+                                    <button type="button" class="menu-action-button primary" id="import-select-btn">
+                                        <span class="material-symbols-rounded">upload_file</span>
+                                        Select File
+                                    </button>
+                                    <button type="button" class="menu-action-button outline" id="import-paste-btn">
+                                        <span class="material-symbols-rounded">content_paste</span>
+                                        Paste JSON
+                                    </button>
+                                </div>
+                                <p class="menu-action-footnote">Import functionality is coming soon. Use these
+                                    placeholders to plan the
+                                    desired flow.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div id="import-subtab" class="subtab-panel">
-                        <p>Import functionality coming soon...</p>
+                    <div id="export-subtab" class="subtab-panel">
+                        <div class="menu-action-grid">
+                            <div class="menu-action-card">
+                                <div class="menu-action-header">
+                                    <span class="material-symbols-rounded menu-action-icon">file_upload</span>
+                                    <div class="menu-action-text">
+                                        <h3 class="menu-action-title">Export Entities</h3>
+                                        <p class="menu-action-description">Generate a backup of your entities and
+                                            settings to share or
+                                            archive.</p>
+                                    </div>
+                                </div>
+                                <div class="menu-action-buttons">
+                                    <button type="button" class="menu-action-button primary" id="export-start-btn">
+                                        <span class="material-symbols-rounded">cloud_download</span>
+                                        Download Export
+                                    </button>
+                                    <button type="button" class="menu-action-button outline" id="export-copy-btn">
+                                        <span class="material-symbols-rounded">content_copy</span>
+                                        Copy to Clipboard
+                                    </button>
+                                </div>
+                                <p class="menu-action-footnote">Export functionality is coming soon. These controls are
+                                    placeholders for the
+                                    upcoming workflow.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
