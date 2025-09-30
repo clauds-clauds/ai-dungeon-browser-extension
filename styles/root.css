@@ -1,0 +1,58 @@
+:root {
+    --animation-duration-normal: 0.2s;
+    --animation-ease: ease;
+
+    --c-core0: #000000;
+    --c-core1: #1b1f22;
+    --c-core2: #272c30;
+    --c-core3: #2f3539;
+    --c-core4: #3a4045;
+    --c-core5: #495057;
+    --c-core6: #5c646b;
+    --c-core7: #69727b;
+    --c-core8: #828a92;
+    --c-core9: #9aa2ab;
+    --c-coreA7: #d5d9dc;
+    --c-coreA85: #eeeeee;
+    --c-coreA9: #ffffff;
+    --c-coreA95: rgba(255, 255, 255, 0.95);
+    --c-primary: #f8ae2c;
+    --c-primary-soft: rgba(248, 174, 44, 0.35);
+    --c-healthBarRed: #ef4444;
+    --c-blue: #0bb0ff;
+    --c-blackA6: rgba(18, 21, 25, 0.6);
+    --c-blackA7: rgba(18, 21, 25, 0.8);
+    --c-blackA8: rgba(15, 18, 22, 0.85);
+    --c-whiteA3: rgba(255, 255, 255, 0.3);
+
+    --f-family: 'IBMPlexSansGameplay', sans-serif;
+    --f-family-heading: 'IBMPlexSans', sans-serif;
+    --f-size-xs: 0.75em;
+    --f-size-sm: 0.9em;
+    --f-size-md: 1em;
+    --f-size-lg: 1.5em;
+    --f-size-icon-sm: 18px;
+    --f-size-icon-md: 22px;
+    --f-size-icon-lg: 24px;
+    --f-size-icon-xl: 28px;
+
+    --s-gap-xs: 4px;
+    --s-gap-sm: 8px;
+    --s-gap-md: 16px;
+    --s-gap-lg: 24px;
+    --s-gap-xl: 32px;
+    --s-padding-xs: 4px;
+    --s-padding-sm: 8px;
+    --s-padding-md: 10px;
+    --s-padding-lg: 16px;
+    --s-padding-xl: 24px;
+    --s-padding-xxl: 32px;
+
+    --r-sm: 4px;
+    --r-md: 6px;
+    --r-lg: 8px;
+    --r-xl: 12px;
+    --r-round: 50%;
+
+    --e-scale-menu: 1;
+}

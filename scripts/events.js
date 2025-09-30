@@ -6,6 +6,11 @@ class Events {
      */
     static #previousAdventureId = null;
 
+    static onCustomMenuButtonClick() {
+        CustomDebugger.say("Custom menu button clicked.", true);
+        Menu.ping();
+    }
+
     /**
      * Called when the adventure changes.
      * @param {string} currentAdventureId
@@ -13,6 +18,7 @@ class Events {
      */
     static onAdventureChange(currentAdventureId) {
         CustomDebugger.say(`Loaded adventure ${currentAdventureId}.`, true);
+        PersistentStorage.ping(currentAdventureId);
         this.#previousAdventureId = currentAdventureId;
     }
 
@@ -55,7 +61,7 @@ class Events {
         });
 
         // Listen for changes in in-memory cache.
-        document.addEventListener('storage-cache-updated', () => {
+        document.addEventListener(Configuration.EVENT_CACHE_UPDATED, () => {
             this.onPersistentStorageModified();
         });
 
@@ -64,12 +70,18 @@ class Events {
             // Get the ID of the current adventure.
             const adventureId = Utilities.getAdventureId();
 
+            // If loaded into an adventure, then try to inject the custom button.
+            if(adventureId) Inject.customMenuButton();
+
             // Check if the adventure ID has changed.
             if(adventureId && adventureId !== this.#previousAdventureId) {
                 this.onAdventureChange(adventureId);
             } else if (!adventureId && this.#previousAdventureId) {
                 this.onAdventureExit();
             }
+
+            // Ping the text effects to update any new elements.
+            TextEffects.ping();
         });
 
         // Start observing for changes.

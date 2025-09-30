@@ -23,4 +23,34 @@ class Inject {
         styleSheet.textContent = `@font-face { font-family: 'Material Symbols Rounded'; font-style: normal; font-weight: 100 700; src: url('${fontPath}') format('truetype'); }`;
         document.head.appendChild(styleSheet); // Append the style element to the document head.
     }
+
+    /**
+     * Injects a custom menu button next to the "Exit game" button.
+     * @returns {void}
+     */
+    static customMenuButton() {
+        if (Discover.extensionMenuButton()) return; // If already injected, do nothing.
+
+        const exitGameButton = Discover.exitGameButton();
+        const customMenuButton = Construct.customMenuButton(exitGameButton);
+        const exitGameButtonParent = exitGameButton?.parentElement;
+        exitGameButtonParent?.insertBefore(customMenuButton, exitGameButton);
+    }
+
+    /**
+     * Injects a component into the specified parent element.
+     * @param {string} path 
+     * @param {HTMLElement} parentElement 
+     * @returns {Promise<HTMLElement|null>}
+     */
+    static async component(path, parentElement) {
+        const url = chrome.runtime.getURL(path);
+        const html = await(await fetch(url)).text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const fragment = doc.body.firstElementChild;
+        
+        if (fragment && parentElement) parentElement.appendChild(fragment);
+        return fragment;
+    }
 }

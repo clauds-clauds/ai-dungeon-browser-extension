@@ -26,25 +26,31 @@
             "js": [
                 "scripts/libraries/dexie/dexie.js",
                 "scripts/libraries/sortable/sortable.js",
-                "scripts/other/persistent_storage.js",
-                "scripts/other/configuration.js",
-                "scripts/other/custom_debugger.js",
+                "scripts/core/configuration.js",
+                "scripts/core/persistent_storage.js",
+                "scripts/core/custom_debugger.js",
                 "scripts/helpers/discover.js",
                 "scripts/helpers/utilities.js",
+                "scripts/helpers/construct.js",
                 "scripts/helpers/inject.js",
+                "scripts/controls/menu.js",
                 "scripts/controls/text_effects.js",
                 "scripts/controls/tooltip.js",
                 "scripts/events.js"
             ],
             "css": [
-                "styles/style.css",
-                "styles/root.css"
+                "styles/random.css",
+                "styles/custom.css",
+                "styles/root.css",
+                "styles/vanilla.css"
             ]
         }
     ],
     "web_accessible_resources": [
         {
             "resources": [
+                "components/menu.html",
+                "components/backdrop.html",
                 "fonts/material_symbols_rounded.ttf"
             ],
             "matches": [
