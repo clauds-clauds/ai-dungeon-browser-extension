@@ -25,9 +25,21 @@
             ],
             "js": [
                 "scripts/libraries/dexie/dexie.js",
-                "scripts/libraries/sortable/sortable.js"
+                "scripts/libraries/sortable/sortable.js",
+                "scripts/other/persistent_storage.js",
+                "scripts/other/configuration.js",
+                "scripts/other/custom_debugger.js",
+                "scripts/helpers/discover.js",
+                "scripts/helpers/utilities.js",
+                "scripts/helpers/inject.js",
+                "scripts/controls/text_effects.js",
+                "scripts/controls/tooltip.js",
+                "scripts/events.js"
             ],
-            "css": []
+            "css": [
+                "styles/style.css",
+                "styles/root.css"
+            ]
         }
     ],
     "web_accessible_resources": [
