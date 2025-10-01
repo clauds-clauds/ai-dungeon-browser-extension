@@ -57,16 +57,16 @@ class Construct {
     }
 
     static async customMenuContent(selectionArea, sidebarButtons) {
-        // Inject all the panels and their snippets.
+        // Inject all the chunks and their snippets.
         for (const button of sidebarButtons) {
-            const panel = await Inject.component(`components/panels/${button.dataset.panel}_panel.html`, selectionArea);
+            const chunk = await Inject.component(`components/chunks/${button.dataset.chunk}_chunk.html`, selectionArea);
 
-            if (!panel) continue;
-            panel.dataset.panel = button.dataset.panel;
+            if (!chunk) continue;
+            chunk.dataset.chunk = button.dataset.chunk;
 
-            const snippetTabs = panel.querySelectorAll('.de-pill-tab[data-snippet]');
-            const snippetContentArea = panel.querySelector('.de-snippet-area');
-            const entityCategoryTabs = panel.querySelectorAll('.de-pill-tab[data-entity-category]');
+            const snippetTabs = chunk.querySelectorAll('.de-pill-tab[data-snippet]');
+            const snippetContentArea = chunk.querySelector('.de-snippet-area');
+            const entityCategoryTabs = chunk.querySelectorAll('.de-pill-tab[data-entity-category]');
 
             if (snippetTabs.length > 0 && snippetContentArea) {
                 for (const tab of snippetTabs) {
@@ -106,7 +106,7 @@ class Construct {
                     });
                 });
 
-                const initialCategory = panel.querySelector('.de-pill-tab[data-entity-category].selected')?.dataset.entityCategory;
+                const initialCategory = chunk.querySelector('.de-pill-tab[data-entity-category].selected')?.dataset.entityCategory;
                 if (initialCategory) {
                     EntityRenderer.ping(initialCategory);
                 }
@@ -118,11 +118,11 @@ class Construct {
                 sidebarButtons.forEach(btn => btn.classList.remove('selected'));
                 button.classList.add('selected');
 
-                const panelName = button.dataset.panel;
-                const panels = selectionArea.querySelectorAll('[data-panel]');
+                const chunkName = button.dataset.chunk;
+                const chunks = selectionArea.querySelectorAll('[data-chunk]');
 
-                panels.forEach(p => {
-                    if (p.dataset.panel === panelName) {
+                chunks.forEach(p => {
+                    if (p.dataset.chunk === chunkName) {
                         p.classList.add('selected');
                     } else {
                         p.classList.remove('selected');

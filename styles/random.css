@@ -15,7 +15,7 @@
     font-variation-settings: 'FILL' 1;
 }
 
-.de-panel-header.secret {
+.de-chunk-header.secret {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;

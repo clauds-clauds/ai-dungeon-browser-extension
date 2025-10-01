@@ -4,8 +4,8 @@
         display: none !important;
     }
 
-    .de-panel-header h3,
-    .de-panel-header p {
+    .de-chunk-header h3,
+    .de-chunk-header p {
         display: none !important;
     }
 }

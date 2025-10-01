@@ -5,7 +5,7 @@ class Menu {
      * Whether the menu is currently visible.
      */
     static #visible = false;
-    static currentPanel = null;
+    static currentChunk = null;
 
     static async ping() {
         CustomDebugger.say("Pinging menu.", true);
