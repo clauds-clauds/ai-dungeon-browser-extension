@@ -33,7 +33,30 @@ class Menu {
         // Finally fix the adventure ID.
         document.getElementById('adventure-id').textContent = Utilities.getAdventureId();
 
+        this.#setupVariables();
         this.toggleVisibility();
+    }
+
+    static #setupVariables() {
+        const settingsControls = document.querySelectorAll('[data-variable]');
+
+        settingsControls.forEach(control => {
+            const variable = control.dataset.variable;
+            const isCheckbox = control.type === 'checkbox';
+
+            control[isCheckbox ? 'checked' : 'value'] = PersistentStorage.getSetting(variable);
+            control.addEventListener('input', (event) => {
+                const newValue = event.target[isCheckbox ? 'checked' : 'value'];
+                PersistentStorage.saveSetting(variable, newValue);
+
+                const linkedControls = document.querySelectorAll(`[data-variable="${variable}"]`);
+                linkedControls.forEach(linkedControl => {
+                    if (linkedControl !== event.target) {
+                        linkedControl[isCheckbox ? 'checked' : 'value'] = newValue;
+                    }
+                });
+            });
+        });
     }
 
     static toggleVisibility() {
