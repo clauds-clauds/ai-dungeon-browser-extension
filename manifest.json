@@ -40,6 +40,7 @@
                 "scripts/events.js"
             ],
             "css": [
+                "styles/legacy/entity_editor.css",
                 "styles/legacy/refactor.css",
                 "styles/mobile.css",
                 "styles/random.css",

@@ -23,3 +23,7 @@
     background: rgba(248, 174, 44, 0.65);
     background-clip: content-box;
 }
+
+select {
+    appearance: none;
+}

@@ -1,0 +1,189 @@
+.entity-snippet {
+    gap: var(--s-gap-lg);
+}
+
+.entity-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-gap-xs);
+}
+
+.entity-form-grid {
+    display: grid;
+    gap: var(--s-gap-md);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.entity-highlight-grid {
+    display: grid;
+    gap: var(--s-gap-md);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.entity-media-row {
+    display: grid;
+    gap: var(--s-gap-lg);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    align-items: flex-start;
+}
+
+.entity-media {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-gap-sm);
+}
+
+.entity-media-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-gap-sm);
+}
+
+.entity-media-empty {
+    padding: var(--s-padding-md);
+    border-radius: var(--r-md);
+    border: 1px dashed rgba(248, 174, 44, 0.35);
+    background: rgba(248, 174, 44, 0.06);
+    color: rgba(200, 205, 210, 0.72);
+    text-align: center;
+}
+
+.entity-media-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--s-gap-md);
+    padding: var(--s-padding-md);
+    padding-right: calc(var(--s-padding-md) + 44px);
+    border-radius: var(--r-md);
+    border: 1px solid rgba(54, 62, 68, 0.6);
+    background: rgba(20, 24, 28, 0.92);
+    cursor: grab;
+    transition: border-color 0.15s var(--animation-ease), box-shadow 0.15s var(--animation-ease);
+}
+
+.entity-media-item:hover {
+    border-color: rgba(248, 174, 44, 0.45);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.32);
+}
+
+.entity-media-item:active {
+    cursor: grabbing;
+}
+
+.entity-media-thumb {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--r-md);
+    background: rgba(248, 174, 44, 0.12);
+    display: grid;
+    place-items: center;
+    color: var(--c-primary);
+    font-size: var(--f-size-icon-lg);
+    flex-shrink: 0;
+}
+
+.entity-media-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-gap-xs);
+    color: var(--c-core8);
+}
+
+.entity-media-title {
+    margin: 0;
+    font-weight: 600;
+    color: var(--c-coreA9);
+}
+
+.entity-media-subtitle {
+    font-size: 0.9rem;
+    color: rgba(200, 205, 210, 0.7);
+}
+
+.entity-media-actions {
+    position: absolute;
+    top: 50%;
+    right: -12px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-gap-xs);
+}
+
+.entity-media-action {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--r-round);
+    border: 1px solid rgba(248, 174, 44, 0.3);
+    background: var(--c-customA1);
+    color: var(--c-coreA9);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s var(--animation-ease), border-color 0.15s var(--animation-ease);
+}
+
+.entity-media-action:hover {
+    background: rgba(248, 174, 44, 0.22);
+    border-color: rgba(248, 174, 44, 0.6);
+}
+
+.entity-media-action:focus-visible {
+    outline: 2px solid rgba(248, 174, 44, 0.65);
+    outline-offset: 2px;
+}
+
+.entity-add-button {
+    align-self: flex-start;
+}
+
+.entity-actions {
+    justify-content: flex-end;
+}
+
+.entity-input,
+.entity-select {
+    background: var(--c-core2);
+    border: 1px solid var(--c-core4);
+    border-radius: var(--r-md);
+    padding: 10px 12px;
+    font: inherit;
+    color: var(--c-coreA9);
+    transition: border-color 0.15s var(--animation-ease), box-shadow 0.15s var(--animation-ease);
+}
+
+.entity-input:focus,
+.entity-select:focus {
+    outline: none;
+    border-color: var(--c-primary);
+    box-shadow: 0 0 0 1px rgba(248, 174, 44, 0.35);
+}
+
+@media (max-width: 640px) {
+
+    .entity-form-grid,
+    .entity-media-row {
+        grid-template-columns: 1fr;
+    }
+
+    .entity-media-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .entity-media-actions {
+        position: static;
+        transform: none;
+        flex-direction: row;
+        gap: var(--s-gap-sm);
+        margin-top: var(--s-gap-sm);
+        justify-content: flex-end;
+        width: 100%;
+    }
+
+    .entity-actions {
+        justify-content: stretch;
+    }
+}

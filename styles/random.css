@@ -30,3 +30,7 @@
 .safe {
     color: var(--c-primary);
 }
+
+.grey {
+    color: #c8cdd2c7;
+}

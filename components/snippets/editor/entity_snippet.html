@@ -1,3 +1,103 @@
-<div id="entity-editor-snippet" class="de-snippet">
+<div id="entity-editor-snippet" class="de-snippet selected">
+    <div class="de-snippet-card stack entity-snippet">
 
+        <div class="de-section gapped">
+            <div class="entity-form-grid">
+                <div class="entity-field">
+                    <label for="entity-name" class="grey">Name</label>
+                    <input type="text" id="entity-name" class="entity-input" placeholder="Enter a name..."
+                        autocomplete="off">
+                </div>
+                <div class="entity-field">
+                    <label for="entity-category" class="grey">Category</label>
+                    <select id="entity-category" class="entity-select">
+                        <option value="character">Character</option>
+                        <option value="race">Race</option>
+                        <option value="location">Location</option>
+                        <option value="faction">Faction</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+            </div>
+            <div class="entity-field">
+                <label for="entity-triggers" class="grey">Triggers</label>
+                <input type="text" id="entity-triggers" class="entity-input" placeholder="Enter any additional triggers..."
+                    autocomplete="off">
+            </div>
+            <div class="entity-media-row">
+                <div class="entity-media">
+                    <label for="entity-add-icon" class="grey">Icons</label>
+                    <div class="entity-media-list" id="entity-icons-list" data-sortable="entity-icons" role="list">
+                        <div class="entity-media-empty">No icons yet. Add one to get started.</div>
+                    </div>
+                    <button type="button" class="de-action-button outline entity-add-button" id="entity-add-icon">
+                        <span class="material-symbols-rounded">add</span>
+                        Add Icon
+                    </button>
+                </div>
+                <div class="entity-media">
+                    <label for="entity-add-graphic" class="grey">Graphics</label>
+                    <div class="entity-media-list" id="entity-graphics-list" data-sortable="entity-graphics"
+                        role="list">
+                        <div class="entity-media-empty">Drop artwork here or add a new graphic.</div>
+                    </div>
+                    <button type="button" class="de-action-button outline entity-add-button" id="entity-add-graphic">
+                        <span class="material-symbols-rounded">add_photo_alternate</span>
+                        Add Graphic
+                    </button>
+                </div>
+            </div>
+            <div class="entity-highlight-grid">
+                <div class="entity-field">
+                    <label for="entity-highlight-mode" class="grey">Highlight Mode</label>
+                    <select id="entity-highlight-mode" class="entity-select">
+                        <option value="shared">Shared</option>
+                        <option value="special">Special</option>
+                    </select>
+                </div>
+                <div class="entity-field">
+                    <label for="entity-highlight-restriction" class="grey">Highlight Restriction</label>
+                    <select id="entity-highlight-restriction" class="entity-select">
+                        <option value="unrestricted">Unrestricted</option>
+                        <option value="action">Action Only</option>
+                        <option value="story">Story Only</option>
+                    </select>
+                </div>
+                <div class="entity-field">
+                    <label for="entity-highlight-color" class="grey">Highlight Color</label>
+                    <input type="color" id="entity-highlight-color" class="de-color-picker" value="#f8ae2c">
+                </div>
+            </div>
+            <div class="de-action-buttons entity-actions">
+                <button type="button" class="de-action-button safe" id="entity-save-button">
+                    <span class="material-symbols-rounded">save</span>
+                    Save Entity
+                </button>
+                <button type="button" class="de-action-button outline" id="entity-reset-button">
+                    <span class="material-symbols-rounded">new_window</span>
+                    New Entity
+                </button>
+            </div>
+        </div>
+
+        <template id="entity-media-item-template">
+            <div class="entity-media-item" draggable="true">
+                <div class="entity-media-thumb">
+                    <span class="material-symbols-rounded">image</span>
+                </div>
+                <div class="entity-media-meta">
+                    <p class="entity-media-title">Untitled Asset</p>
+                    <span class="entity-media-subtitle">Drop file or paste URL</span>
+                </div>
+                <div class="entity-media-actions">
+                    <button type="button" class="entity-media-action" data-action="pin" aria-label="Pin asset">
+                        <span class="material-symbols-rounded">push_pin</span>
+                    </button>
+                    <button type="button" class="entity-media-action" data-action="delete" aria-label="Delete asset">
+                        <span class="material-symbols-rounded">delete</span>
+                    </button>
+                </div>
+            </div>
+        </template>
+    </div>
 </div>

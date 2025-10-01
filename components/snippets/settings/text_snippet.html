@@ -1,5 +1,16 @@
 <div id="text-settings-snippet" class="de-snippet">
     <div class="de-snippet-card stack">
+        <!-- Icon Toggles HERE! -->
+        <div class="de-section">
+            <div class="de-info-row">
+                <label for="text-effects-icons">Show Icons</label>
+                <div class="de-switch">
+                    <input type="checkbox" id="text-effects-icons" data-variable="textEffectsIcons">
+                    <label for="text-effects-icons"></label>
+                </div>
+            </div>
+        </div>
+        <!-- Text Toggles HERE! -->
         <div class="de-section">
             <div class="de-info-row">
                 <label for="text-effects-color">Use Colored Text</label>
@@ -16,6 +27,7 @@
                 </div>
             </div>
         </div>
+        <!-- Trigger Toggles HERE! -->
         <div class="de-section">
             <div class="de-info-row">
                 <label for="text-effects-story">Apply to Story Text</label>
@@ -32,13 +44,11 @@
                 </div>
             </div>
         </div>
+        <!-- Color Options HERE! -->
         <div class="de-section">
             <div class="de-info-row">
-                <label for="text-effects-icons">Show Icons</label>
-                <div class="de-switch">
-                    <input type="checkbox" id="text-effects-icons" data-variable="textEffectsIcons">
-                    <label for="text-effects-icons"></label>
-                </div>
+                <label for="entity-highlight-color" class="grey">Highlight Color</label>
+                <input type="color" id="entity-highlight-color" class="de-color-picker editable" value="#f8ae2c">
             </div>
         </div>
     </div>

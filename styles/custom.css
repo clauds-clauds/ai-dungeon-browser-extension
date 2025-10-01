@@ -477,7 +477,11 @@
     border-bottom: 1px solid var(--c-core2);
     display: flex;
     flex-direction: column;
-    /*gap: var(--s-gap-md);*/
+}
+
+.de-section.gapped {
+    gap: var(--s-gap-lg);
+    border-bottom: none;
 }
 
 .de-section:last-child {
@@ -537,4 +541,27 @@
 
 .de-switch input:checked+label::before {
     transform: translateX(20px);
+}
+
+/* Color Picker */
+.de-color-picker {
+    height: 42px;
+    padding: 0;
+    cursor: pointer;
+    border-radius: var(--r-md);
+    overflow: hidden;
+}
+
+.de-color-picker.editable {
+    width: 44px;
+    height: 24px;
+}
+
+.de-color-picker::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.de-color-picker::-webkit-color-swatch {
+    border: none;
+    border-radius: 0;
 }
