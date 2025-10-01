@@ -131,4 +131,31 @@ class Construct {
             });
         });
     }
+
+    static async entityNugget(entity, parent) {
+        const nugget = await Inject.component('components/nuggets/entity_nugget.html', parent);
+        if (!nugget) return;
+
+        const icons = Configuration.ICONS_CATEGORIES;
+
+        nugget.dataset.entityId = entity.id;
+        nugget.dataset.category = entity.category;
+
+        nugget.querySelector('.de-entity-nugget-name').textContent = entity.name || 'Unnamed Entity';
+        nugget.querySelector('.de-entity-nugget-category-name').textContent = Utilities.capitalizeFirstLetter(entity.category) || 'No Category';
+        nugget.querySelector('.de-entity-nugget-category-icon').textContent = icons[entity.category] || 'help';
+
+        // Set icon
+        const iconContainer = nugget.querySelector('.de-entity-nugget-icon');
+        const icon = entity.icons?.find(i => i.isPinned) || entity.icons?.[0];
+
+        if (icon?.url) {
+            const img = document.createElement('img');
+            img.src = icon.url;
+            iconContainer.innerHTML = '';
+            iconContainer.appendChild(img);
+        } else {
+            iconContainer.innerHTML = `<span class="material-symbols-rounded">${icons[entity.category] || 'image'}</span>`;
+        }
+    }
 }

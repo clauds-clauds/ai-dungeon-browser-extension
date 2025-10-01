@@ -36,6 +36,8 @@ class Menu {
         this.#setupVariables();
         this.#setupActionButtons(Discover.extensionMenu());
         this.toggleVisibility();
+
+        document.dispatchEvent(new CustomEvent(Configuration.EXTENSION_MENU_CREATED));
     }
 
     static #setupVariables() {

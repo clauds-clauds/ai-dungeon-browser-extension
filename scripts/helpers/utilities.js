@@ -20,4 +20,13 @@ class Utilities {
         const match = window.location.pathname.match(/adventure\/([^\/]+)/);
         return match ? match[1] : null;
     }
+
+    /**
+     * Capitalizes the first letter of a string.
+     * @param {string} string - The string to capitalize.
+     * @returns {string} The capitalized string.
+     */
+    static capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1)
+    }
 }

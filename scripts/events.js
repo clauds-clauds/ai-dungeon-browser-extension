@@ -37,6 +37,7 @@ class Events {
      */
     static onPersistentStorageModified() {
         CustomDebugger.say("Persistent storage modified.", true);
+        Renderer.refresh();
     }
 
     /**
@@ -63,6 +64,11 @@ class Events {
         // Listen for changes in in-memory cache.
         document.addEventListener(Configuration.EVENT_CACHE_UPDATED, () => {
             this.onPersistentStorageModified();
+        });
+
+        // Listen for the extension menu creation.
+        document.addEventListener(Configuration.EXTENSION_MENU_CREATED, () => {
+            
         });
 
         // Create an observer which listens for all the changes.

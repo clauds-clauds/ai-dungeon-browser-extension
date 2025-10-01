@@ -52,6 +52,11 @@ class Configuration {
     static EVENT_CACHE_UPDATED = 'cacheupdated';
 
     /**
+     * Event name for when the extension menu is created.
+     */
+    static EXTENSION_MENU_CREATED = 'extensionmenucreated';
+
+    /**
      * Icon name for the custom menu button.
      */
     static CUSTOM_MENU_BUTTON_ICON = 'terminal';
@@ -70,4 +75,15 @@ class Configuration {
      * Key for the IndexedDB database.
      */
     static DATABASE_KEY = 'DEDBKey';
+
+    /**
+     * Categories and their icons.
+     */
+    static ICONS_CATEGORIES = {
+        character: 'person',
+        race: 'sword_rose',
+        location: 'explore',
+        faction: 'castle',
+        custom: 'category'
+    }
 }

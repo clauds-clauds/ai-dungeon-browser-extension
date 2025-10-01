@@ -1,9 +1,11 @@
 .de-entity-nugget-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: var(--s-gap-md);
     overflow-y: auto;
     flex: 1;
+    justify-content: start;
+    align-content: start;
 }
 
 .de-entity-nugget {
@@ -21,7 +23,6 @@
 .de-entity-nugget:hover {
     background: rgba(40, 44, 48, 0.9);
     border-color: var(--c-core4);
-    transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -64,10 +65,10 @@
     display: flex;
     align-items: center;
     gap: var(--s-gap-sm);
-    color: var(--c-core8);
+    color: var(--c-primary);
 }
 
-.de-entity-nugget-category-icon {
+.material-symbols-rounded.de-entity-nugget-category-icon {
     font-size: 16px;
 }
 

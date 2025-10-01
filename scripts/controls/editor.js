@@ -61,12 +61,10 @@ class Editor {
         if (!nugget) return;
 
         const entityId = parseInt(nugget.dataset.entityId, 10);
-        if (confirm(`Are you sure you want to delete this entity?`)) {
-            PersistentStorage.deleteEntity(entityId).then(() => {
-                nugget.remove();
-                CustomDebugger.say(`Deleted entity ${entityId}`, true);
-            });
-        }
+        PersistentStorage.deleteEntity(entityId).then(() => {
+            nugget.remove();
+            CustomDebugger.say(`Deleted entity ${entityId}`, true);
+        });
     }
 
     static #gatherEntityData() {
@@ -117,11 +115,10 @@ class Editor {
             }
         });
 
-        // Clear media lists and add placeholder
         const iconsList = document.getElementById('entity-icons-list');
         const graphicsList = document.getElementById('entity-graphics-list');
-        iconsList.innerHTML = '<div class="entity-media-empty">No icons have been added yet.</div>';
-        graphicsList.innerHTML = '<div class="entity-media-empty">No graphics have been added yet.</div>';
+        iconsList.innerHTML = '';
+        graphicsList.innerHTML = '';
     }
 
     static #getMediaFromList(listId) {
@@ -136,6 +133,7 @@ class Editor {
         CustomDebugger.say("Forwarding entity to storage.", true);
         const entity = this.#gatherEntityData();
         PersistentStorage.saveEntity(entity);
+        this.new();
     }
 
     static addIcon() {
