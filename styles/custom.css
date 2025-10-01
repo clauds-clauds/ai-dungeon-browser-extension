@@ -367,7 +367,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    background: rgba(13, 16, 20, 0.9);
+    background: var(--c-core0, black);
     border-radius: var(--r-md);
     border: 1px solid rgba(54, 62, 68, 0.7);
     padding-right: 40px;
@@ -480,7 +480,7 @@
 }
 
 .de-section.gapped {
-    gap: var(--s-gap-lg);
+    gap: var(--s-gap-xl);
     border-bottom: none;
 }
 

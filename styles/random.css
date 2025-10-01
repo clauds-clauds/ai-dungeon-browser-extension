@@ -32,5 +32,5 @@
 }
 
 .grey {
-    color: #c8cdd2c7;
+    color: var(--c-core8);
 }

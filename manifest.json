@@ -54,8 +54,10 @@
     "web_accessible_resources": [
         {
             "resources": [
+                "components/snippets/hidden/raven_snippet.html",
                 "components/snippets/database/import_snippet.html",
                 "components/snippets/database/export_snippet.html",
+                "components/snippets/database/recover_snippet.html",
                 "components/snippets/editor/entity_snippet.html",
                 "components/snippets/editor/image_snippet.html",
                 "components/snippets/editor/notes_snippet.html",
