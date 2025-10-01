@@ -36,6 +36,7 @@
                 "scripts/controls/menu.js",
                 "scripts/controls/text_effects.js",
                 "scripts/controls/tooltip.js",
+                "scripts/controls/entity_renderer.js",
                 "scripts/events.js"
             ],
             "css": [
@@ -51,15 +52,19 @@
     "web_accessible_resources": [
         {
             "resources": [
+                "components/snippets/database/import_snippet.html",
+                "components/snippets/database/export_snippet.html",
+                "components/snippets/editor/entity_snippet.html",
+                "components/snippets/editor/image_snippet.html",
+                "components/snippets/editor/notes_snippet.html",
                 "components/snippets/settings/general_snippet.html",
                 "components/snippets/settings/text_snippet.html",
                 "components/snippets/settings/tooltip_snippet.html",
-                "components/snippets/settings/storage_snippet.html",
                 "components/snippets/settings/danger_snippet.html",
                 "components/panels/entity_panel.html",
                 "components/panels/editor_panel.html",
                 "components/panels/settings_panel.html",
-                "components/panels/share_panel.html",
+                "components/panels/database_panel.html",
                 "components/panels/hidden_panel.html",
                 "components/menu.html",
                 "components/backdrop.html",

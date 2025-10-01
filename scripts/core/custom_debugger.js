@@ -4,8 +4,8 @@ class CustomDebugger {
     /**
      * Logs a message to the console.
      * @param {*} message - The message to log.
-     * @param {*} loud - Whether the message should be logged as an error.
      * @param {*} verbose - Whether the log is verbose.
+     * @param {*} loud - Whether the message should be logged as an error.
      * @returns {void}
      */
     static say(message, verbose = false, loud = false) {

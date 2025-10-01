@@ -66,6 +66,7 @@ class Construct {
 
             const snippetTabs = panel.querySelectorAll('.de-pill-tab[data-snippet]');
             const snippetContentArea = panel.querySelector('.de-snippet-area');
+            const entityCategoryTabs = panel.querySelectorAll('.de-pill-tab[data-entity-category]');
 
             if (snippetTabs.length > 0 && snippetContentArea) {
                 for (const tab of snippetTabs) {
@@ -78,11 +79,9 @@ class Construct {
 
                 snippetTabs.forEach(tab => {
                     tab.addEventListener('click', () => {
-                        // Update tab selection state.
                         snippetTabs.forEach(t => t.classList.remove('selected'));
                         tab.classList.add('selected');
 
-                        // Show the corresponding snippet.
                         const snippetName = tab.dataset.snippet;
                         const snippets = snippetContentArea.querySelectorAll('.de-snippet');
                         snippets.forEach(s => {
@@ -95,6 +94,23 @@ class Construct {
                     });
                 });
             }
+
+            if (entityCategoryTabs.length > 0) {
+                entityCategoryTabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        entityCategoryTabs.forEach(t => t.classList.remove('selected'));
+                        tab.classList.add('selected');
+
+                        const category = tab.dataset.entityCategory;
+                        EntityRenderer.ping(category);
+                    });
+                });
+
+                const initialCategory = panel.querySelector('.de-pill-tab[data-entity-category].selected')?.dataset.entityCategory;
+                if (initialCategory) {
+                    EntityRenderer.ping(initialCategory);
+                }
+            }
         }
 
         sidebarButtons.forEach(button => {
@@ -105,7 +121,6 @@ class Construct {
                 const panelName = button.dataset.panel;
                 const panels = selectionArea.querySelectorAll('[data-panel]');
 
-                // Hide all panels, then show the one that matches the button.
                 panels.forEach(p => {
                     if (p.dataset.panel === panelName) {
                         p.classList.add('selected');

@@ -27,8 +27,7 @@ class Menu {
         const selectionArea = document.getElementById('de-selection');
         const buttons = document.querySelectorAll('.de-sidebar-button');
 
-        // await this.#addPanelsToSelection(selectionArea, buttons);
-
+        // Inject and construct the menu content.
         await Construct.customMenuContent(selectionArea, buttons);
 
         // Finally fix the adventure ID.
