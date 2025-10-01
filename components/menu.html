@@ -5,19 +5,19 @@
                 <nav class="de-sidebar-stack de-sidebar-tabs">
                     <!-- Sidebar Buttons HERE! -->
                     <!-- TODO: HIDE THIS WHEN MOBILE DEVICES USE IT!-->
-                    <button class="de-sidebar-button selected">
+                    <button id="de-sidebar-button" class="de-sidebar-button selected" data-panel="entity">
                         <span class="material-symbols-rounded">api</span>
                         <span>Entities</span>
                     </button>
-                    <button class="de-sidebar-button">
+                    <button id="de-sidebar-button" class="de-sidebar-button" data-panel="editor">
                         <span class="material-symbols-rounded">handyman</span>
                         <span>Editor</span>
                     </button>
-                    <button class="de-sidebar-button">
+                    <button id="de-sidebar-button" class="de-sidebar-button" data-panel="settings">
                         <span class="material-symbols-rounded">settings_heart</span>
                         <span>Settings</span>
                     </button>
-                    <button class="de-sidebar-button">
+                    <button id="de-sidebar-button" class="de-sidebar-button" data-panel="share">
                         <span class="material-symbols-rounded">directory_sync</span>
                         <span>Share</span>
                     </button>
@@ -40,192 +40,8 @@
 
         <section class="de-area">
             <div class="de-content">
-                <div class="de-selection">
-                    <!-- Entity Panel HERE! -->
-                    <div class="de-tab-panel">
-                        <div class="de-panel-surface">
-                            <header class="de-panel-header">
-                                <div>
-                                    <h3>Entity Library</h3>
-                                    <p>Browse, sort, and refine the characters, places, factions, and custom lore
-                                        driving your narrative.</p>
-                                </div>
-                                <button id="de-panel-button-entity" class="de-panel-button emphasis">
-                                    Add Entity
-                                    <span class="material-symbols-rounded">library_add</span>
-                                </button>
-                                <button id="de-close-menu-button" class="de-close-menu-button" aria-label="Close menu">
-                                    <span class="material-symbols-rounded">close</span>
-                                </button>
-                            </header>
-
-                            <!-- Entity Pills HERE! -->
-                            <div class="de-pill-tabs">
-                                <button class="de-pill-tab selected">
-                                    <span class="material-symbols-rounded">view_list</span>
-                                    All
-                                </button>
-                                <button class="de-pill-tab">
-                                    <span class="material-symbols-rounded">groups_2</span>
-                                    Characters
-                                </button>
-                                <button class="de-pill-tab">
-                                    <span class="material-symbols-rounded">sword_rose</span>
-                                    Races
-                                </button>
-                                <button class="de-pill-tab">
-                                    <span class="material-symbols-rounded">explore</span>
-                                    Locations
-                                </button>
-                                <button class="de-pill-tab">
-                                    <span class="material-symbols-rounded">castle</span>
-                                    Factions
-                                </button>
-                                <button class="de-pill-tab">
-                                    <span class="material-symbols-rounded">category</span>
-                                    Custom
-                                </button>
-                            </div>
-
-                            <div class="panel-content">
-                                <div class="search-container">
-                                    <div class="search-wrapper">
-                                        <span class="material-symbols-rounded search-icon">search</span>
-                                        <input type="text" id="search-input" autocomplete="off"
-                                            placeholder="Search entities..." />
-                                        <button id="clear-search-button" class="clear-search-button"
-                                            style="display: none;">
-                                            <span class="material-symbols-rounded">close</span>
-                                        </button>
-                                    </div>
-                                    <p class="search-subtext">Filter your roster or jump into categories to focus on a
-                                        specific slice of your world.</p>
-                                </div>
-
-                                <div class="de-tab-content-area">
-                                    <div id="all-subtab" class="de-subtab-panel selected">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Editor Panel HERE! -->
-                    <div class="de-tab-panel">
-                        <div class="de-panel-surface">
-                            <header class="de-panel-header">
-                                <div>
-                                    <h3>Editor</h3>
-                                    <p>Swap into authoring mode to sculpt detailed profiles, upload artwork, and tune
-                                        highlight behaviour.</p>
-                                </div>
-                                <button id="de-close-menu-button" class="de-close-menu-button" aria-label="Close menu">
-                                    <span class="material-symbols-rounded">close</span>
-                                </button>
-                            </header>
-
-                            <!-- Settings Pills HERE! -->
-                            <div class="de-pill-tabs">
-                                <button class="de-pill-tab selected">
-                                    <span class="material-symbols-rounded">api</span>
-                                    Entity
-                                </button>
-                            </div>
-
-                            <div class="panel-content">
-                                <div class="de-tab-content-area">
-                                    <div id="all-subtab" class="de-subtab-panel selected">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Settings Panel HERE!-->
-                    <div class="de-tab-panel">
-                        <div class="de-panel-surface">
-                            <header class="de-panel-header">
-                                <div>
-                                    <h3>Settings</h3>
-                                    <p>Fine-tune how highlights render, control tooltip pacing, and keep your session
-                                        data tidy.</p>
-                                </div>
-                                <button id="de-close-menu-button" class="de-close-menu-button" aria-label="Close menu">
-                                    <span class="material-symbols-rounded">close</span>
-                                </button>
-                            </header>
-
-                            <!-- Settings Pills HERE! -->
-                            <div class="de-pill-tabs">
-                                <button class="de-pill-tab selected">
-                                    <span class="material-symbols-rounded">tune</span>
-                                    General
-                                </button>
-                                <button class="de-pill-tab">
-                                    <span class="material-symbols-rounded">text_fields</span>
-                                    Text Effects
-                                </button>
-                                <button class="de-pill-tab">
-                                    <span class="material-symbols-rounded">tooltip</span>
-                                    Tooltip
-                                </button>
-                                <button class="de-pill-tab">
-                                    <span class="material-symbols-rounded">folder_data</span>
-                                    Storage
-                                </button>
-                                <button class="de-pill-tab">
-                                    <span class="material-symbols-rounded">skull</span>
-                                    Danger Zone
-                                </button>
-                            </div>
-
-                            <div class="panel-content">
-                                <div class="de-tab-content-area">
-                                    <div id="all-subtab" class="de-subtab-panel selected">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Share Panel HERE!-->
-                    <div class="de-tab-panel selected">
-                        <div class="de-panel-surface">
-                            <header class="de-panel-header">
-                                <div>
-                                    <h3>Share</h3>
-                                    <p>Plan your import/export pipeline so collaborators can plug into the same
-                                        adventure resources.</p>
-                                </div>
-                                <button id="de-close-menu-button" class="de-close-menu-button" aria-label="Close menu">
-                                    <span class="material-symbols-rounded">close</span>
-                                </button>
-                            </header>
-
-                            <!-- Settings Pills HERE! -->
-                            <div class="de-pill-tabs">
-                                <button class="de-pill-tab selected">
-                                    <span class="material-symbols-rounded">file_download</span>
-                                    Import
-                                </button>
-                                <button class="de-pill-tab">
-                                    <span class="material-symbols-rounded">file_upload</span>
-                                    Export
-                                </button>
-                            </div>
-
-                            <div class="panel-content">
-                                <div class="de-tab-content-area">
-                                    <div id="all-subtab" class="de-subtab-panel selected">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="de-selection" id="de-selection">
+                    <!-- Inject Sub Panels HERE! -->
                 </div>
             </div>
         </section>

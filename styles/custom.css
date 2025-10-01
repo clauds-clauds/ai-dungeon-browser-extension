@@ -323,6 +323,16 @@
     background: rgba(248, 174, 44, 0.12);
 }
 
+.de-pill-tab.elusive:hover {
+    color: var(--c-coreA9);
+    background: rgba(132, 44, 248, 0.12);
+}
+
+.de-pill-tab.danger:hover {
+    color: var(--c-coreA9);
+    background: var(--c-healthBarRed);
+}
+
 .de-pill-tab.selected {
     color: var(--c-primary);
     background: rgba(248, 174, 44, 0.18);

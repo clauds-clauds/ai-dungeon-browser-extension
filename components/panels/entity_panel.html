@@ -1,0 +1,63 @@
+<!-- Entity Panel HERE! -->
+<div class="de-tab-panel selected">
+    <div class="de-panel-surface">
+        <header class="de-panel-header">
+            <div>
+                <h3>Entities</h3>
+                <p>Browse, sort, and refine the characters, places, factions, and custom lore
+                    driving your narrative.</p>
+            </div>
+            <button id="de-close-menu-button" class="de-close-menu-button" aria-label="Close menu">
+                <span class="material-symbols-rounded">close</span>
+            </button>
+        </header>
+
+        <!-- Entity Pills HERE! -->
+        <div class="de-pill-tabs">
+            <button class="de-pill-tab selected">
+                <span class="material-symbols-rounded">view_list</span>
+                All
+            </button>
+            <button class="de-pill-tab">
+                <span class="material-symbols-rounded">groups_2</span>
+                Characters
+            </button>
+            <button class="de-pill-tab">
+                <span class="material-symbols-rounded">sword_rose</span>
+                Races
+            </button>
+            <button class="de-pill-tab">
+                <span class="material-symbols-rounded">explore</span>
+                Locations
+            </button>
+            <button class="de-pill-tab">
+                <span class="material-symbols-rounded">castle</span>
+                Factions
+            </button>
+            <button class="de-pill-tab elusive">
+                <span class="material-symbols-rounded">category</span>
+                Custom
+            </button>
+        </div>
+
+        <div class="panel-content">
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <span class="material-symbols-rounded search-icon">search</span>
+                    <input type="text" id="search-input" autocomplete="off" placeholder="Search entities..." />
+                    <button id="clear-search-button" class="clear-search-button" style="display: none;">
+                        <span class="material-symbols-rounded">close</span>
+                    </button>
+                </div>
+                <p class="search-subtext">Filter your roster or jump into categories to focus on a
+                    specific slice of your world.</p>
+            </div>
+
+            <div class="de-tab-content-area">
+                <div id="all-subtab" class="de-subtab-panel selected">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

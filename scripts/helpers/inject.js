@@ -48,9 +48,9 @@ class Inject {
         const html = await(await fetch(url)).text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
-        const fragment = doc.body.firstElementChild;
+        const component = doc.body.firstElementChild;
         
-        if (fragment && parentElement) parentElement.appendChild(fragment);
-        return fragment;
+        if (component && parentElement) parentElement.appendChild(component);
+        return component;
     }
 }

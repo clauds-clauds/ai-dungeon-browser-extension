@@ -50,6 +50,10 @@
     "web_accessible_resources": [
         {
             "resources": [
+                "components/panels/entity_panel.html",
+                "components/panels/editor_panel.html",
+                "components/panels/settings_panel.html",
+                "components/panels/share_panel.html",
                 "components/menu.html",
                 "components/backdrop.html",
                 "fonts/material_symbols_rounded.ttf"
