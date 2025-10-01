@@ -26,3 +26,7 @@
     background: linear-gradient(135deg, rgba(248, 44, 44, 0.16) 0%, rgba(34, 27, 27, 0.65) 85%);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
+
+.safe {
+    color: var(--c-primary);
+}
