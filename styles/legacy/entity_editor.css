@@ -40,6 +40,8 @@
 }
 
 .entity-media-empty {
+    min-height: 64px;
+    align-content: center;
     padding: var(--s-padding-md);
     border-radius: var(--r-md);
     border: 1px dashed rgba(248, 174, 44, 0.35);
