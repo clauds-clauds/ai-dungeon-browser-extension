@@ -45,6 +45,7 @@
             "css": [
                 "styles/legacy/entity_editor.css",
                 "styles/legacy/refactor.css",
+                "styles/nuggets.css",
                 "styles/mobile.css",
                 "styles/random.css",
                 "styles/custom.css",
@@ -56,6 +57,7 @@
     "web_accessible_resources": [
         {
             "resources": [
+                "components/nuggets/entity_nugget.html",
                 "components/snippets/hidden/raven_snippet.html",
                 "components/snippets/database/import_snippet.html",
                 "components/snippets/database/export_snippet.html",

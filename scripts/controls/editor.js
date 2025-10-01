@@ -3,6 +3,72 @@
 class Editor {
     static #currentEntity = {};
 
+    static edit(event) {
+        const nugget = event.target.closest('.de-entity-nugget');
+        if (!nugget) return;
+
+        const entityId = parseInt(nugget.dataset.entityId, 10);
+        const entity = PersistentStorage.cache.entities.find(e => e.id === entityId);
+
+        if (!entity) {
+            console.error(`Entity with ID ${entityId} not found.`);
+            return;
+        }
+
+        CustomDebugger.say(`Editing entity ${entityId}`, true);
+        this.#currentEntity = entity;
+
+        // Switch to the editor tab
+        document.querySelector('.de-sidebar-button[data-chunk="editor"]')?.click();
+
+        // Populate form fields
+        const fields = document.querySelectorAll('#entity-editor-snippet [data-entity-variable]');
+        fields.forEach(field => {
+            const key = field.dataset.entityVariable;
+            if (entity[key] === undefined) return;
+
+            if (field.type === 'checkbox') {
+                field.checked = entity[key];
+            } else if (key === 'triggers') {
+                field.value = Array.isArray(entity[key]) ? entity[key].join(', ') : '';
+            } else {
+                field.value = entity[key];
+            }
+        });
+
+        // Populate media lists
+        this.#populateMediaList('entity-icons-list', entity.icons);
+        this.#populateMediaList('entity-graphics-list', entity.graphics);
+    }
+
+    static #populateMediaList(listId, mediaItems) {
+        const list = document.getElementById(listId);
+        list.innerHTML = ''; // Clear existing items
+
+        if (!mediaItems || mediaItems.length === 0) return;
+
+        mediaItems.forEach(media => {
+            this.#addMediaItem(listId, media.url, 'Loaded Asset');
+            const item = list.lastElementChild;
+            if (media.isPinned) {
+                item.classList.add('pinned');
+            }
+        });
+    }
+
+    static delete(event) {
+        const nugget = event.target.closest('.de-entity-nugget');
+        if (!nugget) return;
+
+        const entityId = parseInt(nugget.dataset.entityId, 10);
+        if (confirm(`Are you sure you want to delete this entity?`)) {
+            PersistentStorage.deleteEntity(entityId).then(() => {
+                nugget.remove();
+                CustomDebugger.say(`Deleted entity ${entityId}`, true);
+            });
+        }
+    }
+
     static #gatherEntityData() {
         const entityData = {
             id: this.#currentEntity.id,
@@ -25,6 +91,37 @@ class Editor {
         entityData.graphics = this.#getMediaFromList('entity-graphics-list');
 
         return entityData;
+    }
+
+    static new() {
+        CustomDebugger.say("Creating a new entity.", true);
+        this.#currentEntity = {};
+
+        // Reset form fields
+        const fields = document.querySelectorAll('#entity-editor-snippet [data-entity-variable]');
+        fields.forEach(field => {
+            const key = field.dataset.entityVariable;
+            switch (field.type) {
+                case 'checkbox':
+                    field.checked = false;
+                    break;
+                case 'color':
+                    field.value = '#f8ae2c';
+                    break;
+                case 'select-one':
+                    field.selectedIndex = 0;
+                    break;
+                default:
+                    field.value = '';
+                    break;
+            }
+        });
+
+        // Clear media lists and add placeholder
+        const iconsList = document.getElementById('entity-icons-list');
+        const graphicsList = document.getElementById('entity-graphics-list');
+        iconsList.innerHTML = '<div class="entity-media-empty">No icons have been added yet.</div>';
+        graphicsList.innerHTML = '<div class="entity-media-empty">No graphics have been added yet.</div>';
     }
 
     static #getMediaFromList(listId) {

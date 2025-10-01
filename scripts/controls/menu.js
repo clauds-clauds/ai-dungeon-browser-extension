@@ -61,6 +61,10 @@ class Menu {
     }
 
     static #setupActionButtons(container) {
+        this.rebindActions(container);
+    }
+
+    static rebindActions(container) {
         const actionButtons = container.querySelectorAll('[data-action]');
 
         actionButtons.forEach(button => {
@@ -72,9 +76,13 @@ class Menu {
                 return;
             }
 
+            // Avoid re-adding listeners
+            if (button.dataset.actionBound) return;
+            button.dataset.actionBound = 'true';
+
             const targetClass = ActionMap[className];
             if (typeof targetClass?.[methodName] === 'function') {
-                button.addEventListener('click', () => targetClass[methodName]());
+                button.addEventListener('click', (event) => targetClass[methodName](event));
             } else {
                 console.error(`Action not found: ${action}`);
             }
