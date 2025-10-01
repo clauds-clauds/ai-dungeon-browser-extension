@@ -53,9 +53,8 @@
                                     Add Entity
                                     <span class="material-symbols-rounded">library_add</span>
                                 </button>
-                                <button id="de-panel-button-entity" class="de-panel-button emphasis danger">
-                                    Close
-                                    <span class="material-symbols-rounded">tab_close_right</span>
+                                <button id="de-close-menu-button" class="de-close-menu-button" aria-label="Close menu">
+                                    <span class="material-symbols-rounded">close</span>
                                 </button>
                             </header>
 
@@ -84,6 +83,26 @@
                                     <span class="material-symbols-rounded">category</span>
                                     Custom
                                 </button>
+                            </div>
+
+                            <div class="panel-content">
+                                <div class="search-container">
+                                    <div class="search-wrapper">
+                                        <span class="material-symbols-rounded search-icon">search</span>
+                                        <input type="text" id="search-input" autocomplete="off" placeholder="Search entities..." />
+                                        <button id="clear-search-button" class="clear-search-button" style="display: none;">
+                                            <span class="material-symbols-rounded">close</span>
+                                        </button>
+                                    </div>
+                                    <p class="search-subtext">Filter your roster or jump into categories to focus on a
+                                        specific slice of your world.</p>
+                                </div>
+
+                                <div class="de-tab-content-area">
+                                    <div id="all-subtab" class="de-subtab-panel selected">
+                                        
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

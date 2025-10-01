@@ -39,6 +39,7 @@
                 "scripts/events.js"
             ],
             "css": [
+                "styles/legacy/refactor.css",
                 "styles/random.css",
                 "styles/custom.css",
                 "styles/root.css",
