@@ -29,6 +29,7 @@
                 "scripts/core/configuration.js",
                 "scripts/core/persistent_storage.js",
                 "scripts/core/custom_debugger.js",
+                "scripts/controls/egg.js",
                 "scripts/helpers/discover.js",
                 "scripts/helpers/utilities.js",
                 "scripts/helpers/construct.js",
