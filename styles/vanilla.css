@@ -1,3 +1,25 @@
 .nav {
     border: none;
 }
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(18, 22, 26, 0.8);
+    border-radius: var(--r-lg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(54, 62, 68, 0.7);
+    border-radius: var(--r-lg);
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(248, 174, 44, 0.65);
+    background-clip: content-box;
+}
