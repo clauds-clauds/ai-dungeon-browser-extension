@@ -59,21 +59,3 @@
     padding: var(--s-padding-lg);
     min-height: 0;
 }
-
-.de-tab-content-area::-webkit-scrollbar {
-    width: 8px;
-}
-
-.de-tab-content-area::-webkit-scrollbar-track {
-    background: var(--c-core2);
-    border-radius: var(--r-sm);
-}
-
-.de-tab-content-area::-webkit-scrollbar-thumb {
-    background: var(--c-core4);
-    border-radius: var(--r-sm);
-}
-
-.tab-content-area::-webkit-scrollbar-thumb:hover {
-    background: var(--c-core5);
-}
