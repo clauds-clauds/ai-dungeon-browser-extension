@@ -55,4 +55,65 @@ class Construct {
         // Return the constructed button.
         return button;
     }
+
+    static async customMenuContent(selectionArea, sidebarButtons) {
+        // Inject all the panels and their snippets.
+        for (const button of sidebarButtons) {
+            const panel = await Inject.component(`components/panels/${button.dataset.panel}_panel.html`, selectionArea);
+
+            if (!panel) continue;
+            panel.dataset.panel = button.dataset.panel;
+
+            const snippetTabs = panel.querySelectorAll('.de-pill-tab[data-snippet]');
+            const snippetContentArea = panel.querySelector('.de-snippet-area');
+
+            if (snippetTabs.length > 0 && snippetContentArea) {
+                for (const tab of snippetTabs) {
+                    const snippetName = tab.dataset.snippet;
+                    const snippet = await Inject.component(`components/snippets/${snippetName}_snippet.html`, snippetContentArea);
+                    if (snippet) {
+                        snippet.dataset.snippet = snippetName;
+                    }
+                }
+
+                snippetTabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        // Update tab selection state.
+                        snippetTabs.forEach(t => t.classList.remove('selected'));
+                        tab.classList.add('selected');
+
+                        // Show the corresponding snippet.
+                        const snippetName = tab.dataset.snippet;
+                        const snippets = snippetContentArea.querySelectorAll('.de-snippet');
+                        snippets.forEach(s => {
+                            if (s.dataset.snippet === snippetName) {
+                                s.classList.add('selected');
+                            } else {
+                                s.classList.remove('selected');
+                            }
+                        });
+                    });
+                });
+            }
+        }
+
+        sidebarButtons.forEach(button => {
+            button.addEventListener('click', async () => {
+                sidebarButtons.forEach(btn => btn.classList.remove('selected'));
+                button.classList.add('selected');
+
+                const panelName = button.dataset.panel;
+                const panels = selectionArea.querySelectorAll('[data-panel]');
+
+                // Hide all panels, then show the one that matches the button.
+                panels.forEach(p => {
+                    if (p.dataset.panel === panelName) {
+                        p.classList.add('selected');
+                    } else {
+                        p.classList.remove('selected');
+                    }
+                });
+            });
+        });
+    }
 }

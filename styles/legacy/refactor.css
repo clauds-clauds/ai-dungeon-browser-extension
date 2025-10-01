@@ -77,15 +77,3 @@
 .tab-content-area::-webkit-scrollbar-thumb:hover {
     background: var(--c-core5);
 }
-
-.de-subtab-panel {
-    display: none;
-    flex-direction: column;
-    gap: var(--s-gap-lg);
-    min-height: 0;
-    overflow-y: auto;
-}
-
-.de-subtab-panel.selected {
-    display: flex;
-}

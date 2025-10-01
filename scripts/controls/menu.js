@@ -27,39 +27,14 @@ class Menu {
         const selectionArea = document.getElementById('de-selection');
         const buttons = document.querySelectorAll('.de-sidebar-button');
 
-        await this.#addPanelsToSelection(selectionArea, buttons);
+        // await this.#addPanelsToSelection(selectionArea, buttons);
+
+        await Construct.customMenuContent(selectionArea, buttons);
 
         // Finally fix the adventure ID.
         document.getElementById('adventure-id').textContent = Utilities.getAdventureId();
 
         this.toggleVisibility();
-    }
-
-    static async #addPanelsToSelection(selectionArea, panelButtons) {
-        // Inject all panels first.
-        for (const button of panelButtons) {
-            const panel = await Inject.component(`components/panels/${button.dataset.panel}_panel.html`, selectionArea);
-            panel.dataset.panel = button.dataset.panel;
-        }
-
-        panelButtons.forEach(button => {
-            button.addEventListener('click', async () => {
-                panelButtons.forEach(btn => btn.classList.remove('selected'));
-                button.classList.add('selected');
-
-                const panelName = button.dataset.panel;
-                const panels = selectionArea.querySelectorAll('[data-panel]');
-
-                // Hide all panels, then show the one that matches the button.
-                panels.forEach(p => {
-                    if (p.dataset.panel === panelName) {
-                        p.classList.add('selected');
-                    } else {
-                        p.classList.remove('selected');
-                    }
-                });
-            });
-        });
     }
 
     static toggleVisibility() {

@@ -1,5 +1,5 @@
-<!-- Settings Panel HERE!-->
 <div class="de-tab-panel">
+    <!-- Settings Panel HERE!-->
     <div class="de-panel-surface">
         <header class="de-panel-header">
             <div>
@@ -14,33 +14,31 @@
 
         <!-- Settings Pills HERE! -->
         <div class="de-pill-tabs">
-            <button class="de-pill-tab selected">
-                <span class="material-symbols-rounded">tune</span>
+            <button class="de-pill-tab selected" data-snippet="settings/general">
+                <span class="material-symbols-rounded" >tune</span>
                 General
             </button>
-            <button class="de-pill-tab">
+            <button class="de-pill-tab"  data-snippet="settings/text">
                 <span class="material-symbols-rounded">text_fields</span>
                 Text Effects
             </button>
-            <button class="de-pill-tab">
-                <span class="material-symbols-rounded">tooltip</span>
+            <button class="de-pill-tab" data-snippet="settings/tooltip">
+                <span class="material-symbols-rounded" >tooltip</span>
                 Tooltip
             </button>
-            <button class="de-pill-tab">
-                <span class="material-symbols-rounded">folder_data</span>
+            <button class="de-pill-tab" data-snippet="settings/storage">
+                <span class="material-symbols-rounded" >folder_data</span>
                 Storage
             </button>
-            <button class="de-pill-tab danger">
-                <span class="material-symbols-rounded">skull</span>
+            <button class="de-pill-tab danger" data-snippet="settings/danger">
+                <span class="material-symbols-rounded" >skull</span>
                 Danger Zone
             </button>
         </div>
 
         <div class="panel-content">
-            <div class="de-tab-content-area">
-                <div id="all-subtab" class="de-subtab-panel selected">
-
-                </div>
+            <div class="de-snippet-area">
+                <!-- Inject Snippets HERE! -->
             </div>
         </div>
     </div>

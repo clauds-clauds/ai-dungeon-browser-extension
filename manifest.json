@@ -51,6 +51,11 @@
     "web_accessible_resources": [
         {
             "resources": [
+                "components/snippets/settings/general_snippet.html",
+                "components/snippets/settings/text_snippet.html",
+                "components/snippets/settings/tooltip_snippet.html",
+                "components/snippets/settings/storage_snippet.html",
+                "components/snippets/settings/danger_snippet.html",
                 "components/panels/entity_panel.html",
                 "components/panels/editor_panel.html",
                 "components/panels/settings_panel.html",
