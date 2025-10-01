@@ -5,7 +5,7 @@
                 <nav class="de-sidebar-stack de-sidebar-tabs">
                     <!-- Sidebar Buttons HERE! -->
                     <!-- TODO: HIDE THIS WHEN MOBILE DEVICES USE IT!-->
-                    <button class="de-sidebar-button select">
+                    <button class="de-sidebar-button selected">
                         <span class="material-symbols-rounded">api</span>
                         <span>Entities</span>
                     </button>
@@ -38,7 +38,7 @@
             </div>
         </aside>
 
-        <section class="de-menu-content">
+        <section class="de-menu-area">
             <header class="de-menu-topbar">
                 <div>
                     <h2>Extension Menu</h2>
@@ -48,6 +48,26 @@
                     <span class="material-symbols-rounded">close</span>
                 </button>
             </header>
+
+            <div class="de-menu-content">
+                <div class="de-menu-selection">
+                    <div class="de-menu-tab-panel selected">
+                        <div class="de-menu-panel-surface">
+                            <header class="de-panel-header">
+                                <div>
+                                    <h3>Entity Library</h3>
+                                    <p>Browse, sort, and refine the characters, places, factions, and custom lore
+                                        driving your narrative.</p>
+                                </div>
+                                <button id="de-add-entity-button" class="de-add-entity-button emphasis">
+                                    <span class="material-symbols-rounded">library_add</span>
+                                    Add Entity
+                                </button>
+                            </header>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 </div>
