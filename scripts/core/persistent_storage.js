@@ -142,4 +142,9 @@ class PersistentStorage {
         // Print how many entities were loaded.
         CustomDebugger.say(`Loaded ${entities.length} entities from the database.`, true);
     }
+
+    static async deleteDatabase() {
+        Log.scream("Deleting all data!"); // Log something scary.
+        this.#db?.delete({ disableAutoOpen: false }); // Delete the database.
+    }
 }

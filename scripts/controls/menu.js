@@ -34,6 +34,7 @@ class Menu {
         document.getElementById('adventure-id').textContent = Utilities.getAdventureId();
 
         this.#setupVariables();
+        this.#setupActionButtons(Discover.extensionMenu());
         this.toggleVisibility();
     }
 
@@ -57,6 +58,31 @@ class Menu {
                 });
             });
         });
+    }
+
+    static #setupActionButtons(container) {
+        const actionButtons = container.querySelectorAll('[data-action]');
+
+        actionButtons.forEach(button => {
+            const action = button.dataset.action;
+            const [className, methodName] = action.split('.');
+
+            if (!className || !methodName) {
+                console.error(`Invalid action format: ${action}`);
+                return;
+            }
+
+            const targetClass = ActionMap[className];
+            if (typeof targetClass?.[methodName] === 'function') {
+                button.addEventListener('click', () => targetClass[methodName]());
+            } else {
+                console.error(`Action not found: ${action}`);
+            }
+        });
+    }
+
+    static test() {
+        CustomDebugger.say("Menu test action triggered.", true);
     }
 
     static toggleVisibility() {

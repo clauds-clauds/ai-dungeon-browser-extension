@@ -38,6 +38,7 @@
                 "scripts/controls/text_effects.js",
                 "scripts/controls/tooltip.js",
                 "scripts/controls/entity_renderer.js",
+                "scripts/action_map.js",
                 "scripts/events.js"
             ],
             "css": [
