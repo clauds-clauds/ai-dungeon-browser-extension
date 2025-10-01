@@ -2,5 +2,7 @@
 
 const ActionMap = {
     Menu,
-    PersistentStorage
+    PersistentStorage,
+    Renderer,
+    Editor
 }

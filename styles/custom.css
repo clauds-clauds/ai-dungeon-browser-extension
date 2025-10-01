@@ -38,13 +38,15 @@
     flex-direction: column;
     opacity: 0;
     transition: all var(--animation-duration-normal) var(--animation-ease);
-    pointer-events: none;
     overflow: hidden;
+    pointer-events: none;
+    visibility: hidden;
 }
 
 .de-menu.visible {
     opacity: 1;
     pointer-events: all;
+    visibility: visible;
 }
 
 .de-menu-outer {

@@ -90,7 +90,7 @@ class PersistentStorage {
         else this.cache.entities.push(safeEntity);
 
         document.dispatchEvent(new CustomEvent(Configuration.EVENT_CACHE_UPDATED));
-        CustomDebugger.say(`Saved entity ${entity.id} (${entity.type}).`, true);
+        CustomDebugger.say(`Saved entity ${entity.id} (${entity.category}).`, true);
     }
 
     /**
@@ -143,8 +143,23 @@ class PersistentStorage {
         CustomDebugger.say(`Loaded ${entities.length} entities from the database.`, true);
     }
 
+    /**
+     * Deletes all settings from the database and reloads the page.
+     * @returns {Promise<void>}
+     */
+    static async deleteSettings() {
+        await this.#db.settings.delete(Configuration.DATABASE_KEY); // Delete settings from database.
+        CustomDebugger.say("Deleted settings from database.", true);  // Log the deletion.
+        location.reload(); // Reload the page to reset everything.
+    }
+
+    /**
+     * Deletes the entire database and reloads the page.
+     * @returns {Promise<void>}
+     */
     static async deleteDatabase() {
-        Log.scream("Deleting all data!"); // Log something scary.
+        CustomDebugger.scream("Deleting all data!"); // Log something scary.
         this.#db?.delete({ disableAutoOpen: false }); // Delete the database.
+        location.reload(); // Reload the page to reset everything.
     }
 }

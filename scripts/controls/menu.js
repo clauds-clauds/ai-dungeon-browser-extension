@@ -91,9 +91,11 @@ class Menu {
         if (this.#visible) {
             Discover.backdrop().classList.add('visible');
             Discover.extensionMenu().classList.add('visible');
+            Page.makeInert(Configuration.ID_EXTENSION_MENU);
         } else {
             Discover.backdrop().classList.remove('visible');
             Discover.extensionMenu().classList.remove('visible');
+            Page.makeInteractive();
         }
     }
 }

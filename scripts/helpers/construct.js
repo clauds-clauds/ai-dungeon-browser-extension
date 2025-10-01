@@ -102,13 +102,13 @@ class Construct {
                         tab.classList.add('selected');
 
                         const category = tab.dataset.entityCategory;
-                        EntityRenderer.ping(category);
+                        Renderer.ping(category);
                     });
                 });
 
                 const initialCategory = chunk.querySelector('.de-pill-tab[data-entity-category].selected')?.dataset.entityCategory;
                 if (initialCategory) {
-                    EntityRenderer.ping(initialCategory);
+                    Renderer.ping(initialCategory);
                 }
             }
         }

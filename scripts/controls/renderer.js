@@ -1,6 +1,6 @@
 "use strict";
 
-class EntityRenderer {
+class Renderer {
     static ping(category) {
         CustomDebugger.say(`Pinging with ${category}`, true);
     }

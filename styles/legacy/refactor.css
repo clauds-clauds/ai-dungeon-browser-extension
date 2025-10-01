@@ -6,6 +6,8 @@
     align-self: center;
     width: 40px;
     height: 40px;
+    min-width: 40px;
+    max-width: 40px;
     border: 1px solid rgba(248, 174, 44, 0.35);
     border-radius: var(--r-round);
     background: linear-gradient(160deg, rgba(28, 32, 36, 0.85) 0%, rgba(22, 25, 28, 0.92) 100%);
@@ -146,6 +148,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--s-gap-md);
+    justify-content: flex-start;
 }
 
 .de-action-button {
