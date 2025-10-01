@@ -29,6 +29,9 @@ class Menu {
 
         await this.#addPanelsToSelection(selectionArea, buttons);
 
+        // Finally fix the adventure ID.
+        document.getElementById('adventure-id').textContent = Utilities.getAdventureId();
+
         this.toggleVisibility();
     }
 

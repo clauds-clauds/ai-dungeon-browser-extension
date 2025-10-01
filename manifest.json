@@ -54,6 +54,7 @@
                 "components/panels/editor_panel.html",
                 "components/panels/settings_panel.html",
                 "components/panels/share_panel.html",
+                "components/panels/secret_panel.html",
                 "components/menu.html",
                 "components/backdrop.html",
                 "fonts/material_symbols_rounded.ttf"
