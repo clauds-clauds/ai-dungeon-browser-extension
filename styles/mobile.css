@@ -1,0 +1,11 @@
+@media (max-width: 768px) {
+
+    .de-sidebar-button span:not(.material-symbols-rounded) {
+        display: none !important;
+    }
+
+    .de-panel-header h3,
+    .de-panel-header p {
+        display: none !important;
+    }
+}
