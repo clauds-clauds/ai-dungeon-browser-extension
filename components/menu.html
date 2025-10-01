@@ -38,32 +38,53 @@
             </div>
         </aside>
 
-        <section class="de-menu-area">
-            <header class="de-menu-topbar">
-                <div>
-                    <h2>Extension Menu</h2>
-                    <p>Here you can manage your entities, settings and even share stuff!</p>
-                </div>
-                <button class="de-close-menu-button">
-                    <span class="material-symbols-rounded">close</span>
-                </button>
-            </header>
-
-            <div class="de-menu-content">
-                <div class="de-menu-selection">
-                    <div class="de-menu-tab-panel selected">
-                        <div class="de-menu-panel-surface">
+        <section class="de-area">
+            <div class="de-content">
+                <div class="de-selection">
+                    <div class="de-tab-panel selected">
+                        <div class="de-panel-surface">
                             <header class="de-panel-header">
                                 <div>
                                     <h3>Entity Library</h3>
                                     <p>Browse, sort, and refine the characters, places, factions, and custom lore
                                         driving your narrative.</p>
                                 </div>
-                                <button id="de-add-entity-button" class="de-add-entity-button emphasis">
-                                    <span class="material-symbols-rounded">library_add</span>
+                                <button id="de-panel-button-entity" class="de-panel-button emphasis">
                                     Add Entity
+                                    <span class="material-symbols-rounded">library_add</span>
+                                </button>
+                                <button id="de-panel-button-entity" class="de-panel-button emphasis danger">
+                                    Close
+                                    <span class="material-symbols-rounded">tab_close_right</span>
                                 </button>
                             </header>
+
+                            <div class="de-pill-tabs">
+                                <button class="de-pill-tab selected">
+                                    <span class="material-symbols-rounded">view_list</span>
+                                    All
+                                </button>
+                                <button class="de-pill-tab">
+                                    <span class="material-symbols-rounded">groups_2</span>
+                                    Characters
+                                </button>
+                                <button class="de-pill-tab">
+                                    <span class="material-symbols-rounded">sword_rose</span>
+                                    Races
+                                </button>
+                                <button class="de-pill-tab">
+                                    <span class="material-symbols-rounded">explore</span>
+                                    Locations
+                                </button>
+                                <button class="de-pill-tab">
+                                    <span class="material-symbols-rounded">castle</span>
+                                    Factions
+                                </button>
+                                <button class="de-pill-tab">
+                                    <span class="material-symbols-rounded">category</span>
+                                    Custom
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

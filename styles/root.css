@@ -25,6 +25,9 @@
     --c-blackA8: rgba(15, 18, 22, 0.85);
     --c-whiteA3: rgba(255, 255, 255, 0.3);
 
+    --c-customA1: rgba(18, 22, 26, 0.8);
+    --c-customA2: rgba(54, 62, 68, 0.7);
+
     --f-family: 'IBMPlexSansGameplay', sans-serif;
     --f-family-heading: 'IBMPlexSans', sans-serif;
     --f-size-xs: 0.75em;
