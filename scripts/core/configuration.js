@@ -9,7 +9,7 @@ class Configuration {
     /**
      * Whether the custom debugger prints verbose debug messages to the console.
      */
-    static DEBUGGER_VERBOSE_ENABLED = false;
+    static DEBUGGER_VERBOSE_ENABLED = true;
 
     /**
      * A nice looking primary color.
@@ -36,6 +36,9 @@ class Configuration {
      */
     static ID_EXTENSION_MENU_BUTTON = 'de-menu-button';
 
+    /**
+     * CSS selector for the adventure text area.
+     */
     static ID_ADVENTURE_TEXT = '#transition-opacity';
 
     /**

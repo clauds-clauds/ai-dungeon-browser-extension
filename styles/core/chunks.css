@@ -188,6 +188,11 @@
     background: rgba(132, 44, 248, 0.12);
 }
 
+.de-pill.safe:hover {
+    color: var(--c-coreA9);
+    background: var(--c-healer);
+}
+
 .de-pill.danger:hover {
     color: var(--c-coreA9);
     background: var(--c-healthBarRed);

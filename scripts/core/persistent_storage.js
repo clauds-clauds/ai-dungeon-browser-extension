@@ -28,18 +28,18 @@ class PersistentStorage {
      * The default settings.
      */
     static #defaults = {
-        /* Text Effects HERE! */
+        /* Text Effects Defaults HERE! */
         textEffectsIcons: true,
         textEffectsColor: true,
         textEffectsBold: true,
         textEffectsStory: true,
-        textEffectsDialogue: true,
+        textEffectsAction: true,
         textEffectsIconSize: 28,
         textEffectsIconBorderWidth: 1,
         textEffectsIconBorderRadius: 0,
         textEffectsGlobalColor: "#f8ae2c",
 
-        /* Tooltip HERE! */
+        /* Tooltip Defaults HERE! */
         tooltipGraphics: true,
         tooltipGraphicSize: 20,
         tooltipHideDelay: 200

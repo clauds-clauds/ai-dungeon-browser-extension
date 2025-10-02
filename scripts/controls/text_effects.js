@@ -36,7 +36,17 @@ class TextEffects {
         if (allTriggers.length === 0) return;
 
         const pattern = allTriggers.map(Utilities.escapeRegExp).join('|');
-        const regex = new RegExp(`\\b(${pattern})('s)?\\b`, 'gi');
+        
+        const includeColon = PersistentStorage.getSetting('textEffectsColon', false);
+
+        let finalPattern = `(${pattern})('s)?`;
+        let regex;
+
+        if (includeColon) {
+            regex = new RegExp(`\\b${finalPattern}(:)?(?![\\w'])`, 'gi');
+        } else {
+            regex = new RegExp(`\\b${finalPattern}\\b`, 'gi');
+        }
 
         const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
         const textNodes = [];
@@ -67,10 +77,14 @@ class TextEffects {
 
                 if (!entity) continue;
 
-                if (entity.restriction === 'action') {
-                    if (!textNode.parentElement.closest('#action-text')) continue;
-                } else if (entity.restriction === 'story') {
-                    if (textNode.parentElement.closest('#action-text')) continue;
+                const isAction = !!textNode.parentElement.closest('#action-text');
+
+                if (isAction) {
+                    if (!PersistentStorage.getSetting('textEffectsAction', true)) continue;
+                    if (entity.restriction === 'story') continue;
+                } else {
+                    if (!PersistentStorage.getSetting('textEffectsStory', true)) continue;
+                    if (entity.restriction === 'action') continue;
                 }
 
                 if (match.index > lastIndex) {

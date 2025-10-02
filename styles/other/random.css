@@ -5,3 +5,11 @@
 .grey {
     color: var(--c-core8);
 }
+
+.danger {
+    color: var(--c-healthBarRed);
+}
+
+.safer {
+    color: var(--c-healer);
+}
