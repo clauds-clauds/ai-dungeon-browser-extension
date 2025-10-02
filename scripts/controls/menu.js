@@ -107,6 +107,11 @@ class Menu {
         CustomDebugger.say("Menu test action triggered.", true);
     }
 
+    static reportBug() {
+        CustomDebugger.say("Bug report button clicked.", true);
+        window.open('https://github.com/clauds-clauds/ai-dungeon-browser-extension/issues', '_blank');
+    }
+
     static toggleVisibility() {
         this.#visible = !this.#visible;
 
