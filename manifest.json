@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Dungeon Extension",
     "version": "3.2.1",
-    "description": "Dungeon Extension allows you to add icons and graphics to your adventures, as well as many other features to enhance your AI Dungeon experience.",
+    "description": "Customize characters and locations with icons and graphics, plus various other QoL features.",
     "author": "clauds-clauds",
     "permissions": [],
     "icons": {
@@ -56,7 +56,6 @@
             "resources": [
                 "components/nuggets/tooltip_nugget.html",
                 "components/nuggets/entity_nugget.html",
-                "components/snippets/hidden/raven_snippet.html",
                 "components/snippets/database/import_snippet.html",
                 "components/snippets/database/export_snippet.html",
                 "components/snippets/database/restore_snippet.html",
