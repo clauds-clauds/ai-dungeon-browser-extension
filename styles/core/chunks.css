@@ -76,6 +76,11 @@
     max-width: 520px;
 }
 
+.de-chunk-header.secret {
+    border: 1px solid rgba(68, 54, 54, 0.7);
+    background: linear-gradient(135deg, rgba(248, 44, 44, 0.16) 0%, rgba(34, 27, 27, 0.65) 85%);
+}
+
 /* Exit Button HERE! */
 
 .de-exit-button {

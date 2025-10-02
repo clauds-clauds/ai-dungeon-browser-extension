@@ -42,12 +42,12 @@
                 "scripts/events.js"
             ],
             "css": [
-                "styles/legacy/entity_editor.css",
-                "styles/legacy/refactor.css",
-                "styles/new/chunks.css",
-                "styles/new/nuggets.css",
-                "styles/random.css",
-                "styles/custom.css",
+                "styles/other/legacy.css",
+                "styles/other/random.css",
+                "styles/core/nuggets.css",
+                "styles/core/snippets.css",
+                "styles/core/chunks.css",
+                "styles/mobile.css",
                 "styles/root.css",
                 "styles/vanilla.css"
             ]
