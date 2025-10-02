@@ -69,7 +69,7 @@ class Configuration {
     /**
      * Icon name for the custom menu button.
      */
-    static CUSTOM_MENU_BUTTON_ICON = 'terminal';
+    static CUSTOM_MENU_BUTTON_ICON = 'extension';
 
     /**
      * Icon size for the custom menu button.
