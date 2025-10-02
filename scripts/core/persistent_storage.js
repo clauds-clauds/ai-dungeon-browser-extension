@@ -53,10 +53,10 @@ class PersistentStorage {
         /* Importer Defaults HERE! */
         importStoryCards: true,
         importCharacters: true,
-        importRaces: true,
-        importLocations: true,
-        importFactions: true,
-        importCustom: true
+        importRaces: false,
+        importLocations: false,
+        importFactions: false,
+        importCustom: false
     };
 
     /**
@@ -264,16 +264,33 @@ class PersistentStorage {
     static #migrateStoryCards(data) {
         const validCategories = new Set(['character', 'race', 'location', 'faction']);
 
-        return data.map(card => {
-            const category = card.type?.toLowerCase() ?? 'custom';
-            return {
-                name: card.title,
-                triggers: card.keys?.split(',').map(k => k.trim()) ?? [],
-                category: validCategories.has(category) ? category : 'custom',
-                icons: [],
-                graphics: []
-            };
-        });
+        return data
+            .map(card => {
+                const category = card.type?.toLowerCase() ?? 'custom';
+                return {
+                    name: card.title,
+                    triggers: card.keys?.split(',').map(k => k.trim()) ?? [],
+                    category: validCategories.has(category) ? category : 'custom',
+                    icons: [],
+                    graphics: []
+                };
+            })
+            .filter(entity => {
+                switch (entity.category) {
+                    case 'character':
+                        return this.getSetting('importCharacters', true);
+                    case 'race':
+                        return this.getSetting('importRaces', false);
+                    case 'location':
+                        return this.getSetting('importLocations', false);
+                    case 'faction':
+                        return this.getSetting('importFactions', false);
+                    case 'custom':
+                        return this.getSetting('importCustom', false);
+                    default:
+                        return false;
+                }
+            });
     }
 
     static async #importJSON(mode) {
