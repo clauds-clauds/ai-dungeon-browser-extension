@@ -84,7 +84,7 @@ class Configuration {
     /**
      * Key for the IndexedDB database.
      */
-    static DATABASE_KEY = 'DEDBKey';
+    static DATABASE_KEY = 'de-db';
 
     /**
      * Categories and their icons.
