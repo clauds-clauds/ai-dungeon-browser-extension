@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Dungeon Extension",
     "version": "3.2.1",
-    "description": "Here be dragons...",
+    "description": "Dungeon Extension allows you to add icons and graphics to your adventures, as well as many other features to enhance your AI Dungeon experience.",
     "author": "clauds-clauds",
     "permissions": [],
     "icons": {
