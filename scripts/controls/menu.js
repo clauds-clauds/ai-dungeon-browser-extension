@@ -34,6 +34,7 @@ class Menu {
         document.getElementById('adventure-id').textContent = Utilities.getAdventureId();
 
         this.#setupVariables();
+        this.#setupSearch();
         this.#setupActionButtons(Discover.extensionMenu());
         this.toggleVisibility();
 
@@ -59,6 +60,38 @@ class Menu {
                     }
                 });
             });
+        });
+    }
+
+    static #setupSearch() {
+        const searchInput = document.getElementById('search-input');
+        const clearButton = document.getElementById('clear-search-button');
+        const nuggetContainer = document.querySelector('.de-chunk-content .de-chunk-selection');
+
+        if (!searchInput || !clearButton || !nuggetContainer) return;
+
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            const nuggets = nuggetContainer.querySelectorAll('.de-entity-nugget');
+            const selectedCategory = document.querySelector('.de-pill[data-entity-category].selected')?.dataset.entityCategory || 'all';
+
+            clearButton.style.display = searchTerm ? '' : 'none';
+
+            nuggets.forEach(nugget => {
+                const name = nugget.querySelector('.de-entity-nugget-name').textContent.toLowerCase();
+                const category = nugget.dataset.category.toLowerCase();
+                
+                const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
+                const matchesSearch = name.includes(searchTerm) || category.includes(searchTerm);
+
+                nugget.style.display = matchesCategory && matchesSearch ? '' : 'none';
+            });
+        });
+
+        clearButton.addEventListener('click', () => {
+            searchInput.value = '';
+            const event = new Event('input', { bubbles: true, cancelable: true });
+            searchInput.dispatchEvent(event);
         });
     }
 
