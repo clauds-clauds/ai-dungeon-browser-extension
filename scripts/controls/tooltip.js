@@ -13,7 +13,7 @@ class Tooltip {
         CustomDebugger.say("Pinging tooltip.", true);
         if (Discover.tooltip()) return;
 
-        this.#tooltipElement = await Inject.component('components/nuggets/tooltip_nugget.html', document.body);;
+        this.#tooltipElement = await Inject.component('components/nuggets/tooltip_nugget.html', document.body);
         this.#imageElement = document.getElementById('de-tooltip-image');
         this.#counterElement = document.getElementById('de-tooltip-counter');
 
@@ -45,7 +45,7 @@ class Tooltip {
 
             if (target && entityId) {
                 const entity = PersistentStorage.cache.entities.find(e => e.id == entityId);
-                if (entity && entity.graphics?.length > 0) {
+                if (entity && entity.graphics?.length > 0 && !Menu.isOpen()) {
                     Tooltip.show(target, entity);
                 }
             }

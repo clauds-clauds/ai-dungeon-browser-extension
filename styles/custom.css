@@ -1,18 +1,5 @@
 /* Backdrop */
 
-.de-backdrop {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--c-blackA7);
-    backdrop-filter: blur(4px);
-    z-index: 9997;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease-out;
-}
-
 .de-backdrop.visible {
     opacity: 1;
 }

@@ -9,7 +9,7 @@ class Configuration {
     /**
      * Whether the custom debugger prints verbose debug messages to the console.
      */
-    static DEBUGGER_VERBOSE_ENABLED = true;
+    static DEBUGGER_VERBOSE_ENABLED = false;
 
     /**
      * A nice looking primary color.
@@ -52,6 +52,11 @@ class Configuration {
      * Element ID for the custom menu itself.
      */
     static ID_EXTENSION_MENU = 'de-menu';
+
+    /**
+     * Element ID for the extension styles.
+     */
+    static ID_EXTENSION_STYLES = 'de-styles';
 
     /**
      * Event name for when the cache is updated.

@@ -5,22 +5,34 @@ class TextEffects {
         CustomDebugger.say("Pinging text effects" + (hardRefresh ? " with hard refresh." : "."), true);
 
         if(hardRefresh) {
-            this.reloadAndApplyToAdventure();
+            document.querySelectorAll('.entity-highlight').forEach(span => {
+                const parent = span.parentElement;
+                if (parent) {
+                    const text = span.textContent || '';
+                    parent.replaceChild(document.createTextNode(text), span);
+                    parent.normalize();
+                }
+            });
+
+            document.querySelectorAll('[text-effect-entity]').forEach(el => el.removeAttribute('text-effect-entity'));
+        }
+
+        const nodes =document.querySelectorAll(`${Configuration.ID_ADVENTURE_TEXT}:not([text-effect-entity])`);
+
+        for (const node of nodes) {
+            node.setAttribute('text-effect-entity', 'true');
+            TextEffects.#apply(node);
         }
     }
 
-    /**
- * Applies all text effects to a given node.
- * @param {HTMLElement} node The node to apply effects to.
- */
-    static applyToTextContainer(node) {
+    static #apply(node) {
         if (!node || !(node instanceof Node)) return;
         if (!PersistentStorage.getSetting('textEffectsEnabled', true)) return;
 
         const entities = PersistentStorage.cache.entities;
         if (!entities || entities.length === 0) return;
 
-        const allTriggers = [...new Set(entities.flatMap(entity => [entity.name, ...(entity.keywords || [])]).filter(Boolean))];
+        const allTriggers = [...new Set(entities.flatMap(entity => [entity.name, ...(entity.triggers || [])]).filter(Boolean))];
         if (allTriggers.length === 0) return;
 
         const pattern = allTriggers.map(Utilities.escapeRegExp).join('|');
@@ -50,14 +62,14 @@ class TextEffects {
 
                 const entity = entities.find(e =>
                     e.name?.toLowerCase() === matchedName.toLowerCase() ||
-                    e.keywords?.some(k => k.toLowerCase() === matchedName.toLowerCase())
+                    e.triggers?.some(k => k.toLowerCase() === matchedName.toLowerCase())
                 );
 
                 if (!entity) continue;
 
-                if (entity.highlightRestriction === 'action-only') {
+                if (entity.restriction === 'action') {
                     if (!textNode.parentElement.closest('#action-text')) continue;
-                } else if (entity.highlightRestriction === 'story-only') {
+                } else if (entity.restriction === 'story') {
                     if (textNode.parentElement.closest('#action-text')) continue;
                 }
 
@@ -81,32 +93,6 @@ class TextEffects {
         }
     }
 
-    static applyToAdventure(expensiveRefresh = false) {
-        const nodes = expensiveRefresh
-            ? document.querySelectorAll(Configuration.ID_ADVENTURE_TEXT)
-            : document.querySelectorAll(`${Configuration.ID_ADVENTURE_TEXT}:not([text-effect-entity])`);
-
-        for (const node of nodes) {
-            node.setAttribute('text-effect-entity', 'true');
-            TextEffects.applyToTextContainer(node);
-        }
-    }
-
-    static async reloadAndApplyToAdventure() {
-        document.querySelectorAll('.entity-highlight').forEach(span => {
-            const parent = span.parentElement;
-            if (parent) {
-                const text = span.textContent || '';
-                parent.replaceChild(document.createTextNode(text), span);
-                parent.normalize();
-            }
-        });
-
-        document.querySelectorAll('[text-effect-entity]').forEach(el => el.removeAttribute('text-effect-entity'));
-        this.applyToAdventure();
-    }
-
-
     static #createHighlightSpan(entity, text) {
         const span = document.createElement('span');
         span.className = 'entity-highlight';
@@ -129,9 +115,9 @@ class TextEffects {
         }
 
         if (PersistentStorage.getSetting('textEffectsColor', true)) {
-            const color = entity.highlightMode === 'special' && entity.highlightColor
-                ? entity.highlightColor
-                : PersistentStorage.getSetting('textEffectsColor', 'rgba(200, 170, 100, 1)');
+            const color = entity.highlightMode === 'special' && entity.color
+                ? entity.color
+                : PersistentStorage.getSetting('textEffectsGlobalColor', '#f8ae2c');
             span.style.color = color;
         }
 

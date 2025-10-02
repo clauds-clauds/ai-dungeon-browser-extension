@@ -37,7 +37,7 @@ class PersistentStorage {
         textEffectsIconSize: 28,
         textEffectsIconBorderWidth: 1,
         textEffectsIconBorderRadius: 0,
-        textEffectsColor: "#f8ae2c",
+        textEffectsGlobalColor: "#f8ae2c",
 
         /* Tooltip HERE! */
         tooltipGraphics: true,

@@ -48,7 +48,7 @@ class Editor {
         if (!mediaItems || mediaItems.length === 0) return;
 
         mediaItems.forEach(media => {
-            this.#addMediaItem(listId, media.url, 'Loaded Asset');
+            this.#addMediaItem(listId, media.url, 'Saved Image');
             const item = list.lastElementChild;
             if (media.isPinned) {
                 item.classList.add('pinned');
@@ -95,7 +95,6 @@ class Editor {
         CustomDebugger.say("Creating a new entity.", true);
         this.#currentEntity = {};
 
-        // Reset form fields
         const fields = document.querySelectorAll('#entity-editor-snippet [data-entity-variable]');
         fields.forEach(field => {
             const key = field.dataset.entityVariable;
@@ -107,7 +106,6 @@ class Editor {
                     field.value = '#f8ae2c';
                     break;
                 case 'select-one':
-                    field.selectedIndex = 0;
                     break;
                 default:
                     field.value = '';

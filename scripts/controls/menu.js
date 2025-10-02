@@ -62,6 +62,10 @@ class Menu {
         });
     }
 
+    static isOpen () {
+        return this.#visible;
+    }
+
     static #setupActionButtons(container) {
         Page.rebindActions(container);
     }

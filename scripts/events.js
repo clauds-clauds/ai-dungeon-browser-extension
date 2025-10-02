@@ -37,8 +37,12 @@ class Events {
      */
     static onPersistentStorageModified() {
         CustomDebugger.say("Persistent storage modified.", true);
-        TextEffects.ping(true);
         Renderer.refresh();
+        Page.injectCustomSettings();
+
+        setTimeout(() => {
+            TextEffects.ping(true);
+        }, 100);
     }
 
     /**
