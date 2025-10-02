@@ -4,9 +4,7 @@
     "version": "3.2.1",
     "description": "Here be dragons...",
     "author": "clauds-clauds",
-    "permissions": [
-        "storage"
-    ],
+    "permissions": [],
     "icons": {
         "16": "icons/de_tiny.png",
         "32": "icons/de_small.png",
