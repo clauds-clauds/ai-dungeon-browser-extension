@@ -42,7 +42,18 @@ class PersistentStorage {
         /* Tooltip Defaults HERE! */
         tooltipGraphics: true,
         tooltipGraphicSize: 20,
-        tooltipHideDelay: 200
+        tooltipHideDelay: 200,
+
+        /* RegExp Defaults HERE! */
+        textEffectsColon: true,
+
+        /* Importer Defaults HERE! */
+        importStoryCards: true,
+        importCharacters: true,
+        importRaces: true,
+        importLocations: true,
+        importFactions: true,
+        importCustom: true
     };
 
     /**
