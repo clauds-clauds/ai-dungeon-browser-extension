@@ -30,7 +30,42 @@ class Utilities {
         return string.charAt(0).toUpperCase() + string.slice(1)
     }
 
+    /**
+     * Strips special characters from a string for use in a regular expression.
+     * @param {String} str 
+     * @returns {String} The escaped string.
+     */
     static escapeRegExp(str) {
         return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    static download(fileName, url) {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    static async promptForJSON() {
+        return new Promise((resolve) => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'application/json,.json';
+            input.onchange = (event) => {
+                const file = event.target.files[0];
+                if (!file) {
+                    resolve(null);
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.onerror = () => resolve(null);
+                reader.readAsText(file);
+            };
+            input.click();
+        });
     }
 }

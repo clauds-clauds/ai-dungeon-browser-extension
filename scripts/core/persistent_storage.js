@@ -153,6 +153,8 @@ class PersistentStorage {
         // Dispatch an event to notify that the cache has been updated.
         document.dispatchEvent(new CustomEvent('cacheupdated'));
 
+        if (this.cache.entities.length > 0) CustomDebugger.say("First saved entity is " + JSON.stringify(this.cache.entities[0]), true);
+
         // Print how many entities were loaded.
         CustomDebugger.say(`Loaded ${entities.length} entities from the database.`, true);
     }
@@ -179,19 +181,161 @@ class PersistentStorage {
 
     static importMergeJSON() {
         CustomDebugger.say("Merging database from JSON.", true);
-        this.importJSON('merge');
+        this.#importJSON('merge');
     }
 
     static importReplaceJSON() {
         CustomDebugger.say("Replacing database from JSON.", true);
-        this.importJSON('replace');
+        this.#importJSON('replace');
     }
 
-    static importJSON (mode) {
-
-    }
-
-    static exportToJSON() {
+    /**
+     * Exports all entities in the current adventure to a JSON file.
+     * @returns {Promise<void>}
+     */
+    static async exportToJSON() {
         CustomDebugger.say("Exporting database to JSON.", true);
+
+        try {
+            const adventureId = Utilities.getAdventureId();
+
+            if (!adventureId) {
+                CustomDebugger.scream('Cannot export entities outside of an adventure!');
+                return;
+            }
+
+            const entities = await this.#db.entities.where('adventureId').equals(adventureId).toArray();
+            const data = JSON.stringify(entities, null, 4);
+            const blob = new Blob([data], { type: 'application/json' });
+
+            Utilities.download(`dungeon-extension-${adventureId}-entities.json`, URL.createObjectURL(blob));
+
+            CustomDebugger.say(`Successfully exported ${entities.length} entities to JSON.`, true);
+        } catch (error) {
+            CustomDebugger.scream('Failed to export entities to JSON!');
+            throw error;
+        }
+    }
+
+    /**
+     * Exports all entities in the database to a JSON file, regardless of adventure.
+     * @returns {Promise<void>}
+     */
+    static async exportToJSONBackup() {
+        try {
+            const entities = await this.#db.entities.toArray();
+            const data = JSON.stringify(entities, null, 4);
+            const blob = new Blob([data], { type: 'application/json' });
+
+            Utilities.download(`dungeon-extension-backup.json`, URL.createObjectURL(blob));
+
+            CustomDebugger.say("Exported entities to JSON.", true);
+        } catch (error) {
+            CustomDebugger.scream('Failed to export entities to JSON!');
+            throw error;
+        }
+    }
+
+    static #migrateLegacy(data) {
+        if (!data?.data?.characters) return [];
+
+        return data.data.characters.map(char => {
+            const entity = {
+                name: char.name,
+                category: 'character',
+                triggers: char.nicknames?.filter(n => n !== char.name) ?? [],
+                icons: [],
+                graphics: []
+            };
+
+            char.portraits?.forEach(p => {
+                if (p.iconUrl?.startsWith('data:image')) {
+                    entity.icons.push({ url: p.iconUrl, isPinned: false });
+                }
+                if (p.fullUrl?.startsWith('data:image')) {
+                    entity.graphics.push({ url: p.fullUrl, isPinned: false });
+                }
+            });
+
+            return entity;
+        });
+    }
+
+    static #migrateStoryCards(data) {
+        const validCategories = new Set(['character', 'race', 'location', 'faction']);
+
+        return data.map(card => {
+            const category = card.type?.toLowerCase() ?? 'custom';
+            return {
+                name: card.title,
+                triggers: card.keys?.split(',').map(k => k.trim()) ?? [],
+                category: validCategories.has(category) ? category : 'custom',
+                icons: [],
+                graphics: []
+            };
+        });
+    }
+
+    static async #importJSON(mode) {
+        const adventureId = Utilities.getAdventureId();
+        if (!adventureId) {
+            CustomDebugger.scream('Cannot import entities outside of an adventure!');
+            return;
+        }
+
+        try {
+            const fileContent = await Utilities.promptForJSON();
+            if (!fileContent) return; // User cancelled file selection
+
+            const data = JSON.parse(fileContent);
+            let rawEntities = [];
+
+            if (data?.data?.characters) { // Legacy format HERE!.
+                CustomDebugger.say("Detected legacy format. Migrating...", true);
+                rawEntities = this.#migrateLegacy(data);
+            } else if (Array.isArray(data) && data[0]?.keys && data[0]?.title) { // Story card format HERE!
+                CustomDebugger.say("Detected Story Card format. Migrating...", true);
+                rawEntities = this.#migrateStoryCards(data);
+            } else if (Array.isArray(data) && data[0]?.adventureId && data[0]?.name) { // Normal format HERE!
+                CustomDebugger.say("Detected normal entity format.", true);
+                rawEntities = data;
+            } else {
+                throw new Error("Unknown or invalid JSON format.");
+            }
+
+            if (rawEntities.length === 0) {
+                CustomDebugger.say("No compatible entities found to import.", true);
+                return;
+            }
+
+            let entitiesToAdd = rawEntities.map(entity => ({
+                ...entity,
+                adventureId: adventureId,
+                id: undefined
+            }));
+
+            if (mode === 'replace') {
+                const idsToDelete = this.cache.entities.map(e => e.id);
+                if (idsToDelete.length > 0) {
+                    await this.#db.entities.bulkDelete(idsToDelete);
+                }
+            } else {
+                const existingNames = new Set(this.cache.entities.map(e => e.name));
+                entitiesToAdd = entitiesToAdd.filter(e => !existingNames.has(e.name));
+            }
+
+            if (entitiesToAdd.length > 0) {
+                await this.#db.entities.bulkAdd(entitiesToAdd);
+                CustomDebugger.say(`Imported ${entitiesToAdd.length} entities.`, true);
+            } else {
+                CustomDebugger.say("No new entities added.", true);
+            }
+
+            await this.ping(adventureId);
+
+        } catch (error) {
+            CustomDebugger.scream('Failed to import from JSON!');
+            console.error(error);
+        }
     }
 }
