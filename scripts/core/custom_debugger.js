@@ -9,7 +9,7 @@ class CustomDebugger {
      * @returns {void}
      */
     static say(message, verbose = false, loud = false) {
-        if (!Configuration.DEBUGGER_ENABLED || verbose && !Configuration.DEBUGGER_VERBOSE_ENABLED) return; // Check if debugging is enabled, if not, exit early.
+        if (!Configuration.DEBUGGER_ENABLED || verbose && PersistentStorage.getSetting('debugVerbose', false) === false) return; // Check if debugging is enabled, if not, exit early.
 
         // Set the color based on the loudness of the message.
         const color = loud ? Configuration.COLOR_DANGER : Configuration.COLOR_PRIMARY;

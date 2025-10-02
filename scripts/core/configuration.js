@@ -7,11 +7,6 @@ class Configuration {
     static DEBUGGER_ENABLED = true;
 
     /**
-     * Whether the custom debugger prints verbose debug messages to the console.
-     */
-    static DEBUGGER_VERBOSE_ENABLED = true;
-
-    /**
      * A nice looking primary color.
      */
     static COLOR_PRIMARY = '#f8ae2c';

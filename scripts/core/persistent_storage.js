@@ -28,6 +28,9 @@ class PersistentStorage {
      * The default settings.
      */
     static #defaults = {
+        /* General Defaults HERE! */
+        debugVerbose: false,
+
         /* Text Effects Defaults HERE! */
         textEffectsIcons: true,
         textEffectsColor: true,
@@ -172,5 +175,23 @@ class PersistentStorage {
         CustomDebugger.scream("Deleting all data!"); // Log something scary.
         this.#db?.delete({ disableAutoOpen: false }); // Delete the database.
         location.reload(); // Reload the page to reset everything.
+    }
+
+    static importMergeJSON() {
+        CustomDebugger.say("Merging database from JSON.", true);
+        this.importJSON('merge');
+    }
+
+    static importReplaceJSON() {
+        CustomDebugger.say("Replacing database from JSON.", true);
+        this.importJSON('replace');
+    }
+
+    static importJSON (mode) {
+
+    }
+
+    static exportToJSON() {
+        CustomDebugger.say("Exporting database to JSON.", true);
     }
 }
