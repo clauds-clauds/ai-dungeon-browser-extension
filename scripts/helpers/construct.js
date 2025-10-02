@@ -59,19 +59,19 @@ class Construct {
     static async customMenuContent(selectionArea, sidebarButtons) {
         // Inject all the chunks and their snippets.
         for (const button of sidebarButtons) {
-            const chunk = await Inject.component(`components/chunks/${button.dataset.chunk}_chunk.html`, selectionArea);
+            const chunk = await Page.addComponent(`components/chunks/${button.dataset.chunk}_chunk.html`, selectionArea);
 
             if (!chunk) continue;
             chunk.dataset.chunk = button.dataset.chunk;
 
-            const snippetTabs = chunk.querySelectorAll('.de-pill-tab[data-snippet]');
-            const snippetContentArea = chunk.querySelector('.de-snippet-area');
-            const entityCategoryTabs = chunk.querySelectorAll('.de-pill-tab[data-entity-category]');
+            const snippetTabs = chunk.querySelectorAll('.de-pill[data-snippet]');
+            const snippetContentArea = chunk.querySelector('.de-chunk-selection');
+            const entityCategoryTabs = chunk.querySelectorAll('.de-pill[data-entity-category]');
 
             if (snippetTabs.length > 0 && snippetContentArea) {
                 for (const tab of snippetTabs) {
                     const snippetName = tab.dataset.snippet;
-                    const snippet = await Inject.component(`components/snippets/${snippetName}_snippet.html`, snippetContentArea);
+                    const snippet = await Page.addComponent(`components/snippets/${snippetName}_snippet.html`, snippetContentArea);
                     if (snippet) {
                         snippet.dataset.snippet = snippetName;
                     }
@@ -106,7 +106,7 @@ class Construct {
                     });
                 });
 
-                const initialCategory = chunk.querySelector('.de-pill-tab[data-entity-category].selected')?.dataset.entityCategory;
+                const initialCategory = chunk.querySelector('.de-pill[data-entity-category].selected')?.dataset.entityCategory;
                 if (initialCategory) {
                     Renderer.ping(initialCategory);
                 }
@@ -133,7 +133,7 @@ class Construct {
     }
 
     static async entityNugget(entity, parent) {
-        const nugget = await Inject.component('components/nuggets/entity_nugget.html', parent);
+        const nugget = await Page.addComponent('components/nuggets/entity_nugget.html', parent);
         if (!nugget) return;
 
         const icons = Configuration.ICONS_CATEGORIES;

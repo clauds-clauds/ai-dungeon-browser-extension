@@ -33,7 +33,6 @@
                 "scripts/helpers/utilities.js",
                 "scripts/helpers/page.js",
                 "scripts/helpers/construct.js",
-                "scripts/helpers/inject.js",
                 "scripts/controls/menu.js",
                 "scripts/controls/text_effects.js",
                 "scripts/controls/tooltip.js",
@@ -45,6 +44,7 @@
             "css": [
                 "styles/legacy/entity_editor.css",
                 "styles/legacy/refactor.css",
+                "styles/new/chunks.css",
                 "styles/new/nuggets.css",
                 "styles/random.css",
                 "styles/custom.css",

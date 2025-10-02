@@ -27,12 +27,12 @@ class Renderer {
         if (this.#nuggetContainer) {
             this.#nuggetContainer.innerHTML = '';
         }
-        const selectedCategory = document.querySelector('.de-pill-tab[data-entity-category].selected')?.dataset.entityCategory || 'all';
+        const selectedCategory = document.querySelector('.de-pill[data-entity-category].selected')?.dataset.entityCategory || 'all';
         await this.ping(selectedCategory);
     }
 
     static async #initialize() {
-        this.#nuggetContainer = document.querySelector('.de-chunk-content .de-snippet-area');
+        this.#nuggetContainer = document.querySelector('.de-chunk-content .de-chunk-selection');
         if (!this.#nuggetContainer) return;
 
         this.#nuggetContainer.innerHTML = '<div class="de-entity-nugget-list"></div>';

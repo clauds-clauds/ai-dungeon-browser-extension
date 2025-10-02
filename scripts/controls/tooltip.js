@@ -13,7 +13,7 @@ class Tooltip {
         CustomDebugger.say("Pinging tooltip.", true);
         if (Discover.tooltip()) return;
 
-        this.#tooltipElement = await Inject.component('components/nuggets/tooltip_nugget.html', document.body);
+        this.#tooltipElement = await Page.addComponent('components/nuggets/tooltip_nugget.html', document.body);
         this.#imageElement = document.getElementById('de-tooltip-image');
         this.#counterElement = document.getElementById('de-tooltip-counter');
 

@@ -18,10 +18,10 @@ class Menu {
         }
 
         // Otherwise that means the backdrop was not injected yet, so do it now.
-        const backdrop = await Inject.component('components/backdrop.html', document.body);
+        const backdrop = await Page.addComponent('components/backdrop.html', document.body);
 
         // Afterwards inject the actual menu.
-        await Inject.component('components/menu.html', backdrop);
+        await Page.addComponent('components/menu.html', backdrop);
 
         // Create the sidebar functionality.
         const selectionArea = document.getElementById('de-selection');

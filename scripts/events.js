@@ -38,7 +38,7 @@ class Events {
     static onPersistentStorageModified() {
         CustomDebugger.say("Persistent storage modified.", true);
         Renderer.refresh();
-        Page.injectCustomSettings();
+        Page.addCustomSettings();
 
         setTimeout(() => {
             TextEffects.ping(true);
@@ -55,7 +55,7 @@ class Events {
         CustomDebugger.sayStorageQuota();
 
         // Inject some stuff.
-        Inject.materialSymbols();
+        Page.addMaterialSymbols();
 
         // Ping some other stuff.
         TextEffects.ping(true);
@@ -82,7 +82,7 @@ class Events {
             const adventureId = Utilities.getAdventureId();
 
             // If loaded into an adventure, then try to inject the custom button.
-            if(adventureId) Inject.customMenuButton();
+            if(adventureId) Page.addCustomMenuButton();
 
             // Check if the adventure ID has changed.
             if(adventureId && adventureId !== this.#previousAdventureId) {
