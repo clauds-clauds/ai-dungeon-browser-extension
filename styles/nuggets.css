@@ -103,3 +103,65 @@
 .de-entity-nugget-action .material-symbols-rounded {
     font-size: 18px;
 }
+
+/* Tooltip */
+
+.de-tooltip-area {
+    position: fixed;
+    z-index: 10002;
+    background-color: var(--c-core1);
+    border: 1px solid var(--c-core4);
+    border-radius: var(--r-md);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    padding: var(--s-padding-sm);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--animation-duration-normal) var(--animation-ease);
+    transform-origin: top center;
+}
+
+.de-tooltip-area.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.de-tooltip-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--s-gap-sm);
+}
+
+#de-tooltip-image {
+    max-width: 256px;
+    max-height: 256px;
+    object-fit: contain;
+    border-radius: var(--r-sm);
+    display: block;
+}
+
+.de-tooltip-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s-gap-sm);
+}
+
+/* Text Effect */
+
+.entity-highlight {
+    display: inline-flex;
+    align-items: baseline;
+    white-space: nowrap;
+    gap: var(--s-gap-xs);
+}
+
+.entity-text-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 5px;
+    object-fit: cover;
+    border: 1px solid var(--c-whiteA3);
+    align-self: center;
+    border-radius: 0;
+}

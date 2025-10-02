@@ -39,4 +39,8 @@ class Discover {
     static extensionMenu() {
         return document.getElementById(Configuration.ID_EXTENSION_MENU);
     }
+
+    static tooltip() {
+        return document.getElementById(Configuration.ID_TOOLTIP);
+    }
 }

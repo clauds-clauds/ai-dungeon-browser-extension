@@ -57,6 +57,7 @@
     "web_accessible_resources": [
         {
             "resources": [
+                "components/nuggets/tooltip_nugget.html",
                 "components/nuggets/entity_nugget.html",
                 "components/snippets/hidden/raven_snippet.html",
                 "components/snippets/database/import_snippet.html",

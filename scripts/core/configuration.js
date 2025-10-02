@@ -36,6 +36,13 @@ class Configuration {
      */
     static ID_EXTENSION_MENU_BUTTON = 'de-menu-button';
 
+    static ID_ADVENTURE_TEXT = '#transition-opacity';
+
+    /**
+     * Element ID for the custom tooltip.
+     */
+    static ID_TOOLTIP = 'de-tooltip';
+
     /**
      * Element ID for the custom backdrop.
      */

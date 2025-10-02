@@ -48,7 +48,7 @@ class Renderer {
         if (entities.length === 0) return;
         for (const entity of entities) await Construct.entityNugget(entity, list);
 
-        Menu.rebindActions(list);
+        Page.rebindActions(list);
         this.#isInitialized = true;
     }
 }

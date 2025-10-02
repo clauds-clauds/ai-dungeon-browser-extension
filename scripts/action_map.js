@@ -4,5 +4,6 @@ const ActionMap = {
     Menu,
     PersistentStorage,
     Renderer,
-    Editor
+    Editor,
+    Tooltip
 }
