@@ -3,7 +3,10 @@
 class TextEffects {
     static ping(hardRefresh = false) {
         CustomDebugger.say("Pinging text effects" + (hardRefresh ? " with hard refresh." : "."), true);
-        this.applyToAdventure(hardRefresh);
+
+        if(hardRefresh) {
+            this.reloadAndApplyToAdventure();
+        }
     }
 
     /**
