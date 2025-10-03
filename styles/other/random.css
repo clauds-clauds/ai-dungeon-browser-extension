@@ -15,18 +15,49 @@
 }
 
 .scaled-down {
-    transform: scale(0.70);
+    transform: scale(0.7);
 }
 
 .jump {
-    padding-bottom: 20%;
+    padding-bottom: 15%;
 }
 
 .material-symbols-rounded.no-fill {
-    font-variation-settings: 'FILL' 0;
+    font-variation-settings: 'FILL' 0, 'wght' 350;
     transition: all .1s;
 }
 
 #de-extension-circle:hover .material-symbols-rounded.no-fill {
-    font-variation-settings: 'FILL' 1;
+    font-variation-settings: 'FILL' 1, 'wght' 350;
+}
+
+#de-extension-circle {
+    transform: scale(0);
+    animation: scalePuddin 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes scalePuddin {
+    0% {
+        transform: scale(0);
+    }
+
+    60% {
+        transform: scale(1.08);
+    }
+
+    75% {
+        transform: scale(0.96);
+    }
+
+    85% {
+        transform: scale(1.03);
+    }
+
+    92% {
+        transform: scale(0.99);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
