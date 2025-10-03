@@ -31,7 +31,7 @@ class Menu {
         await Construct.customMenuContent(selectionArea, buttons);
 
         // Finally fix the adventure ID.
-        document.getElementById('adventure-id').textContent = Utilities.getAdventureId();
+        document.getElementById('adventure-id').textContent = Utilities.getReadableAdventureId();
 
         this.#setupVariables();
         this.#setupSearch();

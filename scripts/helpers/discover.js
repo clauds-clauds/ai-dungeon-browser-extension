@@ -21,13 +21,33 @@ class Discover {
     }
 
     /**
+     * Gets the settings button element.
+     * @returns {HTMLElement|null} The settings button element, or null if not found.
+     */
+    static settingsButton() {
+        return document.querySelector(Configuration.ID_SETTINGS_BUTTON);
+    }
+
+    /**
      * Gets the extension menu button element.
      * @returns {HTMLElement|null} The extension menu button element, or null if not found.
      */
-    static extensionMenuButton() {
-        return document.getElementById(Configuration.ID_EXTENSION_MENU_BUTTON);
+    static extensionMenuButton(circular = false) {
+        return document.getElementById(circular ? Configuration.ID_EXTENSION_MENU_CIRCLE_BUTTON : Configuration.ID_EXTENSION_MENU_BUTTON);
     }
 
+    /**
+     * Gets the daily rewards button element.
+     * @returns {HTMLElement|null} The daily rewards button element, or null if not found.
+     */
+    static dailyRewardsButton() {
+        return document.querySelector(Configuration.ID_REWARDS_BUTTON);
+    }
+
+    /**
+     * Gets the backdrop element.
+     * @returns {HTMLElement|null} The backdrop element, or null if not found.
+     */
     static backdrop() {
         return document.getElementById(Configuration.ID_BACKDROP);
     }
@@ -40,6 +60,10 @@ class Discover {
         return document.getElementById(Configuration.ID_EXTENSION_MENU);
     }
 
+    /**
+     * Gets the tooltip element.
+     * @returns {HTMLElement|null} The tooltip element, or null if not found.
+     */
     static tooltip() {
         return document.getElementById(Configuration.ID_TOOLTIP);
     }

@@ -84,6 +84,11 @@ class Events {
             // If loaded into an adventure, then try to inject the custom button.
             if(adventureId) Page.addCustomMenuButton();
 
+            if (Discover.dailyRewardsButton()) {
+                CustomDebugger.say("Daily rewards button found.");
+                Page.addCustomCircleMenuButton();
+            }
+
             // Check if the adventure ID has changed.
             if(adventureId && adventureId !== this.#previousAdventureId) {
                 this.onAdventureChange(adventureId);

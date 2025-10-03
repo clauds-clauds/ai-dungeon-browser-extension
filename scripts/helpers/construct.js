@@ -56,6 +56,24 @@ class Construct {
         return button;
     }
 
+    static customMenuButtonCircular(rewardsButton) {
+        const rewardsButtonParent = rewardsButton?.parentElement;
+
+        const parentClone = rewardsButtonParent?.cloneNode(true);
+        const cloneButton = parentClone?.firstElementChild;
+
+        cloneButton.ariaLabel = 'Extension Menu';
+        cloneButton.id = Configuration.ID_EXTENSION_MENU_CIRCLE_BUTTON;
+        cloneButton.accessibilityLabel = 'Open Extension Menu';
+
+        const span = cloneButton.querySelector('p');
+        span.textContent = 'w_sword';
+
+        cloneButton.addEventListener('click', Events.onCustomMenuButtonClick);
+
+        return parentClone;
+    }
+
     static async customMenuContent(selectionArea, sidebarButtons) {
         // Inject all the chunks and their snippets.
         for (const button of sidebarButtons) {

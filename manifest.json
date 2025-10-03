@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Dungeon Extension",
-    "version": "3.2.1",
+    "version": "3.2.2",
     "description": "Customize characters and locations with icons and graphics, plus various other QoL features.",
     "author": "clauds-clauds",
     "permissions": [],

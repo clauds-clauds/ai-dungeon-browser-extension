@@ -8,7 +8,7 @@ class Page {
      * Makes the specified element and its descendants inert.
      * @param {string|null} exclusionId - The ID of the element to exclude from being made inert.
      * @returns {void}
-     */
+    */
     static makeInert(exclusionId = null) {
         const selectors = 'body > div, body > main, body > header, body > footer';
         document.querySelectorAll(selectors).forEach(element => {
@@ -21,7 +21,7 @@ class Page {
     /**
      * Removes the inert attribute from all elements in the body.
      * @returns {void}
-     */
+    */
     static makeInteractive() {
         document.querySelectorAll('[inert]').forEach(element => {
             element.removeAttribute('inert');
@@ -31,7 +31,7 @@ class Page {
     /**
      * Rebinds action buttons within the specified container.
      * @param {HTMLElement} container 
-     */
+    */
     static rebindActions(container) {
         const actionButtons = container.querySelectorAll('[data-action]');
 
@@ -89,9 +89,9 @@ class Page {
     }
 
     /**
- * Injects the Material Symbols font into the page.
- * @returns {void}
- */
+     * Injects the Material Symbols font into the page.
+     * @returns {void}
+    */
     static addMaterialSymbols() {
         if (Discover.materialSymbolsInjection()) return; // If already injected, do nothing.
 
@@ -111,7 +111,7 @@ class Page {
     /**
      * Injects a custom menu button next to the "Exit game" button.
      * @returns {void}
-     */
+    */
     static addCustomMenuButton() {
         if (Discover.extensionMenuButton()) return; // If already injected, do nothing.
 
@@ -121,12 +121,21 @@ class Page {
         exitGameButtonParent?.insertBefore(customMenuButton, exitGameButton);
     }
 
+    static addCustomCircleMenuButton() {
+        if (Discover.extensionMenuButton(true)) return;
+
+        const buttonRoot = Discover.dailyRewardsButton().parentElement.parentElement;
+        const extensionButton = Construct.customMenuButtonCircular(Discover.dailyRewardsButton());
+
+        buttonRoot.insertBefore(extensionButton, buttonRoot.firstChild);
+    }
+
     /**
      * Injects a component into the specified parent element.
      * @param {string} path 
      * @param {HTMLElement} parentElement 
      * @returns {Promise<HTMLElement|null>}
-     */
+    */
     static async addComponent(path, parentElement) {
         const url = chrome.runtime.getURL(path);
         const html = await (await fetch(url)).text();

@@ -10,10 +10,12 @@
             </div>
             <div class="de-action-note">
                 <span class="material-symbols-rounded">info</span>
-                <span>If anything is wrong then feel free to reach out on Discord! I'd be glad to help - <strong class="safe">@Claudia!</strong></span>
+                <span>If anything is wrong then feel free to reach out on Discord! I'd be glad to help - <strong
+                        class="safe">@Claudia!</strong></span>
             </div>
             <div class="de-action-buttons">
-                <button type="button" id="delete-database-button" class="de-action-button safe" data-action="Menu.reportBug">
+                <button type="button" id="delete-database-button" class="de-action-button safe"
+                    data-action="Menu.reportBug">
                     <span class="material-symbols-rounded">bug_report</span>
                     Report Bug
                 </button>
@@ -22,9 +24,23 @@
     </div>
 
     <div class="de-snippet-card stack">
-    
+
         <!-- Toggles HERE! -->
         <div class="de-section">
+            <div class="de-row">
+                <label for="text-effects-icons">Show Icons</label>
+                <div class="de-switch">
+                    <input type="checkbox" id="text-effects-icons" data-variable="textEffectsIcons">
+                    <label for="text-effects-icons"></label>
+                </div>
+            </div>
+            <div class="de-row">
+                <label for="tooltip-graphics">Show Tooltips</label>
+                <div class="de-switch">
+                    <input type="checkbox" id="tooltip-graphics" data-variable="tooltipGraphics">
+                    <label for="tooltip-graphics"></label>
+                </div>
+            </div>
             <div class="de-row">
                 <label for="debug-verbose">Verbose Logging</label>
                 <div class="de-switch">
@@ -33,6 +49,6 @@
                 </div>
             </div>
         </div>
-    
+
     </div>
 </div>

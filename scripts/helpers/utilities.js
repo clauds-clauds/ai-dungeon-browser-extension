@@ -21,6 +21,10 @@ class Utilities {
         return match ? match[1] : null;
     }
 
+    static getReadableAdventureId() {
+        return this.getAdventureId() || 'N/A';
+    }
+
     /**
      * Capitalizes the first letter of a string.
      * @param {string} string - The string to capitalize.
