@@ -1,4 +1,16 @@
-@media (max-width: 640px) {
+@media (max-width: 800px) {
+
+    .de-menu-outer {
+        grid-template-columns: 1fr !important;
+    }
+
+    .de-sidebar {
+        display: none !important;
+    }
+
+    .de-chunk-header div {
+        display: none !important;
+    }
 
     .entity-form-grid,
     .entity-media-row {

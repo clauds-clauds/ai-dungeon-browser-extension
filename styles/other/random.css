@@ -13,3 +13,20 @@
 .safer {
     color: var(--c-healer);
 }
+
+.scaled-down {
+    transform: scale(0.70);
+}
+
+.jump {
+    padding-bottom: 20%;
+}
+
+.material-symbols-rounded.no-fill {
+    font-variation-settings: 'FILL' 0;
+    transition: all .1s;
+}
+
+#de-extension-circle:hover .material-symbols-rounded.no-fill {
+    font-variation-settings: 'FILL' 1;
+}
