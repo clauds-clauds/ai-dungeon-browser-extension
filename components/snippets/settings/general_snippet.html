@@ -1,6 +1,6 @@
 <div id="general-settings-snippet" class="de-snippet selected">
     <div class="de-action-grid">
-        <div class="de-action-card">
+        <div class="de-action-card de-linear-gradient">
             <div class="de-action-header">
                 <span class="material-symbols-rounded de-action-icon">celebration</span>
                 <div class="de-action-text">
@@ -14,8 +14,7 @@
                         class="safe">@Claudia!</strong></span>
             </div>
             <div class="de-action-buttons">
-                <button type="button" id="delete-database-button" class="de-action-button safe"
-                    data-action="Menu.reportBug">
+                <button type="button" id="report-bug-button" class="de-action-button safe" data-action="Menu.reportBug">
                     <span class="material-symbols-rounded">bug_report</span>
                     Report Bug
                 </button>
@@ -41,12 +40,29 @@
                     <label for="tooltip-graphics"></label>
                 </div>
             </div>
+        </div>
+
+        <div class="de-section">
             <div class="de-row">
                 <label for="debug-verbose">Verbose Logging</label>
                 <div class="de-switch">
                     <input type="checkbox" id="debug-verbose" data-variable="debugVerbose">
                     <label for="debug-verbose"></label>
                 </div>
+            </div>
+        </div>
+
+        <!-- Color Picker HERE! -->
+        <div class="de-section">
+            <div class="de-row">
+                <label for="theme-color" class="grey">Theme Color</label>
+                <input type="color" id="theme-color" class="de-color-picker editable" value="#f8ad2a"
+                    data-variable="themeColor">
+            </div>
+            <div class="de-row">
+                <label for="theme-color-danger" class="grey">Danger Color</label>
+                <input type="color" id="theme-color-danger" class="de-color-picker editable" value="#F82A2A"
+                    data-variable="themeColorDanger">
             </div>
         </div>
 

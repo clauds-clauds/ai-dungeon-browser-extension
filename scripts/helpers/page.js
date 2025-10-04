@@ -73,7 +73,15 @@ class Page {
         const tooltipGraphicSize = parseInt(PersistentStorage.getSetting('tooltipGraphicSize', 25));
         const tooltipSize = 1024 * (tooltipGraphicSize / 100);
 
+        const themeHSL = Utilities.hexToHSL(PersistentStorage.getSetting('themeColor', '#f8ad2a'));
+
         styleElement.textContent = `
+            :root {
+                --hue: ${themeHSL.h} !important;
+                --saturation: ${themeHSL.s}% !important;
+                --lightness: ${themeHSL.l}% !important;
+            }
+
             .entity-text-icon {
                 width: ${iconSize}px !important;
                 height: ${iconSize}px !important;

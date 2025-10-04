@@ -47,7 +47,7 @@
                 "styles/core/snippets.css",
                 "styles/core/chunks.css",
                 "styles/mobile.css",
-                "styles/mutators.css",
+                "styles/tags.css",
                 "styles/root.css",
                 "styles/vanilla.css"
             ]

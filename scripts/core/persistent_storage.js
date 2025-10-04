@@ -31,6 +31,9 @@ class PersistentStorage {
         /* General Defaults HERE! */
         debugVerbose: false,
 
+        /* Theme Defaults HERE! */
+        themeColor: "#f8ad2a",
+
         /* Text Effects Defaults HERE! */
         textEffectsIcons: true,
         textEffectsColor: true,
@@ -40,7 +43,7 @@ class PersistentStorage {
         textEffectsIconSize: 28,
         textEffectsIconBorderWidth: 1,
         textEffectsIconBorderRadius: 0,
-        textEffectsGlobalColor: "#f8ae2c",
+        textEffectsGlobalColor: "#f8ad2a",
 
         /* Tooltip Defaults HERE! */
         tooltipGraphics: true,
