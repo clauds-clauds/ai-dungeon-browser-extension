@@ -185,16 +185,18 @@
     color: var(--color-elusive);
 }
 
-.de-pill.danger {
-    --hue: 0;
+.de-pill.de-danger {
+    --hue: var(--hue-danger);
+    --saturation: var(--saturation-danger);
+    --lightness: var(--lightness-danger);
 }
 
-.de-pill.danger.selected {
-    color: var(--color-danger);
+.de-pill.de-danger.selected {
+    color: hsl(var(--hue-danger), var(--saturation-danger), var(--lightness-danger));
 }
 
 .de-pill.safe {
-    --hue: 143;
+    --hue: var(--hue-safe);
 }
 
 .de-pill.safe.selected {

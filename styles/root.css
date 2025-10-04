@@ -59,11 +59,18 @@
     --e-scale-menu: 1;
 
     /* Redone CSS Variables HERE! */
-    /* Testing HERE! */
+    /* Hue HERE! */
     --hue: 38;
     --hue-danger: 0;
+    --hue-safe: 143;
+
+    /* Saturation HERE! */
     --saturation: 94%;
+    --saturation-danger: 94%;
+
+    /* Lightness HERE! */
     --lightness: 57%;
+    --lightness-danger: 57%;
 
     /* Colors Here! */
     --color-primary: hsl(var(--hue), var(--saturation), var(--lightness));

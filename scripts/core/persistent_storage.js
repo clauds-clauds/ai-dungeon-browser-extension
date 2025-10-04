@@ -33,6 +33,7 @@ class PersistentStorage {
 
         /* Theme Defaults HERE! */
         themeColor: "#f8ad2a",
+        themeColorDanger: "#dd3647",
 
         /* Text Effects Defaults HERE! */
         textEffectsIcons: true,

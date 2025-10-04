@@ -131,7 +131,7 @@ class TextEffects {
         if (PersistentStorage.getSetting('textEffectsColor', true)) {
             const color = entity.colorMode === 'special' && entity.color
                 ? entity.color
-                : PersistentStorage.getSetting('textEffectsGlobalColor', '#f8ae2c');
+                : PersistentStorage.getSetting('themeColor', '#f8ad2a');
             span.style.color = color;
         }
 

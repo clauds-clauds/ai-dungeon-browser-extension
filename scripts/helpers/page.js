@@ -74,12 +74,17 @@ class Page {
         const tooltipSize = 1024 * (tooltipGraphicSize / 100);
 
         const themeHSL = Utilities.hexToHSL(PersistentStorage.getSetting('themeColor', '#f8ad2a'));
+        const dangerHSL = Utilities.hexToHSL(PersistentStorage.getSetting('themeColorDanger', '#f82a2a'));
 
         styleElement.textContent = `
             :root {
                 --hue: ${themeHSL.h} !important;
                 --saturation: ${themeHSL.s}% !important;
                 --lightness: ${themeHSL.l}% !important;
+
+                --hue-danger: ${dangerHSL.h} !important;
+                --saturation-danger: ${dangerHSL.s}% !important;
+                --lightness-danger: ${dangerHSL.l}% !important;
             }
 
             .entity-text-icon {

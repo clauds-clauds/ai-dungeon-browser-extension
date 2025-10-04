@@ -13,3 +13,7 @@
 .de-danger {
     --hue: var(--hue-danger);
 }
+
+strong.de-danger {
+    color: hsl(var(--hue-danger), var(--saturation-danger), var(--lightness-danger));
+}
