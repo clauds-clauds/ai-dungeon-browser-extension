@@ -83,7 +83,7 @@
     background: rgba(248, 174, 44, 0.12);
     display: grid;
     place-items: center;
-    color: var(--c-primary);
+    color: var(--color-primary);
     font-size: var(--f-size-icon-lg);
     flex-shrink: 0;
 }
@@ -138,7 +138,7 @@
 
 .entity-media-action:hover {
     background: rgba(248, 174, 44, 0.22);
-    color: var(--c-primary);
+    color: var(--color-primary);
 }
 
 .entity-media-action .material-symbols-rounded {
@@ -172,6 +172,6 @@
 .entity-input:focus,
 .entity-select:focus {
     outline: none;
-    border-color: var(--c-primary);
+    border-color: var(--color-primary);
     box-shadow: 0 0 0 1px rgba(248, 174, 44, 0.35);
 }

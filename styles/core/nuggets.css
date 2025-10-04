@@ -53,7 +53,7 @@
     background: rgba(248, 174, 44, 0.1);
     display: grid;
     place-items: center;
-    color: var(--c-primary);
+    color: var(--color-primary);
     font-size: var(--f-size-icon-lg);
     overflow: hidden;
 }
@@ -84,7 +84,7 @@
     display: flex;
     align-items: center;
     gap: var(--s-gap-sm);
-    color: var(--c-primary);
+    color: var(--color-primary);
 }
 
 .material-symbols-rounded.de-entity-nugget-category-icon {
@@ -116,7 +116,7 @@
 
 .de-entity-nugget-action:hover {
     background: rgba(248, 174, 44, 0.15);
-    color: var(--c-primary);
+    color: var(--color-primary);
 }
 
 .de-entity-nugget-action .material-symbols-rounded {
@@ -221,7 +221,7 @@
     aspect-ratio: 1 / 1;
     border-radius: var(--r-round);
     background: rgba(248, 174, 44, 0.18);
-    color: var(--c-primary);
+    color: var(--color-primary);
     display: grid !important;
     place-items: center;
     font-size: var(--f-size-icon-xl);
@@ -255,7 +255,7 @@
     border-radius: var(--r-md);
     border: 1px dashed rgba(248, 174, 44, 0.4);
     padding: var(--s-padding-md);
-    color: var(--c-primary);
+    color: var(--color-primary);
     display: flex;
     align-items: center;
     gap: var(--s-gap-sm);
@@ -297,7 +297,7 @@
 
 .de-action-button.outline {
     border-color: rgba(248, 174, 44, 0.32);
-    color: var(--c-primary);
+    color: var(--color-primary);
     background: rgba(248, 174, 44, 0.08);
 }
 
@@ -371,7 +371,7 @@
 
 .clear-search-button:hover {
     background: rgba(248, 174, 44, 0.12);
-    color: var(--c-primary);
+    color: var(--color-primary);
 }
 
 /* Sections HERE! */
@@ -441,7 +441,7 @@
 }
 
 .de-switch input:checked+label {
-    background-color: var(--c-primary);
+    background-color: var(--color-primary);
 }
 
 .de-switch input:checked+label::before {
@@ -520,6 +520,6 @@
 }
 
 .de-slider-input input[type="number"]:focus {
-    border-color: var(--c-primary);
+    border-color: var(--color-primary);
     outline: none;
 }

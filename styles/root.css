@@ -16,8 +16,6 @@
     --c-coreA85: #eeeeee;
     --c-coreA9: #ffffff;
     --c-coreA95: rgba(255, 255, 255, 0.95);
-    --c-primary: #f8ae2c;
-    --c-primary-soft: rgba(248, 174, 44, 0.35);
     --c-healthBarRed: #ef4444;
     --c-healer: #23c361;
     --c-blue: #0bb0ff;
@@ -59,6 +57,19 @@
     --r-round: 50%;
 
     --e-scale-menu: 1;
+
+    /* Redone CSS Variables HERE! */
+    /* Colors Here! */
+
+    --color-primary: #f7ad2b;
+    --color-elusive: #912bf7;
+    --color-danger: #ef4444;
+    --color-safe: #23c361;
+
+    /* Pill Stuff HERE! */
+    --pill-hue: 38;
+    --pill-saturation: 94%;
+    --pill-lightness: 57%;
 }
 
 /* Material Symbols HERE! */
@@ -196,7 +207,7 @@
 }
 
 .de-sidebar-button.selected {
-    color: var(--c-primary);
+    color: var(--color-primary);
     border-color: rgba(248, 174, 44, 0.65);
     background: rgba(248, 174, 44, 0.12);
     box-shadow: inset 0 0 0 1px rgba(248, 174, 44, 0.35);

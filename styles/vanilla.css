@@ -79,11 +79,11 @@ input[type="range"]::-moz-range-thumb {
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
-    border-color: var(--c-primary);
+    border-color: var(--color-primary);
     transform: scale(1.1);
 }
 
 input[type="range"]::-moz-range-thumb:hover {
-    border-color: var(--c-primary);
+    border-color: var(--color-primary);
     transform: scale(1.1);
 }

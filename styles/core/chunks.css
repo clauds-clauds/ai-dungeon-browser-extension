@@ -153,6 +153,10 @@
     justify-content: center;
 }
 
+.de-pill .material-symbols-rounded {
+    font-size: 18px;
+}
+
 .de-pill {
     border: none;
     background: transparent;
@@ -167,32 +171,38 @@
     cursor: pointer;
 }
 
-.de-pill .material-symbols-rounded {
-    font-size: 18px;
-}
-
 .de-pill:hover {
     color: var(--c-coreA9);
-    background: rgba(248, 174, 44, 0.12);
+    background: var(--color-primary-soft);
+    background: hsla(var(--pill-hue), var(--pill-saturation), var(--pill-lightness), 0.12);
 }
 
 .de-pill.selected {
-    color: var(--c-primary);
-    background: rgba(248, 174, 44, 0.18);
-    box-shadow: inset 0 0 0 1px rgba(248, 174, 44, 0.22);
+    color: var(--color-primary);
+    background: hsla(var(--pill-hue), var(--pill-saturation), var(--pill-lightness), 0.18);
+    box-shadow: inset 0 0 0 1px hsla(var(--pill-hue), var(--pill-saturation), var(--pill-lightness), 0.22);
 }
 
-.de-pill.elusive:hover {
-    color: var(--c-coreA9);
-    background: rgba(132, 44, 248, 0.12);
+.de-pill.elusive {
+    --pill-hue: 270;
 }
 
-.de-pill.safe:hover {
-    color: var(--c-coreA9);
-    background: var(--c-healer);
+.de-pill.elusive.selected {
+    color: var(--color-elusive);
 }
 
-.de-pill.danger:hover {
-    color: var(--c-coreA9);
-    background: var(--c-healthBarRed);
+.de-pill.danger {
+    --pill-hue: 0;
+}
+
+.de-pill.danger.selected {
+    color: var(--color-danger);
+}
+
+.de-pill.safe {
+    --pill-hue: 143;
+}
+
+.de-pill.safe.selected {
+    color: var(--color-safe);
 }

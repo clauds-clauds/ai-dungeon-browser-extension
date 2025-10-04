@@ -125,7 +125,7 @@ class Page {
         if (Discover.extensionMenuButton(true)) return;
 
         const buttonRoot = Discover.dailyRewardsButton().parentElement.parentElement;
-        const extensionButton = Create.customMenuButtonCircular(Discover.dailyRewardsButton());
+        const extensionButton = Create.customHomeMenuButton(Discover.dailyRewardsButton());
 
         buttonRoot.insertBefore(extensionButton, buttonRoot.firstChild);
     }
