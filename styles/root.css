@@ -59,12 +59,20 @@
     --e-scale-menu: 1;
 
     /* Redone CSS Variables HERE! */
-    /* Colors Here! */
+    /* Testing HERE! */
+    --hue: 38;
+    --saturation: 94%;
+    --lightness: 57%;
 
-    --color-primary: #f7ad2b;
+    /* Colors Here! */
+    --color-primary: hsl(var(--hue), var(--saturation), var(--lightness));
     --color-elusive: #912bf7;
     --color-danger: #ef4444;
     --color-safe: #23c361;
+
+    /* Gradients HERE! */
+    --gradient-alpha: 0.16;
+    --gradient-fade: rgba(18, 22, 26, 0.92);
 
     /* Pill Stuff HERE! */
     --pill-hue: 38;
@@ -98,7 +106,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(var(--e-scale-menu));
-    background: radial-gradient(circle at top left, rgba(248, 174, 44, 0.12), rgba(18, 22, 26, 0.92) 46%) no-repeat, rgba(15, 18, 22, 0.92);
     border: 1px solid var(--c-core4);
     border-radius: var(--r-lg);
     width: 90%;

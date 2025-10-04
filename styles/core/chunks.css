@@ -57,7 +57,6 @@
     padding: var(--s-padding-lg);
     border-radius: var(--r-lg);
     border: 1px solid rgba(54, 62, 68, 0.7);
-    background: linear-gradient(135deg, rgba(248, 174, 44, 0.16) 0%, rgba(27, 31, 34, 0.65) 85%);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
@@ -74,11 +73,6 @@
     font-size: 0.95rem;
     line-height: 1.5;
     max-width: 520px;
-}
-
-.de-chunk-header.secret {
-    border: 1px solid rgba(68, 54, 54, 0.7);
-    background: linear-gradient(135deg, rgba(248, 44, 44, 0.16) 0%, rgba(34, 27, 27, 0.65) 85%);
 }
 
 /* Exit Button HERE! */
@@ -174,17 +168,17 @@
 .de-pill:hover {
     color: var(--c-coreA9);
     background: var(--color-primary-soft);
-    background: hsla(var(--pill-hue), var(--pill-saturation), var(--pill-lightness), 0.12);
+    background: hsla(var(--hue), var(--saturation), var(--lightness), 0.12);
 }
 
 .de-pill.selected {
-    color: var(--color-primary);
-    background: hsla(var(--pill-hue), var(--pill-saturation), var(--pill-lightness), 0.18);
-    box-shadow: inset 0 0 0 1px hsla(var(--pill-hue), var(--pill-saturation), var(--pill-lightness), 0.22);
+    color: hsl(var(--hue), var(--saturation), var(--lightness));
+    background: hsla(var(--hue), var(--saturation), var(--lightness), 0.18);
+    box-shadow: inset 0 0 0 1px hsla(var(--hue), var(--saturation), var(--lightness), 0.22);
 }
 
 .de-pill.elusive {
-    --pill-hue: 270;
+    --hue: 270;
 }
 
 .de-pill.elusive.selected {
@@ -192,7 +186,7 @@
 }
 
 .de-pill.danger {
-    --pill-hue: 0;
+    --hue: 0;
 }
 
 .de-pill.danger.selected {
@@ -200,7 +194,7 @@
 }
 
 .de-pill.safe {
-    --pill-hue: 143;
+    --hue: 143;
 }
 
 .de-pill.safe.selected {
