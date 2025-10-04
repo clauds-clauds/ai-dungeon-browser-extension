@@ -218,6 +218,7 @@
 .de-action-icon {
     width: 52px;
     height: 52px;
+    aspect-ratio: 1 / 1;
     border-radius: var(--r-round);
     background: rgba(248, 174, 44, 0.18);
     color: var(--c-primary);
