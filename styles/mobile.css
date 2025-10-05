@@ -32,7 +32,16 @@
         width: 100%;
     }
 
+    #de-foldout-button {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
     .entity-actions {
         justify-content: stretch;
+    }
+
+    .search-container {
+        display: none;
     }
 }
