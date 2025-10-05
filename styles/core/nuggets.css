@@ -50,7 +50,7 @@
     height: 48px;
     flex-shrink: 0;
     border-radius: var(--r-sm);
-    background: rgba(248, 174, 44, 0.1);
+    background: hsla(var(--hue), var(--saturation), var(--lightness), 0.1);
     display: grid;
     place-items: center;
     color: var(--color-primary);
