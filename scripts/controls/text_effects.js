@@ -1,6 +1,37 @@
 "use strict";
 
 class TextEffects {
+    static #cachedRegex = null;
+    static #cachedTriggers = null;
+
+    static invalidateCache() {
+        this.#cachedRegex = null;
+        this.#cachedTriggers = null;
+        CustomDebugger.say("Invalidated text effects cache.", true);
+    }
+
+    static #getRegex() {
+        if (this.#cachedRegex) return this.#cachedRegex;
+
+        const entities = PersistentStorage.cache.entities;
+
+        if (!entities || entities.length === 0) return null;
+
+        this.#cachedTriggers = [...new Set(entities.flatMap(entity => [entity.name, ...(entity.triggers || [])]).filter(Boolean))];
+        if (this.#cachedTriggers.length === 0) return null;
+
+        const pattern = this.#cachedTriggers.map(Utilities.escapeRegExp).join('|');
+        const includeColon = PersistentStorage.getSetting('textEffectsColon', false);
+        let finalPattern = `(${pattern})('s)?`;
+
+        this.#cachedRegex = includeColon
+            ? new RegExp(`\\b${finalPattern}(:)?(?![\\w'])`, 'gi')
+            : new RegExp(`\\b${finalPattern}\\b`, 'gi');
+
+        CustomDebugger.say("Text Effects regex rebuilt and cached.", true);
+        return this.#cachedRegex;
+    }
+
     static ping(hardRefresh = false) {
         CustomDebugger.say("Pinging text effects" + (hardRefresh ? " with hard refresh." : "."), true);
 
@@ -29,24 +60,11 @@ class TextEffects {
         if (!node || !(node instanceof Node)) return;
         if (!PersistentStorage.getSetting('textEffectsEnabled', true)) return;
 
+        const regex = this.#getRegex();
+        if (!regex) return;
+
         const entities = PersistentStorage.cache.entities;
         if (!entities || entities.length === 0) return;
-
-        const allTriggers = [...new Set(entities.flatMap(entity => [entity.name, ...(entity.triggers || [])]).filter(Boolean))];
-        if (allTriggers.length === 0) return;
-
-        const pattern = allTriggers.map(Utilities.escapeRegExp).join('|');
-        
-        const includeColon = PersistentStorage.getSetting('textEffectsColon', false);
-
-        let finalPattern = `(${pattern})('s)?`;
-        let regex;
-
-        if (includeColon) {
-            regex = new RegExp(`\\b${finalPattern}(:)?(?![\\w'])`, 'gi');
-        } else {
-            regex = new RegExp(`\\b${finalPattern}\\b`, 'gi');
-        }
 
         const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
         const textNodes = [];
