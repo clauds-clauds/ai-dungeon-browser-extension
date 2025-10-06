@@ -7,7 +7,7 @@ class Utilities {
     /**
      * Gets the current version of the extension.
      * @returns {string} The current version of the extension.
-     */
+    */
     static getVersion() {
         return chrome.runtime.getManifest().version;
     }
@@ -15,12 +15,16 @@ class Utilities {
     /**
      * Gets the adventure ID from the URL.
      * @returns {string|null} The adventure ID from the URL, or null if not found.
-     */
+    */
     static getAdventureId() {
         const match = window.location.pathname.match(/adventure\/([^\/]+)/);
         return match ? match[1] : null;
     }
 
+    /**
+     * Gets the readable adventure ID from the URL.
+     * @returns {string} The adventure ID from the URL, or 'N/A' if not found.
+    */
     static getReadableAdventureId() {
         return this.getAdventureId() || 'N/A';
     }
@@ -29,7 +33,7 @@ class Utilities {
      * Capitalizes the first letter of a string.
      * @param {string} string - The string to capitalize.
      * @returns {string} The capitalized string.
-     */
+    */
     static capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1)
     }
@@ -49,6 +53,10 @@ class Utilities {
         URL.revokeObjectURL(url);
     }
 
+    /**
+     * Prompts the user to select a JSON file and reads its content.
+     * @returns {Promise<string|null>} The content of the selected JSON file, or null if cancelled or error.
+    */
     static async promptForJSON() {
         return new Promise((resolve) => {
             const input = document.createElement('input');
@@ -73,7 +81,7 @@ class Utilities {
      * Converts a hex color string to HSL.
      * @param {string} hex - The hex color string.
      * @returns {Object|null} The HSL representation or null if invalid.
-     */
+    */
     static hexToHSL(hex) {
         let r, g, b;
         if (hex.length === 4) {
