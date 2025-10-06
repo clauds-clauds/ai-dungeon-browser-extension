@@ -60,6 +60,10 @@ class TextEffects {
         if (!node || !(node instanceof Node)) return;
         if (!PersistentStorage.getSetting('textEffectsEnabled', true)) return;
 
+        if (node instanceof Element) {
+            this.#normalizeTokenizedBlocks(node);
+        }
+
         const regex = this.#getRegex();
         if (!regex) return;
 
@@ -167,5 +171,35 @@ class TextEffects {
         }
 
         return span;
+    }
+
+    static #normalizeTokenizedBlocks(root) {
+        const tokenSpans = root.querySelectorAll('span.font_gameplayMono[aria-hidden="true"]');
+        if (tokenSpans.length === 0) return;
+
+        const parents = new Set();
+        tokenSpans.forEach(span => {
+            const parent = span.parentElement;
+            if (!parent || parent.dataset.textEffectsMerged === 'true') return;
+            parents.add(parent);
+        });
+
+        parents.forEach(parent => {
+            const fragments = Array.from(parent.childNodes);
+            const mergeable = fragments.every(node => {
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    return node.matches('span.font_gameplayMono[aria-hidden="true"]');
+                }
+                if (node.nodeType === Node.TEXT_NODE) {
+                    return !node.textContent || node.textContent.trim() === '';
+                }
+                return false;
+            });
+            if (!mergeable) return;
+
+            const combined = fragments.map(node => node.textContent ?? '').join('');
+            parent.textContent = combined;
+            parent.dataset.textEffectsMerged = 'true';
+        });
     }
 }
