@@ -74,7 +74,7 @@
 
     /* Colors Here! */
     --color-primary: hsl(var(--hue), var(--saturation), var(--lightness));
-    --color-elusive: #912bf7;
+    --color-elusive: hsl(270, 93%, 57%);
     --color-danger: #ef4444;
     --color-safe: #23c361;
 
@@ -191,7 +191,7 @@
     border: 1px solid var(--c-core4);
     padding: var(--s-padding-sm) var(--s-padding-md);
     border-radius: var(--r-md);
-    box-shadow: inset 0 1px 0 rgba(248, 174, 44, 0.12);
+    box-shadow: inset 0 1px 0 hsla(var(--hue), var(--saturation), var(--lightness), 0.12);
 }
 
 .de-sidebar-chip-label {

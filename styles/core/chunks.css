@@ -186,6 +186,10 @@
     --hue: 270;
 }
 
+.de-pill.experiment {
+    --hue: 220;
+}
+
 .de-pill.elusive.selected {
     color: var(--color-elusive);
 }

@@ -84,9 +84,16 @@ class Page {
                 animation-duration: 0ms !important;
                 animation-delay: 0ms !important;
                 animation-iteration-count: 0 !important;
-                
+
                 transition: none !important;
                 animation: none !important;
+            }
+        `
+
+        const coloredSettings = PersistentStorage.getSetting('experimentalColoredSettings', false);
+        const coloredContent = `
+            strong {
+                color: hsl(var(--hue), var(--saturation), var(--lightness));
             }
         `
 
@@ -121,6 +128,8 @@ class Page {
                 max-width: ${tooltipSize}px !important;
                 max-height: ${tooltipSize}px !important;
             }
+
+            ${coloredSettings ? coloredContent : ''}
             
             ${performanceMode ? performanceContent : ''}
         `;
