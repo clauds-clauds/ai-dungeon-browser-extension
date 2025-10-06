@@ -60,78 +60,130 @@ class TextEffects {
         if (!node || !(node instanceof Node)) return;
         if (!PersistentStorage.getSetting('textEffectsEnabled', true)) return;
 
-        const regex = this.#getRegex();
-        if (!regex) return;
+        const baseRegex = this.#getRegex();
+        if (!baseRegex) return;
 
         const entities = PersistentStorage.cache.entities;
         if (!entities || entities.length === 0) return;
 
-        const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
-        const textNodes = [];
-        let currentNode;
-        while (currentNode = walker.nextNode()) {
-            if (currentNode.parentElement && !currentNode.parentElement.closest('.entity-highlight')) {
-                textNodes.push(currentNode);
+        const walker = document.createTreeWalker(
+            node,
+            NodeFilter.SHOW_TEXT,
+            {
+                acceptNode(textNode) {
+                    const parent = textNode.parentElement;
+                    if (!parent) return NodeFilter.FILTER_REJECT;
+                    if (parent.closest('.entity-highlight')) return NodeFilter.FILTER_REJECT;
+                    return textNode.textContent ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+                }
             }
+        );
+
+        const segments = [];
+        let aggregatedText = '';
+        let currentNode;
+
+        while ((currentNode = walker.nextNode())) {
+            const value = currentNode.textContent;
+            if (!value) continue;
+
+            segments.push({
+                node: currentNode,
+                start: aggregatedText.length,
+                end: aggregatedText.length + value.length,
+                length: value.length
+            });
+
+            aggregatedText += value;
         }
 
-        for (const textNode of textNodes) {
-            const originalText = textNode.textContent;
-            if (!originalText || !regex.test(originalText)) continue;
+        if (!aggregatedText) return;
 
-            const fragment = document.createDocumentFragment();
-            let lastIndex = 0;
-            let match;
-            regex.lastIndex = 0;
+        const regex = new RegExp(baseRegex.source, baseRegex.flags);
+        const matches = [];
+        let match;
 
-            while ((match = regex.exec(originalText)) !== null) {
-                const matchedName = match[1];
-                const fullMatch = match[0];
+        while ((match = regex.exec(aggregatedText)) !== null) {
+            const matchedName = match[1];
 
-                const entity = entities.find(e =>
-                    e.name?.toLowerCase() === matchedName.toLowerCase() ||
-                    e.triggers?.some(k => k.toLowerCase() === matchedName.toLowerCase())
-                );
+            const entity = entities.find(e =>
+                e.name?.toLowerCase() === matchedName.toLowerCase() ||
+                e.triggers?.some(k => k.toLowerCase() === matchedName.toLowerCase())
+            );
 
-                if (!entity) continue;
+            if (!entity) continue;
 
-                const isAction = !!textNode.parentElement.closest('#action-text');
+            const matchStart = match.index;
+            const matchEnd = match.index + match[0].length;
+            const matchSegments = this.#collectMatchSegments(segments, matchStart, matchEnd);
+            if (!matchSegments.length) continue;
 
-                if (isAction) {
-                    if (!PersistentStorage.getSetting('textEffectsAction', true)) continue;
-                    if (entity.restriction === 'story') continue;
-                } else {
-                    if (!PersistentStorage.getSetting('textEffectsStory', true)) continue;
-                    if (entity.restriction === 'action') continue;
-                }
+            const isAction = !!matchSegments[0].node.parentElement?.closest('#action-text');
 
-                if (match.index > lastIndex) {
-                    fragment.appendChild(document.createTextNode(originalText.substring(lastIndex, match.index)));
-                }
-
-                const span = this.#createHighlightSpan(entity, fullMatch);
-                fragment.appendChild(span);
-
-                lastIndex = regex.lastIndex;
+            if (isAction) {
+                if (!PersistentStorage.getSetting('textEffectsAction', true)) continue;
+                if (entity.restriction === 'story') continue;
+            } else {
+                if (!PersistentStorage.getSetting('textEffectsStory', true)) continue;
+                if (entity.restriction === 'action') continue;
             }
 
-            if (lastIndex < originalText.length) {
-                fragment.appendChild(document.createTextNode(originalText.substring(lastIndex)));
-            }
+            matches.push({ segments: matchSegments, entity });
+        }
 
-            if (fragment.childNodes.length > 0) {
-                textNode.parentElement.replaceChild(fragment, textNode);
+        for (let i = matches.length - 1; i >= 0; i--) {
+            const { segments: matchSegments, entity } = matches[i];
+            for (let j = matchSegments.length - 1; j >= 0; j--) {
+                const segment = matchSegments[j];
+                const includeIcon = j === 0;
+                this.#wrapSegment(segment, entity, includeIcon);
             }
         }
     }
 
-    static #createHighlightSpan(entity, text) {
+    static #collectMatchSegments(segments, matchStart, matchEnd) {
+        const pieces = [];
+        for (const segment of segments) {
+            if (segment.end <= matchStart) continue;
+            if (segment.start >= matchEnd) break;
+
+            const startOffset = Math.max(0, matchStart - segment.start);
+            const endOffset = Math.min(segment.length, matchEnd - segment.start);
+            if (endOffset <= startOffset) continue;
+
+            pieces.push({
+                node: segment.node,
+                startOffset,
+                endOffset
+            });
+        }
+        return pieces;
+    }
+
+    static #wrapSegment(segment, entity, includeIcon) {
+        const { node, startOffset, endOffset } = segment;
+        if (!node || startOffset === endOffset) return;
+
+        const range = document.createRange();
+        range.setStart(node, startOffset);
+        range.setEnd(node, endOffset);
+
+        const extracted = range.extractContents();
+        const span = this.#createHighlightSpan(entity, null, includeIcon);
+        span.appendChild(extracted);
+        range.insertNode(span);
+    }
+
+    static #createHighlightSpan(entity, text = null, includeIcon = true) {
         const span = document.createElement('span');
         span.className = 'entity-highlight';
         span.dataset.entityId = entity.id;
-        span.textContent = text;
 
-        if (PersistentStorage.getSetting('textEffectsIcons', true) && entity.icons?.length > 0) {
+        if (text !== null && text !== undefined) {
+            span.textContent = text;
+        }
+
+        if (includeIcon && PersistentStorage.getSetting('textEffectsIcons', true) && entity.icons?.length > 0) {
             const icon = entity.icons.find(i => i.isPinned) || entity.icons[0];
             if (icon?.url) {
                 const img = document.createElement('img');
