@@ -66,61 +66,74 @@ class TextEffects {
         const entities = PersistentStorage.cache.entities;
         if (!entities || entities.length === 0) return;
 
-        const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
-        const textNodes = [];
-        let currentNode;
-        while (currentNode = walker.nextNode()) {
-            if (currentNode.parentElement && !currentNode.parentElement.closest('.entity-highlight')) {
-                textNodes.push(currentNode);
-            }
+        const fullText = node.textContent;
+        if (!fullText) return;
+
+        regex.lastIndex = 0;
+        let match;
+        const matches = [];
+        while ((match = regex.exec(fullText)) !== null) {
+            matches.push(match);
         }
 
-        for (const textNode of textNodes) {
-            const originalText = textNode.textContent;
-            if (!originalText || !regex.test(originalText)) continue;
+        if (matches.length === 0) return;
 
-            const fragment = document.createDocumentFragment();
-            let lastIndex = 0;
-            let match;
-            regex.lastIndex = 0;
+        for (const match of matches.reverse()) {
+            const matchedName = match[1];
+            const fullMatchText = match[0];
+            const startIndex = match.index;
+            const endIndex = startIndex + fullMatchText.length;
 
-            while ((match = regex.exec(originalText)) !== null) {
-                const matchedName = match[1];
-                const fullMatch = match[0];
+            const entity = entities.find(e =>
+                e.name?.toLowerCase() === matchedName.toLowerCase() ||
+                e.triggers?.some(k => k.toLowerCase() === matchedName.toLowerCase())
+            );
 
-                const entity = entities.find(e =>
-                    e.name?.toLowerCase() === matchedName.toLowerCase() ||
-                    e.triggers?.some(k => k.toLowerCase() === matchedName.toLowerCase())
-                );
+            if (!entity) continue;
 
-                if (!entity) continue;
-
-                const isAction = !!textNode.parentElement.closest('#action-text');
-
-                if (isAction) {
-                    if (!PersistentStorage.getSetting('textEffectsAction', true)) continue;
-                    if (entity.restriction === 'story') continue;
-                } else {
-                    if (!PersistentStorage.getSetting('textEffectsStory', true)) continue;
-                    if (entity.restriction === 'action') continue;
-                }
-
-                if (match.index > lastIndex) {
-                    fragment.appendChild(document.createTextNode(originalText.substring(lastIndex, match.index)));
-                }
-
-                const span = this.#createHighlightSpan(entity, fullMatch);
-                fragment.appendChild(span);
-
-                lastIndex = regex.lastIndex;
+            const isAction = !!node.closest('#action-text');
+            if (isAction) {
+                if (!PersistentStorage.getSetting('textEffectsAction', true)) continue;
+                if (entity.restriction === 'story') continue;
+            } else {
+                if (!PersistentStorage.getSetting('textEffectsStory', true)) continue;
+                if (entity.restriction === 'action') continue;
             }
 
-            if (lastIndex < originalText.length) {
-                fragment.appendChild(document.createTextNode(originalText.substring(lastIndex)));
+            const range = document.createRange();
+            let charIndex = 0;
+            let startNode, startOffset, endNode, endOffset;
+
+            const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+            let textNode;
+
+            while (textNode = walker.nextNode()) {
+                if (textNode.parentElement.closest('.entity-highlight')) continue;
+
+                const textLength = textNode.length;
+                const nodeStart = charIndex;
+                const nodeEnd = charIndex + textLength;
+
+                if (!startNode && startIndex >= nodeStart && startIndex < nodeEnd) {
+                    startNode = textNode;
+                    startOffset = startIndex - nodeStart;
+                }
+                if (!endNode && endIndex > nodeStart && endIndex <= nodeEnd) {
+                    endNode = textNode;
+                    endOffset = endIndex - nodeStart;
+                }
+
+                charIndex = nodeEnd;
+                if (startNode && endNode) break;
             }
 
-            if (fragment.childNodes.length > 0) {
-                textNode.parentElement.replaceChild(fragment, textNode);
+            if (startNode && endNode) {
+                range.setStart(startNode, startOffset);
+                range.setEnd(endNode, endOffset);
+
+                const span = this.#createHighlightSpan(entity, range.toString());
+                range.deleteContents();
+                range.insertNode(span);
             }
         }
     }

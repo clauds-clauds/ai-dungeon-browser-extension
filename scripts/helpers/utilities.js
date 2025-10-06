@@ -53,6 +53,10 @@ class Utilities {
         URL.revokeObjectURL(url);
     }
 
+    static escapeRegExp(str) {
+        return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
     /**
      * Prompts the user to select a JSON file and reads its content.
      * @returns {Promise<string|null>} The content of the selected JSON file, or null if cancelled or error.
