@@ -35,14 +35,10 @@ class Utilities {
     }
 
     /**
-     * Strips special characters from a string for use in a regular expression.
-     * @param {String} str 
-     * @returns {String} The escaped string.
-     */
-    static escapeRegExp(str) {
-        return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-
+     * Downloads a file from a URL.
+     * @param {string} fileName - The name of the file to download.
+     * @param {string} url - The URL of the file to download.
+    */
     static download(fileName, url) {
         const a = document.createElement('a');
         a.href = url;
@@ -73,52 +69,31 @@ class Utilities {
         });
     }
 
-    static hexToHSL(H) {
-        let r = 0, g = 0, b = 0;
-        if (H.length == 4) {
-            r = "0x" + H[1] + H[1];
-            g = "0x" + H[2] + H[2];
-            b = "0x" + H[3] + H[3];
-        } else if (H.length == 7) {
-            r = "0x" + H[1] + H[2];
-            g = "0x" + H[3] + H[4];
-            b = "0x" + H[5] + H[6];
+    /**
+     * Converts a hex color string to HSL.
+     * @param {string} hex - The hex color string.
+     * @returns {Object|null} The HSL representation or null if invalid.
+     */
+    static hexToHSL(hex) {
+        let r, g, b;
+        if (hex.length === 4) {
+            r = parseInt(hex[1] + hex[1], 16);
+            g = parseInt(hex[2] + hex[2], 16);
+            b = parseInt(hex[3] + hex[3], 16);
+        } else {
+            r = parseInt(hex.slice(1, 3), 16);
+            g = parseInt(hex.slice(3, 5), 16);
+            b = parseInt(hex.slice(5, 7), 16);
         }
-
-        r /= 255;
-        g /= 255;
-        b /= 255;
-
-        let cmin = Math.min(r, g, b),
-            cmax = Math.max(r, g, b),
-            delta = cmax - cmin,
-            h = 0,
-            s = 0,
-            l = 0;
-
-        if (delta == 0)
-            h = 0;
-        else if (cmax == r)
-            h = ((g - b) / delta) % 6;
-        else if (cmax == g)
-            h = (b - r) / delta + 2;
-        else
-            h = (r - g) / delta + 4;
-
-        h = Math.round(h * 60);
-
-        if (h < 0)
-            h += 360;
-
-        l = (cmax + cmin) / 2;
-        s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
-        s = +(s * 100).toFixed(1);
-        l = +(l * 100).toFixed(1);
-
-        return {
-            h: h,
-            s: s,
-            l: l
-        };
+        r /= 255; g /= 255; b /= 255;
+        const cmin = Math.min(r, g, b), cmax = Math.max(r, g, b), delta = cmax - cmin;
+        let h = delta === 0 ? 0 :
+            cmax === r ? ((g - b) / delta) % 6 :
+                cmax === g ? (b - r) / delta + 2 :
+                    (r - g) / delta + 4;
+        h = Math.round(h * 60); if (h < 0) h += 360;
+        const l = ((cmax + cmin) / 2) * 100;
+        const s = delta === 0 ? 0 : delta / (1 - Math.abs(2 * l / 100 - 1)) * 100;
+        return { h, s: +s.toFixed(1), l: +l.toFixed(1) };
     }
 }
