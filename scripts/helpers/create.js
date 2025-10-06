@@ -30,4 +30,35 @@ class Create {
 
         return homeMenuParent;
     }
+
+    static highlightSpan(entity, text) {
+        const span = document.createElement('span');
+        span.className = 'entity-highlight';
+        span.dataset.entityId = entity.id;
+        span.textContent = text;
+
+        if (PersistentStorage.getSetting('textEffectsIcons', true) && entity.icons?.length > 0) {
+            const icon = entity.icons.find(i => i.isPinned) || entity.icons[0];
+            if (icon?.url) {
+                const img = document.createElement('img');
+                img.src = icon.url;
+                img.className = 'entity-text-icon';
+                img.alt = entity.name;
+                span.insertBefore(img, span.firstChild);
+            }
+        }
+
+        if (PersistentStorage.getSetting('textEffectsBold', true)) {
+            span.style.fontWeight = 'bold';
+        }
+
+        if (PersistentStorage.getSetting('textEffectsColor', true)) {
+            const color = entity.colorMode === 'special' && entity.color
+                ? entity.color
+                : PersistentStorage.getSetting('themeColor', '#f8ad2a');
+            span.style.color = color;
+        }
+
+        return span;
+    }
 }
