@@ -67,6 +67,29 @@ class Page {
             document.head.appendChild(styleElement);
         }
 
+        const performanceMode = PersistentStorage.getSetting('experimentalPerformanceMode', false);
+        const performanceContent = `
+            *,
+            *::before,
+            *::after {
+                filter: none !important;
+                backdrop-filter: none !important;
+                box-shadow: none !important;
+
+                transition-property: none !important;
+                transition-duration: 0ms !important;
+                transition-delay: 0ms !important;
+
+                animation-name: none !important;
+                animation-duration: 0ms !important;
+                animation-delay: 0ms !important;
+                animation-iteration-count: 0 !important;
+                
+                transition: none !important;
+                animation: none !important;
+            }
+        `
+
         const iconSize = parseInt(PersistentStorage.getSetting('textEffectsIconSize', 28));
         const borderRadius = parseInt(PersistentStorage.getSetting('textEffectsIconBorderRadius', 0));
         const borderWidth = parseInt(PersistentStorage.getSetting('textEffectsIconBorderWidth', 1));
@@ -98,6 +121,8 @@ class Page {
                 max-width: ${tooltipSize}px !important;
                 max-height: ${tooltipSize}px !important;
             }
+            
+            ${performanceMode ? performanceContent : ''}
         `;
     }
 
