@@ -106,20 +106,22 @@ class Menu {
         Page.rebindActions(container);
     }
 
-    static test() {
-        CustomDebugger.say("Menu test action triggered.", true);
-    }
-
     static reportBug() {
         CustomDebugger.say("Bug report button clicked.", true);
         window.open('https://github.com/clauds-clauds/ai-dungeon-browser-extension/issues', '_blank');
     }
 
-    static foldout() {
-        if (!Utilities.isMobile()) return;
+    static onSidebarButtonClick() {
         const menu = Discover.extensionMenu();
         Page.decoupleScrollEvents();
-        if (menu && Utilities.isMobile()) {
+        if (menu && Utilities.isMobile() && menu.classList.contains('sidebar-visible')) {
+            menu.classList.remove('sidebar-visible');
+        }
+    }
+
+    static foldout() {
+        const menu = Discover.extensionMenu();
+        if (menu) {
             menu.classList.toggle('sidebar-visible');
         }
     }
