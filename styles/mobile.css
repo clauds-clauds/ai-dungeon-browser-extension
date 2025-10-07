@@ -1,4 +1,4 @@
-@media (max-width: 800px) {
+@media (max-width: 768px) {
 
     .de-menu-outer {
         grid-template-columns: 1fr !important;
@@ -6,6 +6,17 @@
 
     .de-sidebar {
         display: none !important;
+    }
+
+    .de-menu.sidebar-visible .de-sidebar {
+        display: flex !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 260px;
+        z-index: 1;
+        background: var(--c-core1);
     }
 
     .de-chunk-header div {
