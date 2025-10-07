@@ -81,6 +81,10 @@ class Utilities {
         });
     }
 
+    static isMobile() {
+        return window.matchMedia("(max-width: 768px)").matches;
+    }
+
     /**
      * Converts a hex color string to HSL.
      * @param {string} hex - The hex color string.
