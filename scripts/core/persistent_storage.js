@@ -60,7 +60,10 @@ class PersistentStorage {
         importRaces: false,
         importLocations: false,
         importFactions: false,
-        importCustom: false
+        importCustom: false,
+
+        /* Experiments Defaults HERE! */
+        experimentalStoragePerformanceMode: true
     };
 
     /**

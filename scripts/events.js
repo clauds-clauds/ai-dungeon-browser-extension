@@ -68,7 +68,9 @@ class Events {
 
         // Listen for changes in the database.
         Dexie.on('storagemutated', () => {
-            this.onPersistentStorageModified();
+            if (!PersistentStorage.getSetting('experimentalStoragePerformanceMode', true)) {
+                this.onPersistentStorageModified();
+            }
         });
 
         // Listen for changes in in-memory cache.
