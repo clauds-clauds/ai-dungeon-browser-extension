@@ -80,7 +80,7 @@ class Menu {
             nuggets.forEach(nugget => {
                 const name = nugget.querySelector('.de-entity-nugget-name').textContent.toLowerCase();
                 const category = nugget.dataset.category.toLowerCase();
-                
+
                 const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
                 const matchesSearch = name.includes(searchTerm) || category.includes(searchTerm);
 
@@ -95,7 +95,7 @@ class Menu {
         });
     }
 
-    static isOpen () {
+    static isOpen() {
         return this.#visible;
     }
 
@@ -110,6 +110,14 @@ class Menu {
     static reportBug() {
         CustomDebugger.say("Bug report button clicked.", true);
         window.open('https://github.com/clauds-clauds/ai-dungeon-browser-extension/issues', '_blank');
+    }
+
+    static foldout() {
+        if (!Utilities.isMobile()) return;
+        const menu = Discover.extensionMenu();
+        if (menu && Utilities.isMobile()) {
+            menu.classList.toggle('sidebar-visible');
+        }
     }
 
     static toggleVisibility() {
