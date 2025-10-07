@@ -38,6 +38,9 @@ class Menu {
         this.#setupActionButtons(Discover.extensionMenu());
         this.toggleVisibility();
 
+        // This is required, something on the host page is interfering with scroll events and calling this ensures they are properly decoupled.
+        Page.decoupleScrollEvents();
+
         document.dispatchEvent(new CustomEvent(Configuration.EXTENSION_MENU_CREATED));
     }
 
@@ -115,6 +118,7 @@ class Menu {
     static foldout() {
         if (!Utilities.isMobile()) return;
         const menu = Discover.extensionMenu();
+        Page.decoupleScrollEvents();
         if (menu && Utilities.isMobile()) {
             menu.classList.toggle('sidebar-visible');
         }

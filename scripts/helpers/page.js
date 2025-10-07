@@ -197,4 +197,26 @@ class Page {
     static reload() {
         window.location.reload();
     }
+
+    /**
+     * This is required, something on the host page is interfering with scroll events.
+     * @returns {void}
+    */
+    static decoupleScrollEvents() {
+        if (!Utilities.isMobile()) return; // Only do this on mobile.
+
+        const scrollableContainers = document.querySelectorAll('.de-chunk-selection, .de-sidebar-content');
+        if (!scrollableContainers.length) return;
+
+        const stopPropagation = (e) => {
+            e.stopPropagation();
+        };
+
+        scrollableContainers.forEach(container => {
+            container.addEventListener('wheel', stopPropagation, { passive: true });
+            container.addEventListener('touchmove', stopPropagation, { passive: true });
+        });
+
+        CustomDebugger.say("Decoupled scroll events from host page.", true);
+    }
 }
