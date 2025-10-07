@@ -115,7 +115,7 @@
 }
 
 .de-entity-nugget-action:hover {
-    background: rgba(248, 174, 44, 0.15);
+    background: hsla(var(--hue), var(--saturation), var(--lightness), 0.15);
     color: var(--color-primary);
 }
 
