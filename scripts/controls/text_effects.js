@@ -181,11 +181,13 @@ class TextEffects {
      * @returns {void}
     */
     static #mergeResponse(root) {
-        const tokenSpans = root.querySelectorAll('span#game-backdrop-saturate[aria-hidden="true"]');
-        if (tokenSpans.length === 0) return;
+        // I don't know why, but AI Dungeon's responses are loose spans for the latest response.
+        // Why? Who knows. What is the goal? I don't know. But it makes it hard to apply text effects.
+        const itsyBitsySpans = root.querySelectorAll('span#game-backdrop-saturate[aria-hidden="true"]');
+        if (itsyBitsySpans.length === 0) return;
 
         const parents = new Set();
-        tokenSpans.forEach(span => {
+        itsyBitsySpans.forEach(span => {
             const parent = span.parentElement;
             if (!parent || parent.dataset.textEffectsMerged === 'true') return;
             parents.add(parent);
