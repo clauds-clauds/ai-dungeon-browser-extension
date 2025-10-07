@@ -193,4 +193,8 @@ class Page {
         if (component && parentElement) parentElement.appendChild(component);
         return component;
     }
+
+    static reload() {
+        window.location.reload();
+    }
 }
