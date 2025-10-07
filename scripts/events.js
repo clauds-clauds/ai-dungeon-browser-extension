@@ -1,10 +1,13 @@
 "use strict";
 
+let mutationObserver = null;
+
 class Events {
     /**
      * The ID of the previous adventure, used to detect changes.
      */
     static #previousAdventureId = null;
+    static #debounceTimeout = null;
 
     static onCustomMenuButtonClick() {
         CustomDebugger.say("Custom menu button clicked.", true);
@@ -37,13 +40,14 @@ class Events {
      */
     static onPersistentStorageModified() {
         CustomDebugger.say("Persistent storage modified.", true);
-        TextEffects.invalidate();
+        // TextEffects.invalidate();
         Renderer.refresh();
         Page.addCustomSettings();
 
-        setTimeout(() => {
+        clearTimeout(this.#debounceTimeout);
+        this.#debounceTimeout = setTimeout(() => {
             TextEffects.ping(true);
-        }, 100);
+        }, 1000);
     }
 
     /**
@@ -78,17 +82,18 @@ class Events {
         });
 
         // Create an observer which listens for all the changes.
-        const mutationObserver = new MutationObserver((mutations) => {
+        mutationObserver = new MutationObserver((mutations) => {
             // Get the ID of the current adventure.
             const adventureId = Utilities.getAdventureId();
 
             // If loaded into an adventure, then try to inject the custom button.
             if(adventureId) Page.addCustomMenuButton();
 
+            /*
             if (Discover.dailyRewardsButton()) {
                 CustomDebugger.say("Daily rewards button found.");
                 Page.addCustomCircleMenuButton();
-            }
+            }*/
 
             // Check if the adventure ID has changed.
             if(adventureId && adventureId !== this.#previousAdventureId) {
