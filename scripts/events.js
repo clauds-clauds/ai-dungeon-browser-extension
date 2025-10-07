@@ -37,7 +37,7 @@ class Events {
      */
     static onPersistentStorageModified() {
         CustomDebugger.say("Persistent storage modified.", true);
-        TextEffects.invalidateCache();
+        TextEffects.invalidate();
         Renderer.refresh();
         Page.addCustomSettings();
 
