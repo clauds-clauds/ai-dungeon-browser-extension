@@ -5,6 +5,7 @@
  */
 const ActionMap = {
     Menu,
+    Page,
     PersistentStorage,
     Renderer,
     Editor,
