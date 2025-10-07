@@ -31,6 +31,12 @@ class Create {
         return homeMenuParent;
     }
 
+    /**
+     * 
+     * @param {*} entity 
+     * @param {*} text 
+     * @returns 
+    */
     static highlightSpan(entity, text) {
         const span = document.createElement('span');
         span.className = 'entity-highlight';
