@@ -65,7 +65,7 @@ class TextEffects {
 
     /**
      * Applies text effects to the specified node.
-     * @param {*} node The node to apply text effects to.
+     * @param {HTMLElement} node The node to apply text effects to.
      * @returns {void}
     */
     static #apply(node) {
@@ -73,8 +73,11 @@ class TextEffects {
         if (!node || !(node instanceof Node)) return;
         if (!PersistentStorage.getSetting('textEffectsEnabled', true)) return; // Return if disabled.
 
-        // Attempt to merge any existing spans first.
-        if (node instanceof Element) this.#mergeResponse(node);
+        // Attempt to merge any existing spans first plus try to apply markdown formatting.
+        if (node instanceof Element) {
+            this.#mergeResponse(node);
+            this.#applyMarkdown(node);
+        }
 
         // Get or build the regex.
         const regex = this.#cacheRegex();
@@ -173,6 +176,25 @@ class TextEffects {
                 range.insertNode(span);
             }
         }
+    }
+
+    /**
+     * Applies markdown formatting to the given node.
+     * @param {HTMLElement} node The node to apply markdown formatting to.
+     * @returns {void}
+    */
+    static #applyMarkdown(node) {
+        if (!PersistentStorage.getSetting('experimentalMarkdownFormatting', false)) return;
+
+        let html = node.innerHTML;
+
+        html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+        html = html.replace(/\+\+(.*?)\+\+/g, '<u>$1</u>');
+
+        html = html.replace(/~~(.*?)~~/g, '<s>$1</s>');
+
+        node.innerHTML = html;
     }
 
     /**

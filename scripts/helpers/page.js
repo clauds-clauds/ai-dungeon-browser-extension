@@ -92,7 +92,7 @@ class Page {
 
         const coloredSettings = PersistentStorage.getSetting('experimentalColoredSettings', false);
         const coloredContent = `
-            strong {
+            .de-menu strong {
                 color: hsl(var(--hue), var(--saturation), var(--lightness));
             }
         `
