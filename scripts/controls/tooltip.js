@@ -113,8 +113,12 @@ class Tooltip {
         if (graphicsCount <= 1) return;
 
         this.#currentGraphicIndex = (this.#currentGraphicIndex + direction + graphicsCount) % graphicsCount;
-        this.#currentEntity.currentGraphic = this.#currentGraphicIndex;
-        PersistentStorage.saveEntity(this.#currentEntity);
+        
+        if (this.#currentEntity.currentGraphic !== this.#currentGraphicIndex) {
+            this.#currentEntity.currentGraphic = this.#currentGraphicIndex;
+            PersistentStorage.saveEntity(this.#currentEntity);
+        }
+
         this.#updateGraphic();
     }
 
