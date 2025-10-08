@@ -89,6 +89,34 @@ class Utilities {
         return !PersistentStorage.getSetting('experimentalEntryEditing', false);
     }
 
+    static async resizeImage(dataURL, width, height, quality = 1.0, preserveAspectRatio = false) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                if (preserveAspectRatio) {
+                    const ratio = Math.min(width / img.width, height / img.height);
+                    canvas.width = img.width * ratio;
+                    canvas.height = img.height * ratio;
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                } else {
+                    canvas.width = width;
+                    canvas.height = height;
+                    const sourceSize = Math.min(img.width, img.height);
+                    const sx = (img.width - sourceSize) / 2;
+                    const sy = (img.height - sourceSize) / 2;
+                    ctx.drawImage(img, sx, sy, sourceSize, sourceSize, 0, 0, width, height);
+                }
+
+                resolve(canvas.toDataURL('image/jpeg', quality));
+            };
+            img.onerror = reject;
+            img.src = dataURL;
+        });
+    }
+
     /**
      * Converts a hex color string to HSL.
      * @param {string} hex - The hex color string.
