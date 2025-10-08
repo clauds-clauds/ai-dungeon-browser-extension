@@ -159,7 +159,8 @@
 }
 
 .entity-input,
-.entity-select {
+.entity-select,
+.entity-textarea {
     background: var(--c-core2);
     border: 1px solid var(--c-core4);
     border-radius: var(--r-md);
@@ -170,8 +171,15 @@
 }
 
 .entity-input:focus,
-.entity-select:focus {
+.entity-select:focus,
+.entity-textarea:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 1px rgba(248, 174, 44, 0.35);
+    box-shadow: 0 0 0 2px rgba(248, 174, 44, 0.2);
+}
+
+.entity-textarea {
+    min-height: 180px;
+    resize: vertical;
+    line-height: 1.5;
 }
