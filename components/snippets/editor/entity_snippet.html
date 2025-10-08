@@ -8,6 +8,11 @@
                     <input type="text" id="entity-name" class="entity-input" placeholder="Enter a name..."
                         autocomplete="off" data-entity-variable="name">
                 </div>
+                <div class="entity-field" data-hide-if="Editor.isNotCustomCategory">
+                    <label for="entity-category-custom" class="grey">Custom Category</label>
+                    <input type="text" id="entity-category-custom" class="entity-input"
+                        placeholder="Enter a custom category..." autocomplete="off">
+                </div>
                 <div class="entity-field">
                     <label for="entity-category" class="grey">Category</label>
                     <select id="entity-category" class="entity-select" data-entity-variable="category">
@@ -23,6 +28,11 @@
                 <label for="entity-triggers" class="grey">Triggers</label>
                 <input type="text" id="entity-triggers" class="entity-input"
                     placeholder="Enter any additional triggers..." autocomplete="off" data-entity-variable="triggers">
+            </div>
+            <div class="entity-field entity-field-entry" data-hide-if="Utilities.isEntryEditingDisabled">
+                <label for="entity-entry" class="grey">Entry</label>
+                <textarea id="entity-entry" class="entity-textarea"
+                    placeholder="Write the lore or extended entry here..." data-entity-variable="entry"></textarea>
             </div>
             <div class="entity-media-row">
                 <div class="entity-media">
@@ -75,7 +85,8 @@
                     <span class="material-symbols-rounded">save</span>
                     Save Entity
                 </button>
-                <button type="button" class="de-action-button outline" id="entity-reset-button" data-action="Editor.new">
+                <button type="button" class="de-action-button outline" id="entity-reset-button"
+                    data-action="Editor.new">
                     <span class="material-symbols-rounded">new_window</span>
                     New Entity
                 </button>
