@@ -51,7 +51,7 @@ class TextEffects {
      * Generates a regex pattern for matching text effects.
      * @returns {RegExp|null} The generated regex or null if no entities exist.
     */
-    static #regexify () {
+    static #regexify() {
         // Print out a message to the console for debugging purposes.
         CustomDebugger.say("Generating regex for text effects.");
 
@@ -126,11 +126,11 @@ class TextEffects {
     */
     static #markdownize(node) {
         // Check if experimental markdown formatting is enabled and that we're not in the action text.
-        if (!PersistentStorage.getSetting('experimentalMarkdownFormatting', false) || node.id === 'action-text') return;
+        if (!PersistentStorage.getSetting('experimentalMarkdownFormatting', false)) return;
 
         // Get the inner HTML of the node.
         let inner = node.innerHTML;
-
+        
         // Do the replacements for markdown-like syntaxy.
         inner = inner.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         inner = inner.replace(/\*(.*?)\*/g, '<em>$1</em>');
@@ -154,7 +154,10 @@ class TextEffects {
         // If the node is an element, merge tiny spans and apply markdown formatting.
         if (node instanceof Element) {
             this.#merge(node);
-            this.#markdownize(node);
+
+            // Skip action text for markdown formatting, if you try to format those then the world explodes and bad things happen.
+            // Trust me on this one. I've seen it happen. Don't ask. Just don't. ;-)
+            if (!node.querySelector('#action-text')) this.#markdownize(node);
         }
 
         // Get the regex pattern, using the cached version if available.
