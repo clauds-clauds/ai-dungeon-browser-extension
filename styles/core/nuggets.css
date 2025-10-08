@@ -137,33 +137,66 @@
     pointer-events: none;
     transition: opacity var(--animation-duration-normal) var(--animation-ease);
     transform-origin: top center;
+    font-family: var(--f-family-heading);
 }
 
 .de-tooltip-area.visible {
     opacity: 1;
-    pointer-events: all;
+    pointer-events: auto;
 }
 
 .de-tooltip-content {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: var(--s-gap-sm);
-}
-
-#de-tooltip-image {
-    max-width: 256px;
-    max-height: 256px;
-    object-fit: contain;
-    border-radius: var(--r-sm);
-    display: block;
+    gap: var(--s-gap-xs);
 }
 
 .de-tooltip-controls {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 8px;
+    border-radius: var(--r-sm);
     gap: var(--s-gap-sm);
+    transition: background 0.15s ease;
+}
+
+.de-tooltip-controls span {
+    font-size: 0.8rem;
+    color: var(--c-core9);
+    white-space: nowrap;
+}
+
+.de-tooltip-navigation-button {
+    background: none;
+    border: none;
+    color: var(--c-coreA9);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    border-radius: var(--r-sm);
+}
+
+.de-tooltip-navigation-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.de-tooltip-navigation-button .material-symbols-rounded {
+    font-size: 16px;
+}
+
+#de-tooltip-image {
+    max-width: 256px;
+    max-height: 256px;
+    border-radius: var(--r-sm);
+    object-fit: contain;
+    background: rgba(0, 0, 0, 0.2);
+    min-width: 128px;
+    min-height: 128px;
+    display: none;
 }
 
 /* Text Effect */

@@ -3,10 +3,14 @@
 class Tooltip {
     static #tooltipElement = null;
     static #imageElement = null;
-    static #counterElement = null;
+    static #graphicsCounterElement = null;
+    static #iconsCounterElement = null;
+    static #graphicsControls = null;
+    static #iconsControls = null;
 
     static #currentEntity = null;
     static #currentGraphicIndex = 0;
+    static #currentIconIndex = 0;
     static #hideTimeout = null;
 
     static async ping() {
@@ -15,7 +19,10 @@ class Tooltip {
 
         this.#tooltipElement = await Page.addComponent('components/nuggets/tooltip_nugget.html', document.body);
         this.#imageElement = document.getElementById('de-tooltip-image');
-        this.#counterElement = document.getElementById('de-tooltip-counter');
+        this.#graphicsCounterElement = document.getElementById('de-tooltip-graphics-counter');
+        this.#iconsCounterElement = document.getElementById('de-tooltip-icons-counter');
+        this.#graphicsControls = document.getElementById('de-tooltip-graphics-controls');
+        this.#iconsControls = document.getElementById('de-tooltip-icons-controls');
 
         this.#tooltipElement.addEventListener('mouseenter', () => {
             clearTimeout(this.#hideTimeout);
@@ -45,7 +52,7 @@ class Tooltip {
 
             if (target && entityId) {
                 const entity = PersistentStorage.cache.entities.find(e => e.id == entityId);
-                if (entity && entity.graphics?.length > 0 && !Menu.isOpen()) {
+                if (entity && (entity.graphics?.length > 0 || entity.icons?.length > 1) && !Menu.isOpen()) {
                     Tooltip.show(target, entity);
                 }
             }
@@ -64,13 +71,18 @@ class Tooltip {
     }
 
     static show(target, entity) {
-        if (!this.#tooltipElement || !entity || !entity.graphics || entity.graphics.length === 0) return;
+        if (!this.#tooltipElement || !entity) return;
+        if (!entity.graphics?.length > 0 && !entity.icons?.length > 1) return;
 
         clearTimeout(this.#hideTimeout);
 
         this.#currentEntity = entity;
         this.#currentGraphicIndex = entity.currentGraphic || 0;
+        this.#currentIconIndex = entity.icons?.findIndex(i => i.isPinned) ?? -1;
+        if (this.#currentIconIndex === -1) this.#currentIconIndex = 0;
+
         this.#updateGraphic();
+        this.#updateIconSelector();
 
         const targetRect = target.getBoundingClientRect();
         this.#tooltipElement.classList.add('visible');
@@ -100,20 +112,28 @@ class Tooltip {
         }
     }
 
-    static cycleBack() {
+    static cycleGraphicBack() {
         this.#cycleGraphic(-1);
     }
 
-    static cycleForward() {
+    static cycleGraphicForward() {
         this.#cycleGraphic(1);
     }
 
+    static cycleIconBack() {
+        this.#cycleIcon(-1);
+    }
+
+    static cycleIconForward() {
+        this.#cycleIcon(1);
+    }
+
     static #cycleGraphic(direction) {
-        const graphicsCount = this.#currentEntity.graphics.length;
+        const graphicsCount = this.#currentEntity.graphics?.length || 0;
         if (graphicsCount <= 1) return;
 
         this.#currentGraphicIndex = (this.#currentGraphicIndex + direction + graphicsCount) % graphicsCount;
-        
+
         if (this.#currentEntity.currentGraphic !== this.#currentGraphicIndex) {
             this.#currentEntity.currentGraphic = this.#currentGraphicIndex;
             PersistentStorage.saveEntity(this.#currentEntity);
@@ -122,15 +142,47 @@ class Tooltip {
         this.#updateGraphic();
     }
 
+    static #cycleIcon(direction) {
+        const iconsCount = this.#currentEntity.icons?.length || 0;
+        if (iconsCount <= 1) return;
+
+        this.#currentIconIndex = (this.#currentIconIndex + direction + iconsCount) % iconsCount;
+
+        this.#currentEntity.icons.forEach((icon, index) => {
+            icon.isPinned = (index === this.#currentIconIndex);
+        });
+        PersistentStorage.saveEntity(this.#currentEntity);
+
+        this.#updateIconSelector();
+    }
+
     static #updateGraphic() {
         const graphics = this.#currentEntity.graphics;
-        if (!graphics || graphics.length === 0) return;
-        const graphicsCount = graphics.length;
+        const graphicsCount = graphics?.length || 0;
 
-        this.#imageElement.src = graphics[this.#currentGraphicIndex].url;
-        this.#counterElement.textContent = `${this.#currentGraphicIndex + 1} / ${graphicsCount}`;
+        if (graphicsCount > 0) {
+            this.#imageElement.src = graphics[this.#currentGraphicIndex].url;
+            this.#imageElement.style.display = 'block';
+        } else {
+            this.#imageElement.style.display = 'none';
+        }
 
-        const controls = this.#tooltipElement.querySelector('.de-tooltip-controls');
-        if (controls) controls.style.display = graphicsCount > 1 ? 'flex' : 'none';
+        if (this.#graphicsControls) {
+            this.#graphicsControls.style.display = graphicsCount > 1 ? 'flex' : 'none';
+        }
+        if (this.#graphicsCounterElement) {
+            this.#graphicsCounterElement.textContent = `Graphic: ${this.#currentGraphicIndex + 1} / ${graphicsCount}`;
+        }
+    }
+
+    static #updateIconSelector() {
+        const iconsCount = this.#currentEntity.icons?.length || 0;
+
+        if (this.#iconsControls) {
+            this.#iconsControls.style.display = iconsCount > 1 ? 'flex' : 'none';
+        }
+        if (this.#iconsCounterElement) {
+            this.#iconsCounterElement.textContent = `Pinned Icon: ${this.#currentIconIndex + 1} / ${iconsCount}`;
+        }
     }
 }
