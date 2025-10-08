@@ -30,6 +30,7 @@
                 "scripts/helpers/discover.js",
                 "scripts/helpers/utilities.js",
                 "scripts/helpers/page.js",
+                "scripts/helpers/bind.js",
                 "scripts/helpers/create.js",
                 "scripts/helpers/construct.js",
                 "scripts/controls/menu.js",
