@@ -28,35 +28,6 @@ class Page {
         });
     }
 
-    /**
-     * Rebinds action buttons within the specified container.
-     * @param {HTMLElement} container 
-    */
-    static rebindActions(container) {
-        const actionButtons = container.querySelectorAll('[data-action]');
-
-        actionButtons.forEach(button => {
-            const action = button.dataset.action;
-            const [className, methodName] = action.split('.');
-
-            if (!className || !methodName) {
-                console.error(`Invalid action format: ${action}`);
-                return;
-            }
-
-            // Avoid re-adding listeners
-            if (button.dataset.actionBound) return;
-            button.dataset.actionBound = 'true';
-
-            const targetClass = ActionMap[className];
-            if (typeof targetClass?.[methodName] === 'function') {
-                button.addEventListener('click', (event) => targetClass[methodName](event));
-            } else {
-                console.error(`Action not found: ${action}`);
-            }
-        });
-    }
-
     static async addCustomSettings() {
         let styleElement = document.getElementById(Configuration.ID_EXTENSION_STYLES);
 
