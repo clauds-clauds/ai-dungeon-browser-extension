@@ -32,7 +32,12 @@
                 "scripts/events.js",
                 "scripts/run.js"
             ],
-            "css": []
+            "css": [
+                "components/styles/mobile.css",
+                "components/styles/random.css",
+                "components/styles/root.css",
+                "components/styles/vanilla.css"
+            ]
         }
     ],
     "web_accessible_resources": [
