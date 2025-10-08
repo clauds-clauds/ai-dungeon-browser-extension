@@ -3,7 +3,7 @@
 class Editor {
     static #currentEntity = {};
 
-    static edit() {
+    static edit(event) {
         const nugget = event.target.closest('.de-entity-nugget');
         if (!nugget) return;
 
@@ -54,7 +54,7 @@ class Editor {
 
     static #populateMediaList(listId, mediaItems) {
         const list = document.getElementById(listId);
-        list.innerHTML = ''; // Clear existing items
+        list.innerHTML = '';
 
         if (!mediaItems || mediaItems.length === 0) return;
 
@@ -153,28 +153,37 @@ class Editor {
     }
 
     static addIcon() {
-        this.#addMediaFromFile('entity-icons-list');
+        this.#addMediaFromFile('entity-icons-list', 96, 96);
     }
 
     static addGraphic() {
-        this.#addMediaFromFile('entity-graphics-list');
+        this.#addMediaFromFile('entity-graphics-list', 512, 512, true);
     }
 
-    static #addMediaFromFile(listId) {
+    static #addMediaFromFile(listId, width, height, preserveAspectRatio = false) {
         const input = document.createElement('input');
         input.type = 'file';
         input.accept = 'image/*';
-        input.onchange = e => {
+        input.style.display = 'none';
+
+        input.onchange = async e => {
             const file = e.target.files[0];
-            if (!file) return;
+            if (!file) {
+                document.body.removeChild(input);
+                return;
+            }
 
             const reader = new FileReader();
-            reader.onload = readerEvent => {
+            reader.onload = async readerEvent => {
                 const url = readerEvent.target.result;
-                this.#addMediaItem(listId, url, file.name);
+                const resizedUrl = await Utilities.resizeImage(url, width, height, 1.0, preserveAspectRatio);
+                this.#addMediaItem(listId, resizedUrl, file.name);
+                document.body.removeChild(input);
             };
             reader.readAsDataURL(file);
         };
+
+        document.body.appendChild(input);
         input.click();
     }
 
