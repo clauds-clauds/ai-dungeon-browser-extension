@@ -110,6 +110,10 @@ class Menu {
         });
     }
 
+    /**
+     * Opens the bug report page, so very important to have this in menu, right?
+     * Probably need to find a better place for this later on.
+    */
     static reportBug() {
         CustomDebugger.say("Bug report button clicked.", true);
         window.open('https://github.com/clauds-clauds/ai-dungeon-browser-extension/issues', '_blank');
