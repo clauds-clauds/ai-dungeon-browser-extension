@@ -44,6 +44,8 @@ class Events {
         Renderer.refresh();
         Page.addCustomSettings();
 
+        Bind.conditionals(Discover.extensionMenu());
+
         clearTimeout(this.#debounceTimeout);
         this.#debounceTimeout = setTimeout(() => {
             TextEffects.ping(true);
