@@ -44,9 +44,9 @@
     align-content: center;
     padding: var(--s-padding-md);
     border-radius: var(--r-md);
-    border: 1px dashed rgba(248, 174, 44, 0.35);
-    background: rgba(248, 174, 44, 0.06);
-    color: rgba(200, 205, 210, 0.72);
+    border: 1px dashed hsla(var(--hue), var(--saturation), var(--lightness), 0.35);
+    background: hsla(var(--hue), var(--saturation), var(--lightness), 0.06);
+    color: hsla(var(--hue), var(--saturation), var(--lightness), 0.72);
     text-align: center;
 }
 
@@ -65,7 +65,7 @@
 }
 
 .entity-media-item:hover {
-    border-color: rgba(248, 174, 44, 0.45);
+    border-color: hsla(var(--hue), var(--saturation), var(--lightness), 0.45);
     box-shadow: 0 8px 22px rgba(0, 0, 0, 0.32);
 }
 
@@ -80,7 +80,7 @@
     max-height: 64px;
     overflow: hidden;
     border-radius: var(--r-md);
-    background: rgba(248, 174, 44, 0.12);
+    background: hsla(var(--hue), var(--saturation), var(--lightness), 0.12);
     display: grid;
     place-items: center;
     color: var(--color-primary);
@@ -137,7 +137,7 @@
 }
 
 .entity-media-action:hover {
-    background: rgba(248, 174, 44, 0.22);
+    background: hsla(var(--hue), var(--saturation), var(--lightness), 0.22);
     color: var(--color-primary);
 }
 
@@ -146,7 +146,7 @@
 }
 
 .entity-media-action:focus-visible {
-    outline: 2px solid rgba(248, 174, 44, 0.65);
+    outline: 2px solid hsla(var(--hue), var(--saturation), var(--lightness), 0.65);
     outline-offset: 2px;
 }
 
@@ -175,7 +175,7 @@
 .entity-textarea:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px rgba(248, 174, 44, 0.2);
+    box-shadow: 0 0 0 2px hsla(var(--hue), var(--saturation), var(--lightness), 0.2);
 }
 
 .entity-textarea {
