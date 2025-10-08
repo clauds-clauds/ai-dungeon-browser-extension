@@ -136,9 +136,12 @@ class TextEffects {
         inner = inner.replace(/\*(.*?)\*/g, '<em>$1</em>');
         inner = inner.replace(/\+\+(.*?)\+\+/g, '<u>$1</u>');
         inner = inner.replace(/~~(.*?)~~/g, '<s>$1</s>');
+        
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(inner, 'text/html');
 
-        // Set the modified HTML back to the node.
-        node.innerHTML = inner;
+        node.innerHTML = '';
+        node.append(...doc.body.childNodes);
     }
 
     /**
