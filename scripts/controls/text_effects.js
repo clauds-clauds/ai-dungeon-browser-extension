@@ -1,5 +1,5 @@
 "use strict"
 
 class DKTextEffects extends DKControl {
-    static controlName = "Text Effects";
+    static controlName = "text effects";
 }

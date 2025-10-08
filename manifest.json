@@ -18,7 +18,8 @@
             "js": [
                 "scripts/libraries/dexie/dexie.js",
                 "scripts/libraries/sortable/sortable.js",
-
+                
+                "scripts/global.js",
                 "scripts/config.js",
                 "scripts/logger.js",
                 "scripts/storage.js",
@@ -26,7 +27,8 @@
                 "scripts/control.js",
 
                 "scripts/controls/text_effects.js",
-                
+                "scripts/controls/interface.js",
+
                 "scripts/events.js",
                 "scripts/run.js"
             ],

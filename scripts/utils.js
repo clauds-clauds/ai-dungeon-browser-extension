@@ -28,4 +28,26 @@ class DKUtils {
     static readableAdventureID() {
         return this.adventureID() || 'N/A';
     }
+
+    /**
+     * 
+     * @param {*} exclusionID 
+    */
+    static makePageInert(exclusionID = null) {
+        const selectors = 'body > div, body > main, body > header, body > footer';
+        document.querySelectorAll(selectors).forEach(element => {
+            if (element.id !== exclusionID && !element.querySelector(`#${exclusionID}`)) {
+                element.setAttribute('inert', '');
+            }
+        });
+    }
+
+    /**
+     * 
+    */
+    static makePageInteractive() {
+        document.querySelectorAll('[inert]').forEach(element => {
+            element.removeAttribute('inert');
+        });
+    }
 }

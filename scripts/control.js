@@ -1,8 +1,10 @@
 "use strict";
 
 class DKControl {
-    static controlName = "Strange Control";
+    static controlName = "strange control";
+
     static isHot = false;
+    static isVisible = false;
 
     /**
      * Invalidates whatever the control has or does.
@@ -30,6 +32,9 @@ class DKControl {
     */
     static refresh() {
         DKLogger.say(`Refreshing ${this.controlName}...`, true);
+
+        // Warm up the control if it's not hot.
+        if(!this.isHot) this.warmup();
     }
 
     /**
@@ -38,5 +43,13 @@ class DKControl {
     static warmup() {
         if (this.isHot) return;
         DKLogger.say(`Warming up ${this.controlName}...`, true);
+    }
+
+    /**
+     * Toggles the visibility of the control.
+    */
+    static toggleVisibility () {
+        this.isVisible = !this.isVisible;
+        DKLogger.say(`Toggling visibility of ${this.controlName} to ${this.isVisible}...`, true);
     }
 }

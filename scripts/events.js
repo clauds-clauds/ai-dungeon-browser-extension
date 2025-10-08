@@ -4,19 +4,29 @@
  * **DK Events** handles event stuff.
 */
 class DKEvents {
-    static onMenuClick() {
+    static onInterfaceEnter() {
 
     }
 
-    static onAdventureLoad() {
+    static onInterfaceExit() {
+
+    }
+
+    static onAdventureEnter() {
+        DKLogger.say(`Entering adventure ${DKGlobal.adventureID}...`);
+        DKGlobal.lastAdventureID = DKGlobal.adventureID;
+    }
+
+    static onAdventurePlay() {
 
     }
 
     static onAdventureExit() {
-
+        DKLogger.say(`Exiting adventure ${DKGlobal.lastAdventureID}...`);
+        DKGlobal.lastAdventureID = null;
     }
 
-    static onCacheModified () {
+    static onCacheUpdated () {
 
     }
 }
