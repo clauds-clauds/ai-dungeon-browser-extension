@@ -155,13 +155,15 @@ class Construct {
         if (!nugget) return;
 
         const icons = Configuration.ICONS_CATEGORIES;
+        const standardCategories = ['character', 'race', 'location', 'faction'];
+        const displayCategory = standardCategories.includes(entity.category) ? entity.category : 'custom';
 
         nugget.dataset.entityId = entity.id;
-        nugget.dataset.category = entity.category;
+        nugget.dataset.category = displayCategory;
 
         nugget.querySelector('.de-entity-nugget-name').textContent = entity.name || 'Unnamed Entity';
         nugget.querySelector('.de-entity-nugget-category-name').textContent = Utilities.capitalizeFirstLetter(entity.category) || 'No Category';
-        nugget.querySelector('.de-entity-nugget-category-icon').textContent = icons[entity.category] || 'help';
+        nugget.querySelector('.de-entity-nugget-category-icon').textContent = icons[displayCategory] || 'category';
 
         const iconContainer = nugget.querySelector('.de-entity-nugget-icon');
         const icon = entity.icons?.find(i => i.isPinned) || entity.icons?.[0];
@@ -173,7 +175,7 @@ class Construct {
         } else {
             const span = document.createElement('span');
             span.className = 'material-symbols-rounded';
-            span.textContent = icons[entity.category] || 'image';
+            span.textContent = icons[displayCategory] || 'category';
             iconContainer.replaceChildren(span);
         }
     }
