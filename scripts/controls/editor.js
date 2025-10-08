@@ -3,7 +3,7 @@
 class Editor {
     static #currentEntity = {};
 
-    static edit(event) {
+    static edit() {
         const nugget = event.target.closest('.de-entity-nugget');
         if (!nugget) return;
 
@@ -18,10 +18,8 @@ class Editor {
         CustomDebugger.say(`Editing entity ${entityId}`, true);
         this.#currentEntity = entity;
 
-        // Switch to the editor tab
         document.querySelector('.de-sidebar-button[data-chunk="editor"]')?.click();
 
-        // Populate form fields
         const fields = document.querySelectorAll('#entity-editor-snippet [data-entity-variable]');
         fields.forEach(field => {
             const key = field.dataset.entityVariable;
@@ -36,7 +34,20 @@ class Editor {
             }
         });
 
-        // Populate media lists
+        const standardCategories = ['character', 'race', 'location', 'faction'];
+        const categoryField = document.getElementById('entity-category');
+        const customCategoryInput = document.getElementById('entity-category-custom');
+
+        if (categoryField && customCategoryInput) {
+            if (standardCategories.includes(entity.category)) {
+                categoryField.value = entity.category;
+                customCategoryInput.value = '';
+            } else {
+                categoryField.value = 'custom';
+                customCategoryInput.value = entity.category || '';
+            }
+        }
+
         this.#populateMediaList('entity-icons-list', entity.icons);
         this.#populateMediaList('entity-graphics-list', entity.graphics);
     }
@@ -84,6 +95,13 @@ class Editor {
             }
             entityData[key] = value;
         });
+
+        if (entityData.category === 'custom') {
+            const customCategoryInput = document.getElementById('entity-category-custom');
+            if (customCategoryInput && customCategoryInput.value) {
+                entityData.category = customCategoryInput.value.trim();
+            }
+        }
 
         entityData.icons = this.#getMediaFromList('entity-icons-list');
         entityData.graphics = this.#getMediaFromList('entity-graphics-list');
@@ -199,5 +217,10 @@ class Editor {
         deleteButton.addEventListener('click', () => {
             item.remove();
         });
+    }
+
+    static isNotCustomCategory() {
+        const categoryField = document.getElementById('entity-category');
+        return categoryField && categoryField.value !== 'custom';
     }
 }
