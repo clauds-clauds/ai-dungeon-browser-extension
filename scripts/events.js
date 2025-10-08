@@ -18,7 +18,7 @@ class DKEvents {
     }
 
     static onAdventurePlay() {
-
+        DKLogger.say(`Playing adventure ${DKGlobal.adventureID}...`, true);
     }
 
     static onAdventureExit() {
@@ -27,6 +27,6 @@ class DKEvents {
     }
 
     static onCacheUpdated () {
-
+        DKLogger.say(`Cache was updated...`, true);
     }
 }

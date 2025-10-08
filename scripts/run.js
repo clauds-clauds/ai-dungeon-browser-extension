@@ -16,8 +16,6 @@ class DKRun {
 
         // Create a new mutation observer to watch for changes in the DOM.
         DKGlobal.mutationObserver = new MutationObserver((mutations) => {
-            DKLogger.say("Something changed...", true);
-
             // Get the current adventure ID.
             DKGlobal.adventureID = DKUtils.adventureID();
 
