@@ -1,17 +1,11 @@
 {
     "manifest_version": 3,
     "name": "Dungeon Extension",
-    "version": "3.2.2",
-    "description": "Customize characters and locations with icons and graphics, plus various other QoL features.",
+    "version": "4.0.0",
+    "description": "",
     "author": "clauds-clauds",
     "permissions": [],
-    "icons": {
-        "16": "icons/de_tiny.png",
-        "32": "icons/de_small.png",
-        "48": "icons/de_medium.png",
-        "96": "icons/de_medium_large.png",
-        "128": "icons/de_large.png"
-    },
+    "icons": {},
     "content_security_policy": {
         "extension_pages": "script-src 'self'; object-src 'none';"
     },
@@ -21,65 +15,13 @@
                 "https://play.aidungeon.com/*",
                 "https://beta.aidungeon.com/*"
             ],
-            "js": [
-                "scripts/libraries/dexie/dexie.js",
-                "scripts/libraries/sortable/sortable.js",
-                "scripts/core/configuration.js",
-                "scripts/core/persistent_storage.js",
-                "scripts/core/custom_debugger.js",
-                "scripts/helpers/discover.js",
-                "scripts/helpers/utilities.js",
-                "scripts/helpers/page.js",
-                "scripts/helpers/bind.js",
-                "scripts/helpers/create.js",
-                "scripts/helpers/construct.js",
-                "scripts/controls/menu.js",
-                "scripts/controls/text_effects.js",
-                "scripts/controls/tooltip.js",
-                "scripts/controls/editor.js",
-                "scripts/controls/renderer.js",
-                "scripts/action_map.js",
-                "scripts/events.js"
-            ],
-            "css": [
-                "styles/other/legacy.css",
-                "styles/other/random.css",
-                "styles/core/nuggets.css",
-                "styles/core/snippets.css",
-                "styles/core/chunks.css",
-                "styles/mobile.css",
-                "styles/tags.css",
-                "styles/root.css",
-                "styles/vanilla.css"
-            ]
+            "js": [],
+            "css": []
         }
     ],
     "web_accessible_resources": [
         {
-            "resources": [
-                "components/nuggets/tooltip_nugget.html",
-                "components/nuggets/entity_nugget.html",
-                "components/snippets/database/import_snippet.html",
-                "components/snippets/database/export_snippet.html",
-                "components/snippets/database/restore_snippet.html",
-                "components/snippets/database/danger_snippet.html",
-                "components/snippets/editor/entity_snippet.html",
-                "components/snippets/editor/image_snippet.html",
-                "components/snippets/editor/notes_snippet.html",
-                "components/snippets/settings/general_snippet.html",
-                "components/snippets/settings/icon_snippet.html",
-                "components/snippets/settings/text_snippet.html",
-                "components/snippets/settings/tooltip_snippet.html",
-                "components/snippets/settings/experimental_snippet.html",
-                "components/chunks/renderer_chunk.html",
-                "components/chunks/editor_chunk.html",
-                "components/chunks/settings_chunk.html",
-                "components/chunks/database_chunk.html",
-                "components/chunks/hidden_chunk.html",
-                "components/menu.html",
-                "components/backdrop.html",
-                "fonts/material_symbols_rounded.ttf"
-            ],
+            "resources": [],
             "matches": [
                 "https://play.aidungeon.com/*",
                 "https://beta.aidungeon.com/*"

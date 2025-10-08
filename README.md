@@ -1,3 +1,5 @@
+# What is this?
+Nothing.
 # Install Instructions
 ## Chrome
 1. Download and unpack one of the releases from the side-bar.
