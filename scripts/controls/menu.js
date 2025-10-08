@@ -127,7 +127,7 @@ class Menu {
         const menu = Discover.extensionMenu();
 
         // Decouple scroll events again, just in case.
-        Page.decoupleScrollEvents();
+        // Page.decoupleScrollEvents();
 
         // If found and on mobile, hide the menu.
         if (menu && Utilities.isMobile() && menu.classList.contains('sidebar-visible')) menu.classList.remove('sidebar-visible');
