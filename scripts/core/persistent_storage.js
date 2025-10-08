@@ -63,7 +63,12 @@ class PersistentStorage {
         importCustom: false,
 
         /* Experiments Defaults HERE! */
-        experimentalStoragePerformanceMode: true
+        experimentalPerformanceMode: false,
+        experimentalStoragePerformanceMode: true,
+        experimentalColoredSettings: true,
+        experimentalEntryEditing: false,
+        experimentalMarkdownFormatting: false,
+        experimentalImportCharactersOnly: true
     };
 
     /**
@@ -82,7 +87,7 @@ class PersistentStorage {
      * @param {*} value 
      * @return {Promise<void>}
      */
-    static async saveSetting(setting, value){
+    static async saveSetting(setting, value) {
         this.cache.settings[setting] = value;
 
         document.dispatchEvent(new CustomEvent(Configuration.EVENT_CACHE_UPDATED));
@@ -155,7 +160,7 @@ class PersistentStorage {
         if (settings) Object.assign(this.cache.settings, settings.value);
 
         // Load the entities into the cache.
-        this.cache.entities = entities.map(e => JSON.parse(JSON.stringify(e))); 
+        this.cache.entities = entities.map(e => JSON.parse(JSON.stringify(e)));
 
         // Dispatch an event to notify that the cache has been updated.
         document.dispatchEvent(new CustomEvent('cacheupdated'));
@@ -283,20 +288,11 @@ class PersistentStorage {
                 };
             })
             .filter(entity => {
-                switch (entity.category) {
-                    case 'character':
-                        return this.getSetting('importCharacters', true);
-                    case 'race':
-                        return this.getSetting('importRaces', false);
-                    case 'location':
-                        return this.getSetting('importLocations', false);
-                    case 'faction':
-                        return this.getSetting('importFactions', false);
-                    case 'custom':
-                        return this.getSetting('importCustom', false);
-                    default:
-                        return false;
+                const importCharsOnly = this.getSetting('experimentalImportCharactersOnly', true);
+                if (importCharsOnly) {
+                    return entity.category === 'character';
                 }
+                return true;
             });
     }
 
@@ -309,18 +305,18 @@ class PersistentStorage {
 
         try {
             const fileContent = await Utilities.promptForJSON();
-            if (!fileContent) return; // User cancelled file selection
+            if (!fileContent) return;
 
             const data = JSON.parse(fileContent);
             let rawEntities = [];
 
-            if (data?.data?.characters) { // Legacy format HERE!.
+            if (data?.data?.characters) {
                 CustomDebugger.say("Detected legacy format. Migrating...", true);
                 rawEntities = this.#migrateLegacy(data);
-            } else if (Array.isArray(data) && data[0]?.keys && data[0]?.title) { // Story card format HERE!
+            } else if (Array.isArray(data) && data[0]?.keys && data[0]?.title) {
                 CustomDebugger.say("Detected Story Card format. Migrating...", true);
                 rawEntities = this.#migrateStoryCards(data);
-            } else if (Array.isArray(data) && data[0]?.adventureId && data[0]?.name) { // Normal format HERE!
+            } else if (Array.isArray(data) && data[0]?.adventureId && data[0]?.name) {
                 CustomDebugger.say("Detected normal entity format.", true);
                 rawEntities = data;
             } else {
