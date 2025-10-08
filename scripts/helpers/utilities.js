@@ -85,6 +85,10 @@ class Utilities {
         return window.matchMedia("(max-width: 768px)").matches;
     }
 
+    static isEntryEditingDisabled() {
+        return !PersistentStorage.getSetting('experimentalEntryEditing', false);
+    }
+
     /**
      * Converts a hex color string to HSL.
      * @param {string} hex - The hex color string.
