@@ -15,7 +15,21 @@
                 "https://play.aidungeon.com/*",
                 "https://beta.aidungeon.com/*"
             ],
-            "js": [],
+            "js": [
+                "scripts/libraries/dexie/dexie.js",
+                "scripts/libraries/sortable/sortable.js",
+
+                "scripts/config.js",
+                "scripts/logger.js",
+                "scripts/storage.js",
+                "scripts/utils.js",
+                "scripts/control.js",
+
+                "scripts/controls/text_effects.js",
+                
+                "scripts/events.js",
+                "scripts/run.js"
+            ],
             "css": []
         }
     ],
