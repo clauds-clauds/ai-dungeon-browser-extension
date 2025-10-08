@@ -47,7 +47,7 @@ class Events {
         clearTimeout(this.#debounceTimeout);
         this.#debounceTimeout = setTimeout(() => {
             TextEffects.ping(true);
-        }, 1000);
+        }, 200);
     }
 
     /**
