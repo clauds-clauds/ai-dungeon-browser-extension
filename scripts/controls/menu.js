@@ -35,13 +35,25 @@ class Menu {
 
         this.#setupVariables();
         this.#setupSearch();
-        this.#setupActionButtons(Discover.extensionMenu());
         this.toggleVisibility();
+        this.#setupShinies();
+
+        // Bind both actions and conditionals.
+        Bind.actions(Discover.extensionMenu(), true);
 
         // This is required, something on the host page is interfering with scroll events and calling this ensures they are properly decoupled.
         Page.decoupleScrollEvents();
 
         document.dispatchEvent(new CustomEvent(Configuration.EXTENSION_MENU_CREATED));
+    }
+
+    static #setupShinies() {
+        const categoryField = document.getElementById('entity-category');
+        if (categoryField) {
+            categoryField.addEventListener('change', () => {
+                Bind.conditionals(document.getElementById('entity-editor-snippet'));
+            });
+        }
     }
 
     static #setupVariables() {
@@ -98,44 +110,61 @@ class Menu {
         });
     }
 
-    static isOpen() {
-        return this.#visible;
-    }
-
-    static #setupActionButtons(container) {
-        Page.rebindActions(container);
-    }
-
     static reportBug() {
         CustomDebugger.say("Bug report button clicked.", true);
         window.open('https://github.com/clauds-clauds/ai-dungeon-browser-extension/issues', '_blank');
     }
 
-    static onSidebarButtonClick() {
+    /**
+     * Closes the sidebar foldout on mobile devices.
+    */
+    static foldoutClose() {
+        // Try to find the menu first.
         const menu = Discover.extensionMenu();
+
+        // Decouple scroll events again, just in case.
         Page.decoupleScrollEvents();
-        if (menu && Utilities.isMobile() && menu.classList.contains('sidebar-visible')) {
-            menu.classList.remove('sidebar-visible');
-        }
+
+        // If found and on mobile, hide the menu.
+        if (menu && Utilities.isMobile() && menu.classList.contains('sidebar-visible')) menu.classList.remove('sidebar-visible');
     }
 
+    /**
+     * Makes the sidebar fold out (or back in).
+    */
     static foldout() {
         const menu = Discover.extensionMenu();
-        if (menu) {
-            menu.classList.toggle('sidebar-visible');
-        }
+        if (menu) menu.classList.toggle('sidebar-visible');
     }
 
-    static toggleVisibility() {
-        this.#visible = !this.#visible;
+    /**
+     * Checks if the menu is currently open.
+     * @returns {boolean} True if the menu is open, false otherwise.
+    */
+    static isOpen() {
+        return this.#visible;
+    }
 
+    /**
+     * Toggles the visibility of the menu.
+    */
+    static toggleVisibility() {
+        this.#visible = !this.#visible; // Toggle the state first.
+
+        // Then apply the changes.
         if (this.#visible) {
+            // Show the backdrop and menu.
             Discover.backdrop().classList.add('visible');
             Discover.extensionMenu().classList.add('visible');
+
+            // Ensure none of the host page elements are interactive.
             Page.makeInert(Configuration.ID_EXTENSION_MENU);
         } else {
+            // Hide the backdrop and menu.
             Discover.backdrop().classList.remove('visible');
             Discover.extensionMenu().classList.remove('visible');
+
+            // Ensure all of the host page elements are interactive again.
             Page.makeInteractive();
         }
     }

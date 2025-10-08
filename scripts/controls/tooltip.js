@@ -60,7 +60,7 @@ class Tooltip {
             }
         });
 
-        Page.rebindActions(this.#tooltipElement);
+        Bind.actions(this.#tooltipElement);
     }
 
     static show(target, entity) {
