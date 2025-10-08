@@ -38,13 +38,15 @@ class Renderer {
         this.#nuggetContainer.innerHTML = '<div class="de-entity-nugget-list"></div>';
         const list = this.#nuggetContainer.querySelector('.de-entity-nugget-list');
 
-        new Sortable(list, {
-            animation: 150,
-            ghostClass: 'sortable-ghost'
-        });
+        if (!Utilities.isMobile()) {
+            new Sortable(list, {
+                animation: 150,
+                ghostClass: 'sortable-ghost'
+            });
+        }
 
         const entities = PersistentStorage.cache.entities;
-        
+
         if (entities.length === 0) return;
         for (const entity of entities) await Construct.entityNugget(entity, list);
 
